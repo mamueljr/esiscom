@@ -3802,3 +3802,85 @@ input, select, textarea {
 			}
 
 		}
+
+/* Contact Section Enhancements */
+#cta .contact-wrapper {
+  display: flex;
+  flex-wrap: wrap; /* Permite que los elementos se apilen en pantallas pequeñas */
+  gap: 2em; /* Espacio entre el mapa y la información */
+  margin-top: 2em;
+  margin-bottom: 3em;
+  align-items: flex-start; /* Alinea los items al inicio si tienen alturas diferentes */
+}
+
+#cta .contact-map {
+  flex: 1 1 55%; /* Permite crecer, encoger, base del 55% del ancho */
+  min-width: 300px; /* Ancho mínimo para el mapa */
+}
+
+#cta .contact-map iframe {
+  width: 100%; /* Asegura que el iframe llene su contenedor */
+  height: 400px; /* Altura fija para el mapa, ajústala a tu gusto */
+  border-radius: 8px; /* Bordes redondeados opcionales */
+  border: 0; /* Asegura que no haya borde por defecto del iframe */
+}
+
+#cta .contact-info {
+  flex: 1 1 40%; /* Permite crecer, encoger, base del 40% del ancho */
+  min-width: 280px; /* Ancho mínimo para la info */
+  text-align: left; /* Alinea el texto a la izquierda dentro de esta columna */
+}
+
+#cta .contact-info h3 {
+  margin-top: 0;
+  color: #ffffff; /* O el color principal de tus títulos */
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3); /* Línea divisoria sutil */
+  padding-bottom: 0.5em;
+  margin-bottom: 1em;
+}
+
+/* Ajustes para la lista dl.alt dentro de contact-info */
+#cta .contact-info dl.alt dt {
+  width: 6em; /* Ajusta el ancho de las etiquetas (Dirección, Teléfono, etc.) */
+  color: #ffffff; /* O el color que uses para texto destacado */
+}
+
+#cta .contact-info dl.alt dd {
+  margin-left: 7em; /* Debe ser un poco más que el width de dt */
+}
+
+#cta .contact-info dl.alt dd a {
+  color: inherit; /* Para que los enlaces tomen el color del texto normal */
+  border-bottom: 1px dotted rgba(255, 255, 255, 0.5);
+}
+#cta .contact-info dl.alt dd a:hover {
+  color: #efa8b0; /* Color de hover de la plantilla */
+  border-bottom-color: transparent;
+}
+
+#cta .contact-info .icons {
+  margin-top: 1.5em;
+  /* Los estilos de .icons ya deberían estar definidos en main.css */
+}
+
+
+/* Responsive adjustments para la sección de contacto */
+@media screen and (max-width: 736px) {
+  #cta .contact-wrapper {
+    flex-direction: column; /* Apila el mapa y la info en pantallas pequeñas */
+  }
+
+  #cta .contact-map,
+  #cta .contact-info {
+    flex-basis: 100%; /* Cada uno ocupa el ancho completo cuando están apilados */
+    width: 100%;
+  }
+
+  #cta .contact-map {
+    margin-bottom: 2em; /* Espacio entre el mapa y la info cuando están apilados */
+  }
+
+  #cta .contact-map iframe {
+    height: 300px; /* Reduce la altura del mapa en móviles */
+  }
+}
