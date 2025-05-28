@@ -3933,3 +3933,78 @@ input, select, textarea {
 }
 */
 
+/*iconos*/
+/* === ESTILOS PERSONALIZADOS PARA ICONOS SOCIALES EN SECCIÓN DE CONTACTO === */
+
+/* Contenedor de los iconos sociales */
+#cta .contact-social-icons {
+  text-align: center; /* Centra la lista ul.icons */
+  margin-top: 2.5em;  /* Espacio por encima de los iconos */
+  margin-bottom: 2em; /* Espacio por debajo, antes del footer de la sección */
+}
+
+/* Estilo para los íconos sociales específicos, manteniendo la base de .alt pero personalizando */
+#cta .contact-social-icons .icons li a.icon.alt {
+  /* --- AJUSTA ESTOS VALORES PARA EL TAMAÑO --- */
+  /* Para el círculo contenedor (el 'a' tag) */
+  /* Si quieres círculos más pequeños, reduce width/height/line-height del :before más abajo */
+
+  /* Para el ícono de FontAwesome dentro del círculo (el ':before' pseudo-elemento) */
+  /* No es necesario cambiar el font-size del 'a' tag directamente, sino de su :before */
+}
+
+/* Ajustamos el tamaño del :before pseudo-elemento para los iconos .alt aquí */
+#cta .contact-social-icons .icons li a.icon.alt:before {
+  /* --- AJUSTA ESTOS VALORES PARA EL TAMAÑO DEL ICONO Y SU CÍRCULO --- */
+  font-size: 1.0em;  /* Reduce/Aumenta esto para el tamaño del símbolo (ej. logo de WhatsApp) */
+  width: 2.25em;     /* Ancho del círculo. Debe ser proporcional al font-size. */
+  height: 2.25em;    /* Alto del círculo. Debe ser proporcional al font-size. */
+  line-height: 2.25em;/* Para centrar verticalmente. Igual al height. */
+  /* --- FIN DE AJUSTES DE TAMAÑO --- */
+}
+
+
+/* Colores específicos para cada red social, sobrescribiendo el color de .icon.alt */
+
+/* WhatsApp */
+#cta .contact-social-icons .icons li a.fa-whatsapp.alt {
+  background-color: #25D366; /* Fondo verde WhatsApp */
+  border-color: #25D366;     /* Borde verde WhatsApp */
+  color: #ffffff !important; /* Icono (símbolo) blanco, !important para asegurar que sobreescriba el #636363 de #main .icon.alt */
+}
+#cta .contact-social-icons .icons li a.fa-whatsapp.alt:hover {
+  background-color: #1DAE52; /* Verde más oscuro al pasar el ratón */
+  border-color: #1DAE52;
+  color: #ffffff !important;
+}
+
+/* Facebook */
+#cta .contact-social-icons .icons li a.fa-facebook-f.alt {
+  background-color: #1877F2; /* Fondo azul Facebook */
+  border-color: #1877F2;     /* Borde azul Facebook */
+  color: #ffffff !important; /* Icono blanco */
+}
+#cta .contact-social-icons .icons li a.fa-facebook-f.alt:hover {
+  background-color: #125DB1; /* Azul más oscuro al pasar el ratón */
+  border-color: #125DB1;
+  color: #ffffff !important;
+}
+
+/* Instagram */
+#cta .contact-social-icons .icons li a.fa-instagram.alt {
+  /* Usaremos un fondo sólido representativo o un gradiente simple */
+  background-color: #C13584; /* Magenta, un color clave de Instagram */
+  /* Si prefieres el gradiente exacto, puedes usar una herramienta online para generar el CSS:
+     background-image: linear-gradient(45deg, #f09433 0%,#e6683c 25%,#dc2743 50%,#cc2366 75%,#bc1888 100%);
+  */
+  border-color: #C13584;
+  color: #ffffff !important; /* Icono blanco */
+}
+#cta .contact-social-icons .icons li a.fa-instagram.alt:hover {
+  background-color: #A32B6F; /* Magenta más oscuro */
+  border-color: #A32B6F;
+  /* Si usaste el gradiente, podrías aplicar un filtro o transform en hover:
+     filter: brightness(0.9);
+  */
+  color: #ffffff !important;
+}
