@@ -3884,3 +3884,52 @@ input, select, textarea {
     height: 300px; /* Reduce la altura del mapa en móviles */
   }
 }
+
+/* En tu assets/css/main.css */
+
+#soporte-remoto {
+  /* Puedes añadir padding o margin específico si es necesario */
+  /* padding-top: 3em; */
+  /* padding-bottom: 3em; */
+  background-color: #f8f8f8; /* Un color de fondo ligeramente diferente para distinguirla, opcional */
+                                /* O usa uno de los colores de la paleta de Stellar si prefieres */
+}
+
+#soporte-remoto .actions.stacked-sm li {
+  display: block; /* Hace que cada botón ocupe toda la línea */
+  margin: 0.5em 0; /* Espacio entre botones cuando están apilados */
+}
+
+#soporte-remoto .actions.stacked-sm li:first-child {
+  margin-top: 0;
+}
+
+/* Para asegurar que en pantallas más grandes NO estén apilados si usas stacked-sm */
+@media screen and (min-width: 737px) { /* Ajusta este breakpoint según el de Stellar */
+  #soporte-remoto .actions.stacked-sm li {
+    display: inline-block; /* Vuelven a estar en línea */
+    margin: 0 0.5em; /* Espacio horizontal entre botones */
+  }
+  #soporte-remoto .actions.stacked-sm li:first-child {
+    margin-left: 0;
+  }
+   #soporte-remoto .actions.stacked-sm li:last-child {
+    margin-right: 0;
+  }
+}
+
+/* Si quieres que los botones en esta sección siempre estén apilados,
+   puedes simplificarlo y no usar 'stacked-sm', sino directamente:
+*/
+/*
+#soporte-remoto .actions li {
+  display: block;
+  margin: 0.75em auto;
+  width: 80%; // O un ancho fijo
+  max-width: 300px; // Para que no sean demasiado anchos en pantallas grandes
+}
+#soporte-remoto .actions li a {
+  display: block; // Para que el enlace ocupe todo el botón li
+}
+*/
+
