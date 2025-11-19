@@ -1,0 +1,338 @@
+:root {
+  --color-primary: #3544ff;
+  --color-secondary: #00c4a7;
+  --color-dark: #0c1033;
+  --color-light: #f5f7ff;
+  --color-muted: rgba(255, 255, 255, 0.65);
+  --gradient-hero: linear-gradient(135deg, #0d1b47 0%, #152c6a 60%, #1f3c8c 100%);
+  --shadow-soft: 0 20px 40px rgba(6, 18, 51, 0.25);
+}
+
+body,
+input,
+select,
+textarea {
+  font-family: 'Inter', 'Source Sans Pro', -apple-system, BlinkMacSystemFont,
+    'Segoe UI', sans-serif;
+  color: var(--color-muted);
+}
+
+#wrapper {
+  background: radial-gradient(circle at top, rgba(255, 255, 255, 0.04), transparent);
+}
+
+#header.alt {
+  position: relative;
+  padding-top: 7rem;
+  padding-bottom: 5rem;
+  background: var(--gradient-hero);
+  border-bottom-left-radius: 32px;
+  border-bottom-right-radius: 32px;
+  overflow: hidden;
+}
+
+#header.alt::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.12), transparent 45%);
+  pointer-events: none;
+}
+
+#header .brand-mark img {
+  max-width: 260px;
+  filter: drop-shadow(0 10px 30px rgba(0, 0, 0, 0.25));
+}
+
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.45rem 1rem;
+  border-radius: 999px;
+  font-size: 0.95rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  margin-bottom: 1.5rem;
+}
+
+.hero-highlights {
+  display: flex;
+  justify-content: center;
+  gap: 1.25rem;
+  flex-wrap: wrap;
+  margin: 2rem auto 2.5rem;
+  padding: 0;
+  list-style: none;
+  max-width: 720px;
+}
+
+.hero-highlights li {
+  padding-left: 1.25rem;
+  position: relative;
+  font-weight: 500;
+}
+
+.hero-highlights li::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--color-secondary);
+  position: absolute;
+  left: 0;
+  top: 0.6rem;
+}
+
+.hero-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.button.ghost {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  color: #ffffff !important;
+}
+
+.button.secondary {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.button.small {
+  font-size: 0.9em;
+  line-height: 1;
+  padding: 0.5rem 1.2rem;
+}
+
+.features li {
+  position: relative;
+  padding: 2rem 1.5rem 2.5rem;
+  background: rgba(12, 16, 51, 0.2);
+  border-radius: 18px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+.feature-cta {
+  margin-top: 1.5rem;
+}
+
+.statistics img {
+  max-height: 70px;
+  filter: grayscale(1) brightness(1.2);
+  opacity: 0.85;
+}
+
+.testimonials {
+  background: rgba(12, 16, 51, 0.25);
+  border-radius: 32px;
+  padding: 4rem 3rem;
+  box-shadow: var(--shadow-soft);
+}
+
+.testimonial-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 2rem;
+}
+
+.testimonial-card {
+  padding: 1.75rem;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(8px);
+}
+
+.testimonial-card .quote {
+  font-style: italic;
+  font-size: 1.05rem;
+}
+
+.testimonial-card .author {
+  margin-top: 1.5rem;
+  color: #ffffff;
+}
+
+.support-steps {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2.5rem;
+}
+
+.support-steps .step {
+  padding: 1.25rem;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  text-align: left;
+}
+
+.step-number {
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  background: var(--color-secondary);
+  color: #0b1d35;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 0.75rem;
+}
+
+.stacked-sm {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.stacked-sm li {
+  flex: 1 1 220px;
+}
+
+.contact-location .contact-wrapper {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 2rem;
+  align-items: stretch;
+}
+
+.ratio-16x9 {
+  position: relative;
+  width: 100%;
+  padding-bottom: 56.25%;
+  overflow: hidden;
+  border-radius: 18px;
+  box-shadow: var(--shadow-soft);
+}
+
+.ratio-16x9 iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+.contact-info {
+  background: rgba(12, 16, 51, 0.25);
+  border-radius: 18px;
+  padding: 2rem;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.contact-cta {
+  text-align: center;
+}
+
+.contact-social-icons .icons {
+  justify-content: center;
+  gap: 1.5rem;
+}
+
+.contact-social-icons .icons .icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.contact-social-icons .icons .icon:hover {
+  transform: translateY(-2px);
+  border-color: #ffffff;
+}
+
+.support-note {
+  margin-top: 1.2rem;
+  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.75);
+}
+
+.floating-whatsapp {
+  position: fixed;
+  right: 1.5rem;
+  bottom: 1.5rem;
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  background: #25d366;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.6rem;
+  box-shadow: 0 15px 30px rgba(17, 27, 43, 0.35);
+  z-index: 1000;
+}
+
+.floating-whatsapp:hover {
+  transform: translateY(-2px);
+}
+
+@media screen and (max-width: 980px) {
+  #header.alt {
+    padding: 5rem 2rem 4rem;
+  }
+
+  .contact-location .contact-wrapper {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media screen and (max-width: 736px) {
+  #nav {
+    display: block !important;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    max-width: none;
+    border-radius: 0;
+    background: rgba(12, 16, 51, 0.92);
+    z-index: 100;
+    padding: 0.75rem 1rem;
+    box-shadow: 0 8px 20px rgba(5, 10, 24, 0.45);
+  }
+
+  #nav ul li {
+    display: inline-flex;
+    margin: 0.15rem;
+  }
+
+  #nav ul {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  #nav + #main {
+    padding-top: 4.5rem;
+  }
+
+  .hero-highlights {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .testimonial-card {
+    padding: 1.25rem;
+  }
+
+  .floating-whatsapp {
+    right: 1rem;
+    bottom: 1rem;
+  }
+}
