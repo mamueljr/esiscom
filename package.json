@@ -1,0 +1,29 @@
+{
+  "name": "esiscom",
+  "version": "1.0.0",
+  "description": "Sitio web corporativo ESISCOM - Tecnología y Soporte",
+  "scripts": {
+    "sass": "sass assets/sass/main.scss:assets/css/main.css --style expanded --quiet-deps",
+    "sass:watch": "sass --watch assets/sass/main.scss:assets/css/main.css --style expanded --quiet-deps",
+    "sass:prod": "sass assets/sass/main.scss:assets/css/main.css --style compressed --no-source-map --quiet-deps",
+    "sass:noscript": "sass assets/sass/noscript.scss:assets/css/noscript.css --style expanded --quiet-deps",
+    "sass:noscript:prod": "sass assets/sass/noscript.scss:assets/css/noscript.css --style compressed --no-source-map --quiet-deps",
+    "build": "npm run sass:prod && npm run sass:noscript:prod",
+    "dev": "npm run sass:watch",
+    "serve": "npx http-server . -p 8080 -o",
+    "start": "npm run sass && npm run serve",
+    "watch": "npm run sass:watch"
+  },
+  "keywords": [
+    "esiscom",
+    "tecnologia",
+    "soporte-tecnico"
+  ],
+  "author": "ESISCOM",
+  "license": "CC-BY-3.0",
+  "devDependencies": {
+    "sass": "^1.77.0",
+    "http-server": "^14.1.1"
+  }
+}
+
