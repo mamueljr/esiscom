@@ -24,7 +24,7 @@ export const generateChatResponse = async (
   try {
     const ai = getAiClient();
     if (!ai) {
-      return "Lo siento, el sistema de chat no está configurado correctamente (falta API Key).";
+      return "FAP Actualmente nuestros sistemas de IA están en mantenimiento. Por favor llama al (614) 254-10-66";
     }
 
     const model = "gemini-2.5-flash";
