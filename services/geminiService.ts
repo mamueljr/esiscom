@@ -1,19 +1,39 @@
 import { GoogleGenAI } from "@google/genai";
 
-// Initialize the Gemini client
-// Note: In a real production app, you might proxy this through a backend to hide the key,
-// but for this demo architecture, we use it directly as per instructions.
-const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+// Initialize the Gemini client lazily to prevent crashes if the key is missing
+let aiClient: GoogleGenAI | null = null;
 
-export const generateChatResponse = async (history: { role: string, text: string }[], newMessage: string): Promise<string> => {
+const getAiClient = () => {
+  if (!aiClient) {
+    const apiKey = process.env.API_KEY;
+    if (!apiKey) {
+      console.warn(
+        "Gemini API Key is missing. Chat functionality will not work."
+      );
+      return null;
+    }
+    aiClient = new GoogleGenAI({ apiKey });
+  }
+  return aiClient;
+};
+
+export const generateChatResponse = async (
+  history: { role: string; text: string }[],
+  newMessage: string
+): Promise<string> => {
   try {
-    const model = 'gemini-2.5-flash';
-    
+    const ai = getAiClient();
+    if (!ai) {
+      return "Lo siento, el sistema de chat no está configurado correctamente (falta API Key).";
+    }
+
+    const model = "gemini-2.5-flash";
+
     // Construct the chat history for the model
-    // We map 'user'/'model' to the API expected format if necessary, 
+    // We map 'user'/'model' to the API expected format if necessary,
     // but usually managing state locally and sending a fresh "contents" or using sendMessage is best.
     // Here we will use the chat session feature.
-    
+
     const chat = ai.chats.create({
       model: model,
       config: {
@@ -28,17 +48,20 @@ export const generateChatResponse = async (history: { role: string, text: string
         Tono: Profesional, técnico pero accesible, y muy servicial. Respuestas concisas.
         `,
       },
-      history: history.map(h => ({
+      history: history.map((h) => ({
         role: h.role,
-        parts: [{ text: h.text }]
-      }))
+        parts: [{ text: h.text }],
+      })),
     });
 
     const result = await chat.sendMessage({
-      message: newMessage
+      message: newMessage,
     });
 
-    return result.text || "Lo siento, tuve un problema procesando tu solicitud. Por favor contacta al soporte humano.";
+    return (
+      result.text ||
+      "Lo siento, tuve un problema procesando tu solicitud. Por favor contacta al soporte humano."
+    );
   } catch (error) {
     console.error("Error calling Gemini API:", error);
     return "Actualmente nuestros sistemas de IA están en mantenimiento. Por favor llama al (614) 254-1066.";
