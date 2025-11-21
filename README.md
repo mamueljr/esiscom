@@ -18,4 +18,4 @@ View your app in AI Studio: https://ai.studio/apps/drive/1mo-nxkGIQKltv3PijcJ8uR
 3. Run the app:
    `npm run dev`
 
-# esto es solo para hacer commit y desplegar pagina
+# esto es solo para hacer commit y desplegar pagina dgdfg
