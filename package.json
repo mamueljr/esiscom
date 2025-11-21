@@ -1,29 +1,22 @@
 {
-  "name": "esiscom",
-  "version": "1.0.0",
-  "description": "Sitio web corporativo ESISCOM - Tecnología y Soporte",
+  "name": "esiscom-modern",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
   "scripts": {
-    "sass": "sass assets/sass/main.scss:assets/css/main.css --style expanded --quiet-deps",
-    "sass:watch": "sass --watch assets/sass/main.scss:assets/css/main.css --style expanded --quiet-deps",
-    "sass:prod": "sass assets/sass/main.scss:assets/css/main.css --style compressed --no-source-map --quiet-deps",
-    "sass:noscript": "sass assets/sass/noscript.scss:assets/css/noscript.css --style expanded --quiet-deps",
-    "sass:noscript:prod": "sass assets/sass/noscript.scss:assets/css/noscript.css --style compressed --no-source-map --quiet-deps",
-    "build": "npm run sass:prod && npm run sass:noscript:prod",
-    "dev": "npm run sass:watch",
-    "serve": "npx http-server . -p 8080 -o",
-    "start": "npm run sass && npm run serve",
-    "watch": "npm run sass:watch"
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
   },
-  "keywords": [
-    "esiscom",
-    "tecnologia",
-    "soporte-tecnico"
-  ],
-  "author": "ESISCOM",
-  "license": "CC-BY-3.0",
+  "dependencies": {
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "@google/genai": "^1.30.0"
+  },
   "devDependencies": {
-    "sass": "^1.77.0",
-    "http-server": "^14.1.1"
+    "@types/node": "^22.14.0",
+    "@vitejs/plugin-react": "^5.0.0",
+    "typescript": "~5.8.2",
+    "vite": "^6.2.0"
   }
 }
-
