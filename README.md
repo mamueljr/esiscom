@@ -10,6 +10,13 @@
 - `components/Navbar.tsx` (desktop y móvil) abre enlaces externos con `target="_blank" rel="noopener noreferrer"`.
 - Verificación: `npx tsc --noEmit` y `npm run build` OK.
 
+## Despliegue (GitHub Pages sin Actions)
+- Actions está bloqueado por billing (`account is locked`), así que Pages usa **Deploy from a branch**.
+- Rama `gh-pages` (huérfana) contiene el contenido de `dist/` + `.nojekyll`.
+- Pasos: `npm run build` → copiar `dist/` a `gh-pages` → `git push origin gh-pages` → `POST /repos/mamueljr/esiscom/pages/builds` si no auto-construye.
+- Fuente Pages: `build_type: legacy`, `source: {branch: gh-pages, path: /}`.
+- El push a `main` solo guarda código; ya no despliega (el workflow `deploy.yml` falla por billing y se ignora).
+
 ## Run Locally
 
 **Prerequisites:** Node.js
