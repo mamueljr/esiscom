@@ -4,6 +4,7 @@ export interface ServiceItem {
   title: string;
   description: string;
   icon: React.ReactNode;
+  tags: string[];
 }
 
 export interface Testimonial {

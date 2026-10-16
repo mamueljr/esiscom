@@ -1,83 +1,104 @@
 import React from 'react';
 import { LocationIcon, PhoneIcon, MailIcon, ClockIcon } from './Icons';
+import Reveal from './Reveal';
+
+const ROWS = [
+  {
+    icon: <LocationIcon className="w-6 h-6 text-primary-400" />,
+    title: 'Dirección',
+    body: (
+      <>
+        Cipres #3712, Col. Satélite
+        <br />
+        Chihuahua, Chih. · CP 31114
+      </>
+    ),
+  },
+  {
+    icon: <PhoneIcon className="w-6 h-6 text-primary-400" />,
+    title: 'Teléfono',
+    body: <a href="tel:+526142541066" className="hover:text-primary-400 transition-colors">(614) 254-1066</a>,
+  },
+  {
+    icon: <MailIcon className="w-6 h-6 text-primary-400" />,
+    title: 'Email',
+    body: (
+      <a href="mailto:contacto@esiscom.com" className="hover:text-primary-400 transition-colors">
+        contacto@esiscom.com
+      </a>
+    ),
+  },
+  {
+    icon: <ClockIcon className="w-6 h-6 text-primary-400" />,
+    title: 'Horario',
+    body: (
+      <>
+        Lun–Vie: 9:00 AM – 6:00 PM
+        <br />
+        Sáb: 9:00 AM – 1:00 PM
+      </>
+    ),
+  },
+];
 
 const Contact: React.FC = () => {
   return (
-    <section id="contact" className="py-20 bg-white">
+    <section id="contact" className="py-24 bg-ink text-white scroll-mt-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
-          <h2 className="text-3xl font-extrabold text-slate-900 sm:text-4xl">Contacto y Ubicación</h2>
-          <p className="mt-4 text-xl text-slate-500">
-            Visítanos o contáctanos. Estamos listos para resolver tus necesidades tecnológicas.
+        <Reveal>
+          <p className="font-display text-xs font-bold tracking-[0.3em] text-primary-400 mb-4">
+            05 — CONTACTO
           </p>
-        </div>
+          <h2 className="font-display text-4xl sm:text-5xl font-extrabold tracking-tight leading-[1.05]">
+            Hablemos<span className="text-primary-400">.</span>
+          </h2>
+          <p className="mt-5 text-lg text-slate-400 max-w-2xl">
+            Visítanos en Cipres #3712 o escríbenos — respondemos hoy mismo.
+          </p>
+        </Reveal>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-          {/* Contact Info Card */}
-          <div className="bg-slate-50 rounded-2xl p-8 shadow-lg border border-slate-100 h-full flex flex-col justify-between">
-            <div>
-              <h3 className="text-2xl font-bold text-slate-900 mb-8">Información Directa</h3>
-              <div className="space-y-6">
-                <div className="flex items-start">
-                  <LocationIcon className="w-6 h-6 text-primary-600 mt-1 flex-shrink-0" />
-                  <div className="ml-4">
-                    <h4 className="text-lg font-medium text-slate-900">Dirección</h4>
-                    <p className="text-slate-600">Cipres #3712, Col. Satelite<br/>Chihuahua, Chih., México • CP 31114</p>
+        <div className="mt-12 grid grid-cols-1 lg:grid-cols-2 gap-8">
+          <Reveal>
+            <div className="h-full border border-white/15 bg-ink-soft p-8 sm:p-10 flex flex-col justify-between">
+              <div className="space-y-8">
+                {ROWS.map((row) => (
+                  <div key={row.title} className="flex items-start">
+                    <div className="flex-shrink-0 mt-0.5">{row.icon}</div>
+                    <div className="ml-5">
+                      <h4 className="font-display text-xs font-bold tracking-[0.24em] text-slate-400 uppercase">
+                        {row.title}
+                      </h4>
+                      <div className="mt-1 text-lg text-white">{row.body}</div>
+                    </div>
                   </div>
-                </div>
-                
-                <div className="flex items-start">
-                  <PhoneIcon className="w-6 h-6 text-primary-600 mt-1 flex-shrink-0" />
-                  <div className="ml-4">
-                    <h4 className="text-lg font-medium text-slate-900">Teléfono</h4>
-                    <a href="tel:+526142541066" className="text-slate-600 hover:text-primary-600 transition-colors">(614) 254-1066</a>
-                  </div>
-                </div>
-
-                <div className="flex items-start">
-                  <MailIcon className="w-6 h-6 text-primary-600 mt-1 flex-shrink-0" />
-                  <div className="ml-4">
-                    <h4 className="text-lg font-medium text-slate-900">Email</h4>
-                    <a href="mailto:contacto@esiscom.com" className="text-slate-600 hover:text-primary-600 transition-colors">contacto@esiscom.com</a>
-                  </div>
-                </div>
-
-                <div className="flex items-start">
-                  <ClockIcon className="w-6 h-6 text-primary-600 mt-1 flex-shrink-0" />
-                  <div className="ml-4">
-                    <h4 className="text-lg font-medium text-slate-900">Horario</h4>
-                    <p className="text-slate-600">Lunes a Viernes: 9:00 AM - 6:00 PM</p>
-                    <p className="text-slate-600">Sábados: 9:00 AM - 1:00 PM</p>
-                  </div>
-                </div>
+                ))}
               </div>
-            </div>
-
-            <div className="mt-8">
-              <a 
-                href="https://wa.me/526142541066" 
-                target="_blank" 
+              <a
+                href="https://wa.me/526142541066"
+                target="_blank"
                 rel="noopener noreferrer"
-                className="w-full flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-green-600 hover:bg-green-700 transition-colors shadow-sm"
+                className="mt-10 flex items-center justify-center px-6 py-4 bg-primary-400 hover:bg-primary-300 text-ink font-display text-sm font-bold uppercase tracking-[0.12em] transition-colors"
               >
                 Enviar WhatsApp
               </a>
             </div>
-          </div>
+          </Reveal>
 
-          {/* Map */}
-          <div className="h-96 lg:h-auto rounded-2xl overflow-hidden shadow-lg border border-slate-200 relative">
-            <iframe
-              title="Ubicación ESISCOM"
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3500.6762461427656!2d-106.0922363!3d28.6694111!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x86ea4308e7bce6cd%3A0xadd80f9d7922d30d!2sESISCOM!5e0!3m2!1ses!2smx"
-              width="100%"
-              height="100%"
-              style={{ border: 0 }}
-              allowFullScreen={true}
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-            ></iframe>
-          </div>
+          <Reveal delay={120} className="h-full">
+            <div className="h-96 lg:h-full min-h-[24rem] overflow-hidden border border-white/15">
+              <iframe
+                title="Ubicación ESISCOM"
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3500.6762461427656!2d-106.0922363!3d28.6694111!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x86ea4308e7bce6cd%3A0xadd80f9d7922d30d!2sESISCOM!5e0!3m2!1ses!2smx"
+                width="100%"
+                height="100%"
+                style={{ border: 0 }}
+                className="[filter:grayscale(1)_invert(92%)_contrast(88%)]"
+                allowFullScreen={true}
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+              ></iframe>
+            </div>
+          </Reveal>
         </div>
       </div>
     </section>

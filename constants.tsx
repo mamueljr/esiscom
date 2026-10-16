@@ -13,19 +13,22 @@ export const NAV_ITEMS: NavItem[] = [
 
 export const SERVICES: ServiceItem[] = [
   {
-    title: 'Reparaciones de Hardware',
-    description: 'Diagnóstico y reparación a nivel componente para laptops, PCs de escritorio e impresoras. Mantenimiento preventivo y correctivo garantizado.',
-    icon: <WrenchIcon className="w-8 h-8 text-white" />,
+    title: 'Reparación de Hardware',
+    description: 'Diagnóstico a nivel componente para laptops, PCs e impresoras. Mantenimiento preventivo y correctivo con garantía, para que tu equipo vuelva a trabajar en horas, no en semanas.',
+    icon: <WrenchIcon className="w-7 h-7" />,
+    tags: ['Laptops', 'PCs', 'Impresoras', 'Preventivo'],
   },
   {
     title: 'Soporte Técnico IT',
-    description: 'Asistencia técnica inmediata remota y presencial. Administración de redes, servidores y seguridad informática para tu empresa.',
-    icon: <MonitorIcon className="w-8 h-8 text-white" />,
+    description: 'Asistencia remota y presencial para tu operación diaria: redes, servidores y seguridad informática administrados por gente que contesta y resuelve.',
+    icon: <MonitorIcon className="w-7 h-7" />,
+    tags: ['Redes', 'Servidores', 'Remoto', 'Seguridad'],
   },
   {
     title: 'Desarrollo de Software',
-    description: 'Soluciones digitales a la medida. Desde automatización de procesos hasta aplicaciones web completas para optimizar tu negocio.',
-    icon: <CodeIcon className="w-8 h-8 text-white" />,
+    description: 'Sistemas a la medida que eliminan trabajo manual: inventarios, automatización de procesos y aplicaciones web completas, entregadas con capacitación.',
+    icon: <CodeIcon className="w-7 h-7" />,
+    tags: ['Web apps', 'Inventarios', 'Automatización'],
   },
 ];
 

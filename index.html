@@ -3,21 +3,56 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>ESISCOM - Tecnología y Soporte Técnico</title>
+    <title>ESISCOM - Tecnología y Soporte Técnico en Chihuahua</title>
     <meta
       name="description"
-      content="Soluciones tecnológicas en Chihuahua. Reparación, desarrollo de software y soporte técnico."
+      content="Reparación de equipos, soporte IT y desarrollo de software a la medida en Chihuahua. Más de 15 años manteniendo negocios operativos."
     />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "ProfessionalService",
+        "name": "ESISCOM",
+        "description": "Reparación de equipos, soporte técnico IT y desarrollo de software a la medida en Chihuahua.",
+        "telephone": "+526142541066",
+        "email": "contacto@esiscom.com",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "Cipres #3712, Col. Satélite",
+          "addressLocality": "Chihuahua",
+          "postalCode": "31114",
+          "addressCountry": "MX"
+        },
+        "geo": { "@type": "GeoCoordinates", "latitude": 28.6694111, "longitude": -106.0922363 },
+        "openingHoursSpecification": [
+          { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday"], "opens": "09:00", "closes": "18:00" },
+          { "@type": "OpeningHoursSpecification", "dayOfWeek": "Saturday", "opens": "09:00", "closes": "13:00" }
+        ],
+        "sameAs": [
+          "https://www.facebook.com/people/Esiscom/100091457924009/",
+          "https://www.instagram.com/esiscomti/"
+        ]
+      }
+    </script>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Sora:wght@600;700;800&display=swap"
       rel="stylesheet"
     />
     <style>
       body {
         font-family: "Inter", sans-serif;
+        background-color: #070b14;
+      }
+      ::selection {
+        background: #a3e635;
+        color: #070b14;
+      }
+      :focus-visible {
+        outline: 2px solid #a3e635;
+        outline-offset: 3px;
       }
       /* Custom scrollbar for chat */
       .scrollbar-hide::-webkit-scrollbar {
@@ -27,6 +62,19 @@
         -ms-overflow-style: none;
         scrollbar-width: none;
       }
+      @keyframes marquee {
+        from { transform: translateX(0); }
+        to { transform: translateX(-50%); }
+      }
+      .animate-marquee {
+        animation: marquee 28s linear infinite;
+      }
+      .bg-grid {
+        background-image:
+          linear-gradient(to right, rgba(255,255,255,0.05) 1px, transparent 1px),
+          linear-gradient(to bottom, rgba(255,255,255,0.05) 1px, transparent 1px);
+        background-size: 56px 56px;
+      }
     </style>
     <script>
       tailwind.config = {
@@ -34,28 +82,34 @@
           extend: {
             colors: {
               primary: {
-                50: "#eff6ff",
-                100: "#dbeafe",
-                200: "#bfdbfe",
-                300: "#93c5fd",
-                400: "#60a5fa",
-                500: "#3b82f6",
-                600: "#2563eb",
-                700: "#1d4ed8",
-                800: "#1e40af",
-                900: "#1e3a8a",
-                950: "#172554",
+                50: "#f7fee7",
+                100: "#ecfccb",
+                200: "#d9f99d",
+                300: "#bef264",
+                400: "#a3e635",
+                500: "#84cc16",
+                600: "#65a30d",
+                700: "#4d7c0f",
+                800: "#3f6212",
+                900: "#365314",
+                950: "#1a2e05",
               },
-              secondary: {
-                500: "#0f172a", // Slate 900
+              ink: {
+                DEFAULT: "#070b14",
+                soft: "#0d1322",
+                line: "rgba(255,255,255,0.10)",
               },
+            },
+            fontFamily: {
+              display: ["Sora", "Inter", "sans-serif"],
+              sans: ["Inter", "sans-serif"],
             },
           },
         },
       };
     </script>
   </head>
-  <body class="bg-slate-50 text-slate-900 antialiased">
+  <body class="bg-ink text-slate-900 antialiased">
     <div id="root"></div>
     <script type="module" src="/index.tsx"></script>
   </body>

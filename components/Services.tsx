@@ -1,46 +1,55 @@
 import React from 'react';
 import { SERVICES } from '../constants';
+import Reveal from './Reveal';
 
 const Services: React.FC = () => {
   return (
-    <section id="services" className="py-20 bg-white">
+    <section id="services" className="py-24 bg-white scroll-mt-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
-          <h2 className="text-base text-primary-600 font-semibold tracking-wide uppercase">Nuestra Especialidad</h2>
-          <p className="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-slate-900 sm:text-4xl">
-            Servicios Integrales IT
+        <Reveal>
+          <p className="font-display text-xs font-bold tracking-[0.3em] text-slate-500 mb-4">
+            01 — LO QUE HACEMOS
           </p>
-          <p className="mt-4 max-w-2xl text-xl text-slate-500 mx-auto">
-            Cubrimos todo el espectro tecnológico, desde el hardware físico hasta el software que impulsa tu negocio.
-          </p>
-        </div>
+          <h2 className="font-display text-4xl sm:text-5xl font-extrabold tracking-tight text-ink max-w-3xl leading-[1.05]">
+            Tres frentes. <span className="bg-primary-400 px-2">Cero downtime.</span>
+          </h2>
+        </Reveal>
 
-        <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-14 border-t-2 border-ink">
           {SERVICES.map((service, index) => (
-            <div 
-              key={index} 
-              className="relative group bg-slate-50 p-8 rounded-2xl transition-all duration-300 hover:-translate-y-1 hover:shadow-xl border border-slate-100"
-            >
-              <div className="absolute top-0 right-0 -mt-4 -mr-4 w-24 h-24 bg-primary-50 rounded-full opacity-50 group-hover:scale-150 transition-transform duration-500"></div>
-              
-              <div className="relative">
-                <div className="inline-flex items-center justify-center p-3 bg-primary-600 rounded-xl shadow-lg mb-6 group-hover:bg-primary-700 transition-colors">
-                  {service.icon}
-                </div>
-                <h3 className="text-xl font-bold text-slate-900 mb-3">{service.title}</h3>
-                <p className="text-slate-600 leading-relaxed">
+            <Reveal key={service.title} delay={index * 80}>
+              <a
+                href="#contact"
+                className="group grid md:grid-cols-12 gap-6 items-start py-10 border-b-2 border-ink px-2 sm:px-6 transition-colors duration-300 hover:bg-ink"
+              >
+                <span className="md:col-span-2 font-display text-5xl font-extrabold text-ink/15 group-hover:text-primary-400 transition-colors">
+                  0{index + 1}
+                </span>
+                <span className="md:col-span-5">
+                  <span className="block font-display text-2xl sm:text-3xl font-bold text-ink group-hover:text-white transition-colors">
+                    {service.title}
+                  </span>
+                  <span className="mt-4 flex flex-wrap gap-2">
+                    {service.tags.map((tag) => (
+                      <span
+                        key={tag}
+                        className="text-[11px] font-semibold uppercase tracking-[0.14em] border border-ink/25 text-ink/70 px-3 py-1 group-hover:border-white/25 group-hover:text-slate-300 transition-colors"
+                      >
+                        {tag}
+                      </span>
+                    ))}
+                  </span>
+                </span>
+                <span className="md:col-span-4 text-slate-600 group-hover:text-slate-300 leading-relaxed transition-colors">
                   {service.description}
-                </p>
-                <div className="mt-6">
-                  <a href="#contact" className="text-primary-600 font-medium hover:text-primary-800 inline-flex items-center">
-                    Solicitar cotización
-                    <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                    </svg>
-                  </a>
-                </div>
-              </div>
-            </div>
+                </span>
+                <span className="md:col-span-1 flex md:justify-end">
+                  <span className="text-ink group-hover:text-primary-400 group-hover:translate-x-1 group-hover:-translate-y-1 transition-all">
+                    {service.icon}
+                  </span>
+                </span>
+              </a>
+            </Reveal>
           ))}
         </div>
       </div>
