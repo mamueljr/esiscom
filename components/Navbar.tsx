@@ -39,6 +39,7 @@ const Navbar: React.FC = () => {
                 <a
                   key={item.label}
                   href={item.href}
+                  {...(item.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
                   className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
                     scrolled 
                       ? 'text-slate-700 hover:text-primary-600 hover:bg-slate-50' 
@@ -74,6 +75,7 @@ const Navbar: React.FC = () => {
               <a
                 key={item.label}
                 href={item.href}
+                {...(item.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
                 onClick={() => setIsOpen(false)}
                 className="text-slate-700 hover:text-primary-600 hover:bg-slate-50 block px-3 py-2 rounded-md text-base font-medium"
               >

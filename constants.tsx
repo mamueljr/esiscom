@@ -8,6 +8,7 @@ export const NAV_ITEMS: NavItem[] = [
   { label: 'Soporte Remoto', href: '#remote-support' },
   { label: 'Ubicación', href: '#location' },
   { label: 'Contacto', href: '#contact' },
+  { label: 'EManager', href: 'https://investigacioneducativafccf.net/esiscom/manager/login', external: true },
 ];
 
 export const SERVICES: ServiceItem[] = [
