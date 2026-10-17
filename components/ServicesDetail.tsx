@@ -168,7 +168,7 @@ const ServiceCard: React.FC<{
 
 const ServicesDetail: React.FC<{ onBack: () => void }> = ({ onBack }) => {
   return (
-    <div id="servicios-detalle" className="min-h-screen bg-ink text-white pt-20 pb-16">
+    <div id="servicios-detalle" className="min-h-screen bg-ink text-white pb-16">
       <a
         href="#intro"
         className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-[60] focus:bg-primary-400 focus:text-ink focus:px-4 focus:py-2 focus:font-bold focus:text-sm"
@@ -176,8 +176,8 @@ const ServicesDetail: React.FC<{ onBack: () => void }> = ({ onBack }) => {
         Saltar al contenido
       </a>
 
-      <header className="border-b border-white/10">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex items-center justify-between">
+      <header className="sticky top-0 z-40 bg-ink/90 backdrop-blur-md border-b border-white/10">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
           <button
             onClick={onBack}
             className="group flex items-center gap-2 text-slate-300 hover:text-primary-400 transition-colors"
@@ -188,28 +188,29 @@ const ServicesDetail: React.FC<{ onBack: () => void }> = ({ onBack }) => {
             </svg>
             <span className="font-display text-sm font-semibold tracking-[0.1em]">Volver</span>
           </button>
-          <h1 className="font-display text-3xl sm:text-4xl font-extrabold tracking-tight">
+          <h1 className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight">
             Servicios y Precios
           </h1>
           <div className="w-20" />
         </div>
       </header>
 
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-16">
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-12">
         <Reveal>
-          <p className="text-lg text-slate-300 max-w-3xl leading-relaxed">
-            ESISCOM: Soporte técnico y soluciones de cómputo en Chihuahua
+          <p className="text-base sm:text-lg text-slate-300 max-w-3xl leading-relaxed">
+            Soporte técnico y soluciones de cómputo en Chihuahua. Tu computadora
+            funcionando bien, sin vueltas ni sorpresas.
           </p>
-          <p className="mt-4 text-slate-400 max-w-3xl leading-relaxed">
-            Tu computadora funcionando bien, sin vueltas ni sorpresas. Atendemos a
-            hogares y pequeñas empresas en taller, a domicilio y por acceso remoto.
-            Precios claros desde el inicio y 30 días de garantía en nuestro trabajo.
+          <p className="mt-3 text-sm sm:text-base text-slate-400 max-w-3xl leading-relaxed">
+            Atendemos a hogares y pequeñas empresas en taller, a domicilio y por
+            acceso remoto. Precios claros desde el inicio y 30 días de garantía en
+            nuestro trabajo.
           </p>
           <a
             href={wa('Hola ESISCOM, quiero cotizar un servicio')}
             target="_blank"
             rel="noopener noreferrer"
-            className="mt-6 inline-flex items-center justify-center px-8 py-4 bg-primary-400 hover:bg-primary-300 text-ink font-display text-sm font-bold uppercase tracking-[0.12em] transition-colors"
+            className="mt-5 inline-flex items-center justify-center px-7 py-3 bg-primary-400 hover:bg-primary-300 text-ink font-display text-sm font-bold uppercase tracking-[0.12em] transition-colors"
           >
             Cotiza por WhatsApp
           </a>
