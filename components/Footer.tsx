@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Footer: React.FC = () => {
+const Footer: React.FC<{ onShowServices: () => void }> = ({ onShowServices }) => {
   return (
     <footer className="bg-black text-white pt-16 overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -55,6 +55,14 @@ const Footer: React.FC = () => {
                   </a>
                 </li>
               ))}
+              <li>
+                <button
+                  onClick={onShowServices}
+                  className="text-slate-300 hover:text-primary-400 transition-colors"
+                >
+                  Precios y servicios
+                </button>
+              </li>
               <li>
                 <a
                   href="https://investigacioneducativafccf.net/esiscom/manager/login"

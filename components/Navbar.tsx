@@ -5,7 +5,7 @@ import { MenuIcon, XIcon } from './Icons';
 const linkClass =
   'px-3 py-2 text-[13px] font-semibold uppercase tracking-[0.18em] text-slate-300 hover:text-primary-400 transition-colors';
 
-const Navbar: React.FC = () => {
+const Navbar: React.FC<{ onShowServices: () => void }> = ({ onShowServices }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
@@ -53,10 +53,16 @@ const Navbar: React.FC = () => {
               ))}
               <a
                 href="#contact"
-                className="ml-4 bg-primary-400 hover:bg-primary-300 text-ink px-5 py-2.5 text-[13px] font-bold uppercase tracking-[0.14em] transition-colors"
+                className="ml-3 border border-white/25 hover:border-primary-400 text-slate-200 hover:text-primary-400 px-4 py-2.5 text-[13px] font-bold uppercase tracking-[0.14em] transition-colors"
               >
                 Agendar
               </a>
+              <button
+                onClick={onShowServices}
+                className="ml-2 bg-primary-400 hover:bg-primary-300 text-ink px-5 py-2.5 text-[13px] font-bold uppercase tracking-[0.14em] transition-colors"
+              >
+                Precios
+              </button>
             </div>
           </div>
 
@@ -91,10 +97,19 @@ const Navbar: React.FC = () => {
             <a
               href="#contact"
               onClick={() => setIsOpen(false)}
-              className="block mt-4 bg-primary-400 text-ink text-center px-4 py-3 text-sm font-bold uppercase tracking-[0.14em]"
+              className="block mt-4 border border-white/25 text-slate-200 text-center px-4 py-3 text-sm font-bold uppercase tracking-[0.14em]"
             >
               Agendar
             </a>
+            <button
+              onClick={() => {
+                setIsOpen(false);
+                onShowServices();
+              }}
+              className="block w-full mt-2 bg-primary-400 text-ink text-center px-4 py-3 text-sm font-bold uppercase tracking-[0.14em]"
+            >
+              Precios
+            </button>
           </div>
         </div>
       )}

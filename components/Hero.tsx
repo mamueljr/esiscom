@@ -79,7 +79,7 @@ const Stat: React.FC<{ value: number; prefix: string; pad?: boolean; label: stri
   );
 };
 
-const Hero: React.FC = () => {
+const Hero: React.FC<{ onShowServices: () => void }> = ({ onShowServices }) => {
   const [openState] = useState(() => getOpenState(new Date()));
 
   return (
@@ -128,6 +128,12 @@ const Hero: React.FC = () => {
               >
                 Soporte remoto →
               </a>
+              <button
+                onClick={onShowServices}
+                className="inline-flex justify-center items-center px-8 py-4 border border-white/25 hover:border-primary-400 text-white hover:text-primary-400 font-display text-sm font-bold uppercase tracking-[0.12em] transition-colors"
+              >
+                Ver precios
+              </button>
             </div>
             <div className="mt-6 inline-flex items-center gap-2.5 border border-white/15 bg-white/5 px-4 py-2">
               <span className="relative flex h-2.5 w-2.5">

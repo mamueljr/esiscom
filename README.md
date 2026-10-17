@@ -3,6 +3,12 @@
 ## SItio web de la empresa ESISCOM
 
 ## Cambios
+### Página "Servicios y Precios" (vista interna `#servicios-detalle`)
+- Nuevo componente `components/ServicesDetail.tsx` con precios de taller, soporte externo, empresas, zonas de cobertura, "Cómo trabajamos" y "Por qué ESISCOM".
+- Todos los CTA usan WhatsApp prellenado (`wa.me/526142541066?text=...`).
+- Datos reales: SSD 240 GB desde $980, zonas por distancia (1 sin cargo / 2 +$150 / 3 +$250), 20 años de experiencia, revisión técnica de oficina gratis.
+- Navegación SPA sin dependencias: estado `view` en `App.tsx` + hash `#servicios-detalle` (soporta back/forward). Botones "Precios" en Navbar (desktop/móvil), "Ver precios" en Hero, "Precios y servicios" en Footer y en las filas de Services.
+- Verificación: `npx tsc --noEmit` y `npm run build` OK.
 ### Rediseño "Moderno audaz" (código en `main`, publicado en `gh-pages`)
 - Sistema visual: tinta `#070b14` + acento voltio `#a3e635`, titulares Sora + cuerpo Inter. Fin del azul default y gradientes genéricos.
 - Hero: titular gigante, foto en duotono, badge vivo de horario (hora de Chihuahua, Lun–Vie 9–6 / Sáb 9–1) y stats con conteo animado. Sin fallbacks a picsum.
