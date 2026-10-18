@@ -3,6 +3,12 @@
 ## SItio web de la empresa ESISCOM
 
 ## Cambios
+### 2026-10-18 — Tailwind compilado (fuera el CDN)
+- Se eliminó `cdn.tailwindcss.com` y el `tailwind.config` inline del `index.html`. Ahora `tailwind.config.cjs` + `postcss.config.cjs` + `index.css` (importado desde `index.tsx`) generan un CSS estático de **33.5 kB (6.5 kB gzip)** y la paleta/tipografías viven en el config real.
+- Los estilos propios (`body`, `::selection`, `:focus-visible`, `.bg-grid`, `.scrollbar-hide`) pasaron a `@layer base` / `@layer utilities`; la animación del marquee ahora se define en `theme.extend.animation`.
+- **Verificación pixel a pixel** contra el sitio anterior: 0% de diferencia en home desktop (1440×1250), home móvil (390×844) y aviso de privacidad. La única diferencia inicial era la posición del marquee animado, que se congeló para comparar.
+- Efecto medido en móvil con caché desactivada: `DOMContentLoaded` **722 ms → 136 ms**. El navegador ya no descarga ni ejecuta el compilador de CSS en tiempo de ejecución.
+
 ### 2026-10-18 — Aviso de privacidad y formulario de contacto
 - Nuevo `components/PrivacyPolicy.tsx`: aviso de privacidad en 12 secciones (responsable, datos, finalidades, transferencias, derechos ARCO, cookies, cambios). Ruta propia `#aviso-de-privacidad` y enlace en el footer. **Es una base conforme a la LFPDPPP: conviene revisión legal.** Si se agrega analítica hay que actualizar la sección 9.
 - Nuevo `components/ContactForm.tsx` en la sección de contacto: validación en línea, honeypot anti-spam, estados de envío y mensaje de error con alternativa por WhatsApp.

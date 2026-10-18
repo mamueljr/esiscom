@@ -1,0 +1,39 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    font-family: 'Inter', sans-serif;
+    background-color: #070b14;
+  }
+
+  ::selection {
+    background: #a3e635;
+    color: #070b14;
+  }
+
+  :focus-visible {
+    outline: 2px solid #a3e635;
+    outline-offset: 3px;
+  }
+}
+
+@layer utilities {
+  /* Scrollbar oculto para el chat */
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  /* Retícula de fondo del hero y de soporte remoto */
+  .bg-grid {
+    background-image:
+      linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+    background-size: 56px 56px;
+  }
+}
