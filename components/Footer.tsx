@@ -48,6 +48,7 @@ const Footer: React.FC<{ onShowServices: () => void }> = ({ onShowServices }) =>
                 { label: 'Servicios', href: '#services' },
                 { label: 'Soporte Remoto', href: '#remote-support' },
                 { label: 'Contacto', href: '#contact' },
+                { label: 'Aviso de privacidad', href: '#aviso-de-privacidad' },
               ].map((l) => (
                 <li key={l.label}>
                   <a href={l.href} className="text-slate-300 hover:text-primary-400 transition-colors">

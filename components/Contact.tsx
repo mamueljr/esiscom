@@ -1,6 +1,7 @@
 import React from 'react';
 import { LocationIcon, PhoneIcon, MailIcon, ClockIcon } from './Icons';
 import Reveal from './Reveal';
+import ContactForm from './ContactForm';
 
 const ROWS = [
   {
@@ -53,13 +54,18 @@ const Contact: React.FC = () => {
             Hablemos<span className="text-primary-400">.</span>
           </h2>
           <p className="mt-5 text-lg text-slate-400 max-w-2xl">
-            Visítanos en Cipres #3712 o escríbenos — respondemos hoy mismo.
+            Cuéntanos qué pasa con tu equipo y te respondemos el mismo día hábil. También puedes
+            visitarnos en Cipres #3712.
           </p>
         </Reveal>
 
-        <div className="mt-12 grid grid-cols-1 lg:grid-cols-2 gap-8">
-          <Reveal>
-            <div className="h-full border border-white/15 bg-ink-soft p-8 sm:p-10 flex flex-col justify-between">
+        <div className="mt-12 grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+          <Reveal className="lg:col-span-7">
+            <ContactForm />
+          </Reveal>
+
+          <Reveal delay={120} className="lg:col-span-5">
+            <div className="flex h-full flex-col justify-between border border-white/15 bg-ink-soft p-8 sm:p-10">
               <div className="space-y-8">
                 {ROWS.map((row) => (
                   <div key={row.title} className="flex items-start">
@@ -74,7 +80,7 @@ const Contact: React.FC = () => {
                 ))}
               </div>
               <a
-                href="https://wa.me/526142541066"
+                href="https://wa.me/526142541066?text=Hola%20ESISCOM%2C%20necesito%20soporte%20t%C3%A9cnico."
                 target="_blank"
                 rel="noopener noreferrer"
                 className="mt-10 flex items-center justify-center px-6 py-4 bg-primary-400 hover:bg-primary-300 text-ink font-display text-sm font-bold uppercase tracking-[0.12em] transition-colors"
@@ -83,23 +89,23 @@ const Contact: React.FC = () => {
               </a>
             </div>
           </Reveal>
-
-          <Reveal delay={120} className="h-full">
-            <div className="h-96 lg:h-full min-h-[24rem] overflow-hidden border border-white/15">
-              <iframe
-                title="Ubicación ESISCOM"
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3500.6762461427656!2d-106.0922363!3d28.6694111!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x86ea4308e7bce6cd%3A0xadd80f9d7922d30d!2sESISCOM!5e0!3m2!1ses!2smx"
-                width="100%"
-                height="100%"
-                style={{ border: 0 }}
-                className="[filter:grayscale(1)_invert(92%)_contrast(88%)]"
-                allowFullScreen={true}
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-              ></iframe>
-            </div>
-          </Reveal>
         </div>
+
+        <Reveal delay={160} className="mt-8">
+          <div className="h-72 sm:h-80 overflow-hidden border border-white/15">
+            <iframe
+              title="Ubicación ESISCOM"
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3500.6762461427656!2d-106.0922363!3d28.6694111!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x86ea4308e7bce6cd%3A0xadd80f9d7922d30d!2sESISCOM!5e0!3m2!1ses!2smx"
+              width="100%"
+              height="100%"
+              style={{ border: 0 }}
+              className="[filter:grayscale(1)_invert(92%)_contrast(88%)]"
+              allowFullScreen={true}
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+            ></iframe>
+          </div>
+        </Reveal>
       </div>
     </section>
   );

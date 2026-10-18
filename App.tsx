@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import Clients from './components/Clients';
@@ -11,17 +11,41 @@ import CtaBand from './components/CtaBand';
 import Footer from './components/Footer';
 import WhatsAppButton from './components/WhatsAppButton';
 import ServicesDetail from './components/ServicesDetail';
+import PrivacyPolicy from './components/PrivacyPolicy';
 
-type View = 'home' | 'services';
+type View = 'home' | 'services' | 'privacy';
+
+const HASH_BY_VIEW: Record<View, string> = {
+  home: '#intro',
+  services: '#servicios-detalle',
+  privacy: '#aviso-de-privacidad',
+};
+
+const viewFromHash = (): View =>
+  (Object.keys(HASH_BY_VIEW) as View[]).find((v) => HASH_BY_VIEW[v] === window.location.hash) ??
+  'home';
 
 const App: React.FC = () => {
-  const [view, setView] = useState<View>(() =>
-    window.location.hash === '#servicios-detalle' ? 'services' : 'home'
-  );
+  const [view, setView] = useState<View>(viewFromHash);
+  const viewRef = useRef<View>(view);
+
+  useEffect(() => {
+    viewRef.current = view;
+  }, [view]);
 
   useEffect(() => {
     const onHashChange = () => {
-      setView(window.location.hash === '#servicios-detalle' ? 'services' : 'home');
+      const next = viewFromHash();
+      // Solo al cambiar de vista: así los enlaces internos (#contact, #services)
+      // siguen desplazándose a su sección y no al inicio.
+      if (next !== viewRef.current) {
+        const toTop = () => window.scrollTo({ top: 0, behavior: 'instant' as ScrollBehavior });
+        toTop();
+        // El navegador reajusta el scroll al cambiar el alto del documento;
+        // repetimos después del commit para no aterrizar a media página.
+        requestAnimationFrame(() => requestAnimationFrame(toTop));
+      }
+      setView(next);
     };
     window.addEventListener('hashchange', onHashChange);
     return () => window.removeEventListener('hashchange', onHashChange);
@@ -29,7 +53,7 @@ const App: React.FC = () => {
 
   const goTo = (next: View) => {
     setView(next);
-    window.history.pushState(null, '', next === 'services' ? '#servicios-detalle' : '#intro');
+    window.history.pushState(null, '', HASH_BY_VIEW[next]);
     window.scrollTo({ top: 0, behavior: 'instant' as ScrollBehavior });
   };
 
@@ -37,6 +61,15 @@ const App: React.FC = () => {
     return (
       <div className="min-h-screen flex flex-col font-sans bg-ink">
         <ServicesDetail onBack={() => goTo('home')} />
+        <WhatsAppButton />
+      </div>
+    );
+  }
+
+  if (view === 'privacy') {
+    return (
+      <div className="min-h-screen flex flex-col font-sans bg-ink">
+        <PrivacyPolicy onBack={() => goTo('home')} />
         <WhatsAppButton />
       </div>
     );

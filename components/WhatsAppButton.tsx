@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { WhatsAppIcon } from './Icons';
 
 const PHONE = '526142541066';
@@ -8,8 +8,24 @@ const MESSAGE = 'Hola ESISCOM, necesito soporte técnico.';
  * Botón flotante de WhatsApp.
  * Reemplaza al asistente de IA (ChatWidget), que dependía de una API key
  * expuesta en el cliente y quedaba inservible en el build de producción.
+ *
+ * Se oculta mientras la sección de contacto está en pantalla: ahí ya hay un
+ * botón de WhatsApp propio y el flotante tapaba los campos del formulario.
  */
 const WhatsAppButton: React.FC = () => {
+  const [suppressed, setSuppressed] = useState(false);
+
+  useEffect(() => {
+    const contact = document.getElementById('contact');
+    if (!contact) return;
+    const obs = new IntersectionObserver(
+      ([entry]) => setSuppressed(entry.isIntersecting),
+      { threshold: 0.12 }
+    );
+    obs.observe(contact);
+    return () => obs.disconnect();
+  }, []);
+
   const href = `https://wa.me/${PHONE}?text=${encodeURIComponent(MESSAGE)}`;
 
   return (
@@ -18,7 +34,11 @@ const WhatsAppButton: React.FC = () => {
       target="_blank"
       rel="noopener noreferrer"
       aria-label="Escríbenos por WhatsApp"
-      className="group fixed bottom-5 right-5 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-[#25D366] text-ink shadow-lg shadow-black/40 transition-transform duration-200 hover:scale-105 focus-visible:scale-105 sm:bottom-6 sm:right-6"
+      aria-hidden={suppressed}
+      tabIndex={suppressed ? -1 : 0}
+      className={`group fixed bottom-5 right-5 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-[#25D366] text-ink shadow-lg shadow-black/40 transition-all duration-200 hover:scale-105 focus-visible:scale-105 sm:bottom-6 sm:right-6 ${
+        suppressed ? 'pointer-events-none translate-y-3 opacity-0' : 'opacity-100'
+      }`}
     >
       <WhatsAppIcon className="h-7 w-7" />
       <span

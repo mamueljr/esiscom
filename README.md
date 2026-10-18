@@ -3,6 +3,17 @@
 ## SItio web de la empresa ESISCOM
 
 ## Cambios
+### 2026-10-18 — Aviso de privacidad y formulario de contacto
+- Nuevo `components/PrivacyPolicy.tsx`: aviso de privacidad en 12 secciones (responsable, datos, finalidades, transferencias, derechos ARCO, cookies, cambios). Ruta propia `#aviso-de-privacidad` y enlace en el footer. **Es una base conforme a la LFPDPPP: conviene revisión legal.** Si se agrega analítica hay que actualizar la sección 9.
+- Nuevo `components/ContactForm.tsx` en la sección de contacto: validación en línea, honeypot anti-spam, estados de envío y mensaje de error con alternativa por WhatsApp.
+  - Con `VITE_WEB3FORMS_KEY` definida envía a Web3Forms y llega por correo.
+  - **Sin llave no simula un envío**: arma el mensaje y abre WhatsApp (el canal que ya se atiende).
+  - Las variables se documentan en [.env.example](.env.example).
+- La sección de contacto se reordenó: formulario a la izquierda, datos a la derecha y el mapa como banda inferior.
+- Arreglo: al entrar a una vista por hash (`#servicios-detalle`, `#aviso-de-privacidad`) la página aterrizaba a media altura; ahora sube al inicio solo cuando cambia de vista, sin romper los anclas internas (`#services`, `#contact`).
+- El botón flotante de WhatsApp se oculta mientras la sección de contacto está en pantalla (tapaba los campos del formulario en móvil).
+- Verificación: `npx tsc --noEmit`, `npm run build` y pruebas automatizadas en Chrome (validación, envío por WhatsApp, navegación entre vistas, FAB oculto).
+
 ### 2026-10-17 — Chat de IA fuera, WhatsApp dentro + arreglos de móvil y SEO social
 - **Asistente de IA desactivado** y sustituido por `components/WhatsAppButton.tsx` (botón flotante con mensaje precargado). Motivo: la `GEMINI_API_KEY` se inlineaba en el bundle público (`vite.config.ts → define`) y en el build de Pages nunca se inyectaba, así que el widget respondía siempre con un mensaje de error. `components/ChatWidget.tsx` y `services/geminiService.ts` quedan en el repo documentados para reactivarlo con un proxy serverless. Efecto colateral: `@google/genai` ya no entra al bundle (241 kB, 73.6 kB gzip).
 - **Arreglo de navegación**: el ítem "Ubicación" apuntaba a `#location`, que no existía; ahora va a `#contact` (mapa + datos).
