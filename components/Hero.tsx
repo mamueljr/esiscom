@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 
 const STATS = [
-  { value: 15, prefix: '+', label: 'Años en Chihuahua' },
+  { value: 20, prefix: '+', label: 'Años en Chihuahua' },
   { value: 3, prefix: '0', pad: true, label: 'Hardware · Redes · Software' },
   { value: 6, prefix: '0', pad: true, label: 'Días de atención semanal' },
 ];
@@ -105,7 +105,7 @@ const Hero: React.FC<{ onShowServices: () => void }> = ({ onShowServices }) => {
             <p className="font-display text-xs font-bold tracking-[0.3em] text-primary-400 mb-6">
               ESISCOM — CHIHUAHUA, MX
             </p>
-            <h1 className="font-display text-5xl sm:text-6xl lg:text-7xl font-extrabold text-white tracking-tight leading-[1.02]">
+            <h1 className="font-display text-4xl sm:text-6xl lg:text-7xl font-extrabold text-white tracking-tight leading-[1.05]">
               TU TECNOLOGÍA
               <br />
               BAJO <span className="text-primary-400">CONTROL.</span>

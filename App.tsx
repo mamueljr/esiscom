@@ -9,7 +9,7 @@ import Testimonials from './components/Testimonials';
 import Process from './components/Process';
 import CtaBand from './components/CtaBand';
 import Footer from './components/Footer';
-import ChatWidget from './components/ChatWidget';
+import WhatsAppButton from './components/WhatsAppButton';
 import ServicesDetail from './components/ServicesDetail';
 
 type View = 'home' | 'services';
@@ -37,7 +37,7 @@ const App: React.FC = () => {
     return (
       <div className="min-h-screen flex flex-col font-sans bg-ink">
         <ServicesDetail onBack={() => goTo('home')} />
-        <ChatWidget />
+        <WhatsAppButton />
       </div>
     );
   }
@@ -62,7 +62,7 @@ const App: React.FC = () => {
         <Contact />
       </main>
       <Footer onShowServices={() => goTo('services')} />
-      <ChatWidget />
+      <WhatsAppButton />
     </div>
   );
 };

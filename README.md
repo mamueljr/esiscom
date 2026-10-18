@@ -3,6 +3,15 @@
 ## SItio web de la empresa ESISCOM
 
 ## Cambios
+### 2026-10-17 — Chat de IA fuera, WhatsApp dentro + arreglos de móvil y SEO social
+- **Asistente de IA desactivado** y sustituido por `components/WhatsAppButton.tsx` (botón flotante con mensaje precargado). Motivo: la `GEMINI_API_KEY` se inlineaba en el bundle público (`vite.config.ts → define`) y en el build de Pages nunca se inyectaba, así que el widget respondía siempre con un mensaje de error. `components/ChatWidget.tsx` y `services/geminiService.ts` quedan en el repo documentados para reactivarlo con un proxy serverless. Efecto colateral: `@google/genai` ya no entra al bundle (241 kB, 73.6 kB gzip).
+- **Arreglo de navegación**: el ítem "Ubicación" apuntaba a `#location`, que no existía; ahora va a `#contact` (mapa + datos).
+- **20 años** unificado en hero, footer, página de precios y `<meta description>` (antes decía 15 en tres lugares y 20 en otro).
+- **SEO social**: `og:*`, `twitter:card`, `canonical`, `theme-color`, favicon SVG y JSON-LD ampliado (`url`, `image`, `priceRange`, `currenciesAccepted`, `areaServed`). La tarjeta usa `images/hero-bg.jpg` (960×538, la proporción más cercana a 1.91:1).
+- **Móvil**: el titular del hero bajó a `text-4xl` en pantallas chicas (antes `text-5xl` partía "TU / TECNOLOGÍA"); el encabezado de "Servicios y Precios" ya no se encima con el botón Volver; la ⭐ del plan recomendado es ahora un badge de marca.
+- **Accesibilidad**: `aria-label` dinámico y `aria-expanded`/`aria-controls` en el menú móvil. Corregido el texto "FAP" del fallback de IA.
+- Verificación: `npx tsc --noEmit` y `npm run build` OK; revisado en Chrome a 390 px y 1440 px (sin scroll horizontal).
+
 ### Página "Servicios y Precios" (vista interna `#servicios-detalle`)
 - Nuevo componente `components/ServicesDetail.tsx` con precios de taller, soporte externo, empresas, zonas de cobertura, "Cómo trabajamos" y "Por qué ESISCOM".
 - Todos los CTA usan WhatsApp prellenado (`wa.me/526142541066?text=...`).
@@ -58,6 +67,6 @@ curl -s https://mamueljr.github.io/esiscom/ | grep -o 'assets/[^"]*'
 
 1. Install dependencies:
    `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
+2. (Opcional) El asistente de IA está desactivado. Si lo reactivas, define `GEMINI_API_KEY` en [.env.local](.env.local) — pero recuerda que Vite la inlinea en el bundle público, así que en producción debe ir por un proxy.
 3. Run the app:
    `npm run dev`

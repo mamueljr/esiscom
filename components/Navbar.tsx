@@ -71,7 +71,9 @@ const Navbar: React.FC<{ onShowServices: () => void }> = ({ onShowServices }) =>
             <button
               onClick={() => setIsOpen(!isOpen)}
               className="p-2 text-white hover:text-primary-400 focus:outline-none"
-              aria-label="Abrir menú"
+              aria-label={isOpen ? 'Cerrar menú' : 'Abrir menú'}
+              aria-expanded={isOpen}
+              aria-controls="menu-movil"
             >
               {isOpen ? <XIcon className="h-6 w-6" /> : <MenuIcon className="h-6 w-6" />}
             </button>
@@ -81,7 +83,7 @@ const Navbar: React.FC<{ onShowServices: () => void }> = ({ onShowServices }) =>
 
       {/* Mobile Menu Panel */}
       {isOpen && (
-        <div className="md:hidden bg-ink border-t border-white/10">
+        <div id="menu-movil" className="md:hidden bg-ink border-t border-white/10">
           <div className="px-4 pt-2 pb-6 space-y-1">
             {NAV_ITEMS.map((item) => (
               <a

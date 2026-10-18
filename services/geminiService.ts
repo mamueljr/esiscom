@@ -24,7 +24,7 @@ export const generateChatResponse = async (
   try {
     const ai = getAiClient();
     if (!ai) {
-      return "FAP Actualmente nuestros sistemas de IA están en mantenimiento. Por favor llama al (614) 254-10-66";
+      return "Actualmente nuestros sistemas de IA están en mantenimiento. Por favor llama al (614) 254-1066.";
     }
 
     const model = "gemini-2.5-flash";

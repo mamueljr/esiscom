@@ -15,7 +15,7 @@ const Footer: React.FC<{ onShowServices: () => void }> = ({ onShowServices }) =>
               <span className="font-display font-extrabold text-xl tracking-tight">ESISCOM</span>
             </div>
             <p className="text-slate-400 text-sm leading-relaxed max-w-sm">
-              Reparación, redes y software en Chihuahua. Más de 15 años
+              Reparación, redes y software en Chihuahua. Más de 20 años
               manteniendo operaciones críticas en marcha.
             </p>
             <div className="mt-6 flex gap-3">

@@ -1,3 +1,11 @@
+/**
+ * ⚠️ NO SE USA actualmente. Fue reemplazado por WhatsAppButton en App.tsx.
+ *
+ * Motivo: dependía de GEMINI_API_KEY definida en el cliente (vite.config.ts),
+ * así que la key viajaba dentro del bundle público y además nunca se inyectaba
+ * en el build de GitHub Actions. Para reactivarlo hay que mover la llamada a un
+ * proxy serverless (Cloudflare Worker / Netlify Function) y volver a importarlo.
+ */
 import React, { useState, useRef, useEffect } from 'react';
 import { generateChatResponse } from '../services/geminiService';
 import { ChatMessage } from '../types';

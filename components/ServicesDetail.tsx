@@ -16,7 +16,8 @@ const TALLER = [
     nota: 'No incluye respaldo: el equipo se recibe sin archivos que conservar.',
   },
   {
-    nombre: 'Formateo Pro + Respaldo ⭐ El más elegido',
+    nombre: 'Formateo Pro + Respaldo',
+    badge: 'El más elegido',
     precio: '$900',
     incluye: [
       'Todo lo del Estándar',
@@ -149,10 +150,17 @@ const POR_QUE = [
 ];
 
 const ServiceCard: React.FC<{
-  s: { nombre: string; precio: string; incluye: string[]; nota?: string };
+  s: { nombre: string; precio: string; incluye: string[]; nota?: string; badge?: string };
 }> = ({ s }) => (
   <div className="bg-ink-soft border border-white/10 rounded-xl p-6 sm:p-8">
-    <h3 className="font-display text-xl font-bold">{s.nombre}</h3>
+    <div className="flex flex-wrap items-center gap-3">
+      <h3 className="font-display text-xl font-bold">{s.nombre}</h3>
+      {s.badge && (
+        <span className="bg-primary-400 px-2.5 py-1 font-display text-[10px] font-bold uppercase tracking-[0.14em] text-ink">
+          {s.badge}
+        </span>
+      )}
+    </div>
     <p className="mt-1 text-2xl font-extrabold text-primary-400">{s.precio}</p>
     <ul className="mt-4 space-y-2 text-slate-300 text-sm sm:text-base">
       {s.incluye.map((item, idx) => (
@@ -177,10 +185,10 @@ const ServicesDetail: React.FC<{ onBack: () => void }> = ({ onBack }) => {
       </a>
 
       <header className="sticky top-0 z-40 bg-ink/90 backdrop-blur-md border-b border-white/10">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between gap-2">
           <button
             onClick={onBack}
-            className="group flex items-center gap-2 text-slate-300 hover:text-primary-400 transition-colors"
+            className="group flex shrink-0 items-center gap-2 text-slate-300 hover:text-primary-400 transition-colors"
             aria-label="Volver al inicio"
           >
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -188,10 +196,10 @@ const ServicesDetail: React.FC<{ onBack: () => void }> = ({ onBack }) => {
             </svg>
             <span className="font-display text-sm font-semibold tracking-[0.1em]">Volver</span>
           </button>
-          <h1 className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight">
+          <h1 className="min-w-0 flex-1 truncate text-center font-display text-base sm:text-3xl font-extrabold tracking-tight">
             Servicios y Precios
           </h1>
-          <div className="w-20" />
+          <div className="w-14 shrink-0 sm:w-20" />
         </div>
       </header>
 
