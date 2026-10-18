@@ -2,8 +2,8 @@ import React, { useEffect, useRef, useState } from 'react';
 
 const STATS = [
   { value: 20, prefix: '+', label: 'Años en Chihuahua' },
-  { value: 3, prefix: '0', pad: true, label: 'Hardware · Redes · Software' },
-  { value: 6, prefix: '0', pad: true, label: 'Días de atención semanal' },
+  { value: 3, prefix: '0', label: 'Hardware · Redes · Software' },
+  { value: 6, prefix: '0', label: 'Días de atención semanal' },
 ];
 
 function getOpenState(now: Date): { open: boolean; detail: string } {
@@ -30,22 +30,29 @@ function getOpenState(now: Date): { open: boolean; detail: string } {
   return { open: false, detail: `CERRADO · ABRIMOS ${next}` };
 }
 
-const Stat: React.FC<{ value: number; prefix: string; pad?: boolean; label: string }> = ({
+const Stat: React.FC<{ value: number; prefix: string; label: string }> = ({
   value,
   prefix,
-  pad,
   label,
 }) => {
   const ref = useRef<HTMLDivElement>(null);
   const [started, setStarted] = useState(false);
-  const [n, setN] = useState(0);
+  // Arranca en el valor real: si el bloque ya es visible al cargar (o el usuario
+  // pide menos movimiento) nunca se muestra una cifra falsa mientras anima.
+  const [n, setN] = useState(value);
 
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    const rect = el.getBoundingClientRect();
+    if (rect.top < window.innerHeight && rect.bottom > 0) return;
+
     const obs = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
+          setN(0);
           setStarted(true);
           obs.disconnect();
         }
@@ -70,7 +77,7 @@ const Stat: React.FC<{ value: number; prefix: string; pad?: boolean; label: stri
     return () => cancelAnimationFrame(raf);
   }, [started, value]);
 
-  const text = pad ? `${prefix}${n}` : `${prefix}${n}`;
+  const text = `${prefix}${n}`;
   return (
     <div ref={ref} className="flex items-baseline gap-4 py-6 sm:px-8 first:pl-0 border-b sm:border-b-0 border-white/10">
       <span className="font-display text-4xl font-extrabold text-white tabular-nums">{text}</span>
@@ -179,7 +186,7 @@ const Hero: React.FC<{ onShowServices: () => void }> = ({ onShowServices }) => {
 
         <div className="mt-16 grid grid-cols-1 sm:grid-cols-3 border-t border-white/10">
           {STATS.map((s) => (
-            <Stat key={s.label} value={s.value} prefix={s.prefix} pad={s.pad} label={s.label} />
+            <Stat key={s.label} value={s.value} prefix={s.prefix} label={s.label} />
           ))}
         </div>
       </div>
