@@ -119,7 +119,7 @@ const PrivacyPolicy: React.FC<{ onBack: () => void }> = ({ onBack }) => (
       <div className="mx-auto flex max-w-4xl items-center justify-between gap-2 px-4 py-4 sm:px-6 lg:px-8">
         <button
           onClick={onBack}
-          className="group flex shrink-0 items-center gap-2 text-slate-300 transition-colors hover:text-primary-400"
+          className="group flex shrink-0 items-center gap-2 text-slate-300 transition-colors hover:text-primary-300"
           aria-label="Volver al inicio"
         >
           <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -134,7 +134,7 @@ const PrivacyPolicy: React.FC<{ onBack: () => void }> = ({ onBack }) => (
       </div>
     </header>
 
-    <main className="mx-auto max-w-4xl px-4 py-10 sm:px-6 lg:px-8">
+    <main id="intro" tabIndex={-1} className="mx-auto max-w-4xl px-4 py-10 focus:outline-none sm:px-6 lg:px-8">
       <p className="font-display text-xs font-bold tracking-[0.3em] text-primary-400">
         ESISCOM — CHIHUAHUA, MX
       </p>
@@ -142,7 +142,7 @@ const PrivacyPolicy: React.FC<{ onBack: () => void }> = ({ onBack }) => (
         Este aviso explica qué datos personales recabamos, para qué los usamos y cómo puedes ejercer
         tus derechos. Aplica a este sitio web y a los canales de atención de ESISCOM.
       </p>
-      <p className="mt-2 text-sm text-slate-500">Última actualización: {UPDATED}.</p>
+      <p className="mt-2 text-sm text-slate-400">Última actualización: {UPDATED}.</p>
 
       <div className="mt-10 space-y-10">
         {SECTIONS.map((s) => (
@@ -180,7 +180,7 @@ const PrivacyPolicy: React.FC<{ onBack: () => void }> = ({ onBack }) => (
         </p>
         <button
           onClick={onBack}
-          className="mt-6 border border-white/25 px-6 py-3 font-display text-sm font-bold uppercase tracking-[0.12em] text-white transition-colors hover:border-primary-400 hover:text-primary-400"
+          className="mt-6 border border-white/25 px-6 py-3 font-display text-sm font-bold uppercase tracking-[0.12em] text-white transition-colors hover:border-primary-400 hover:text-primary-300"
         >
           Volver al sitio
         </button>

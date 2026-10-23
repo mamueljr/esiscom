@@ -3,7 +3,7 @@ import { NAV_ITEMS } from '../constants';
 import { MenuIcon, XIcon } from './Icons';
 
 const linkClass =
-  'px-3 py-2 text-[13px] font-semibold uppercase tracking-[0.18em] text-slate-300 hover:text-primary-400 transition-colors';
+  'relative px-3 py-2 text-[13px] font-semibold uppercase tracking-[0.18em] text-slate-300 transition-colors hover:text-primary-300 after:absolute after:inset-x-3 after:-bottom-0.5 after:h-px after:origin-left after:scale-x-0 after:bg-primary-400 after:transition-transform after:duration-300 hover:after:scale-x-100';
 
 const Navbar: React.FC<{ onShowServices: () => void }> = ({ onShowServices }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -17,10 +17,36 @@ const Navbar: React.FC<{ onShowServices: () => void }> = ({ onShowServices }) =>
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  useEffect(() => {
+    if (!isOpen) return;
+
+    const handleKey = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') setIsOpen(false);
+    };
+    const previousOverflow = document.body.style.overflow;
+
+    document.addEventListener('keydown', handleKey);
+    document.body.style.overflow = 'hidden';
+
+    return () => {
+      document.removeEventListener('keydown', handleKey);
+      document.body.style.overflow = previousOverflow;
+    };
+  }, [isOpen]);
+
+  useEffect(() => {
+    const desktop = window.matchMedia('(min-width: 1280px)');
+    const handleBreakpoint = () => {
+      if (desktop.matches) setIsOpen(false);
+    };
+    desktop.addEventListener('change', handleBreakpoint);
+    return () => desktop.removeEventListener('change', handleBreakpoint);
+  }, []);
+
   return (
     <nav
-      className={`fixed w-full z-50 bg-ink/85 backdrop-blur-md border-b border-white/10 transition-all duration-300 ${
-        scrolled ? 'py-1' : 'py-3'
+      className={`fixed w-full z-50 border-b border-white/10 bg-ink/85 backdrop-blur-md transition-all duration-300 ${
+        scrolled ? 'py-1 shadow-lg shadow-black/30' : 'py-3'
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -39,7 +65,7 @@ const Navbar: React.FC<{ onShowServices: () => void }> = ({ onShowServices }) =>
           </div>
 
           {/* Desktop Menu */}
-          <div className="hidden md:block">
+          <div className="hidden xl:block">
             <div className="ml-10 flex items-center space-x-2">
               {NAV_ITEMS.map((item) => (
                 <a
@@ -53,13 +79,13 @@ const Navbar: React.FC<{ onShowServices: () => void }> = ({ onShowServices }) =>
               ))}
               <a
                 href="#contact"
-                className="ml-3 border border-white/25 hover:border-primary-400 text-slate-200 hover:text-primary-400 px-4 py-2.5 text-[13px] font-bold uppercase tracking-[0.14em] transition-colors"
+                className="ml-3 rounded-xl border border-white/25 px-4 py-2.5 text-[13px] font-bold uppercase tracking-[0.14em] text-slate-200 transition-colors hover:border-primary-400 hover:text-primary-300"
               >
                 Agendar
               </a>
               <button
                 onClick={onShowServices}
-                className="ml-2 bg-primary-400 hover:bg-primary-300 text-ink px-5 py-2.5 text-[13px] font-bold uppercase tracking-[0.14em] transition-colors"
+                className="ml-2 rounded-xl bg-primary-400 px-5 py-2.5 text-[13px] font-bold uppercase tracking-[0.14em] text-ink shadow-lg shadow-primary-400/10 transition-colors hover:bg-primary-300"
               >
                 Precios
               </button>
@@ -67,10 +93,10 @@ const Navbar: React.FC<{ onShowServices: () => void }> = ({ onShowServices }) =>
           </div>
 
           {/* Mobile menu button */}
-          <div className="md:hidden flex items-center">
+          <div className="flex items-center xl:hidden">
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className="p-2 text-white hover:text-primary-400 focus:outline-none"
+              className="p-2 text-white hover:text-primary-300 focus:outline-none"
               aria-label={isOpen ? 'Cerrar menú' : 'Abrir menú'}
               aria-expanded={isOpen}
               aria-controls="menu-movil"
@@ -83,7 +109,10 @@ const Navbar: React.FC<{ onShowServices: () => void }> = ({ onShowServices }) =>
 
       {/* Mobile Menu Panel */}
       {isOpen && (
-        <div id="menu-movil" className="md:hidden bg-ink border-t border-white/10">
+        <div
+          id="menu-movil"
+          className="h-[calc(100dvh-4.5rem)] overflow-y-auto border-t border-white/10 bg-ink shadow-2xl shadow-black/60 xl:hidden"
+        >
           <div className="px-4 pt-2 pb-6 space-y-1">
             {NAV_ITEMS.map((item) => (
               <a
@@ -91,7 +120,7 @@ const Navbar: React.FC<{ onShowServices: () => void }> = ({ onShowServices }) =>
                 href={item.href}
                 {...(item.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
                 onClick={() => setIsOpen(false)}
-                className="block px-3 py-3 text-sm font-semibold uppercase tracking-[0.18em] text-slate-200 hover:text-primary-400 border-b border-white/5"
+                className="block px-3 py-3 text-sm font-semibold uppercase tracking-[0.18em] text-slate-200 hover:text-primary-300 border-b border-white/5"
               >
                 {item.label}
               </a>
@@ -99,7 +128,7 @@ const Navbar: React.FC<{ onShowServices: () => void }> = ({ onShowServices }) =>
             <a
               href="#contact"
               onClick={() => setIsOpen(false)}
-              className="block mt-4 border border-white/25 text-slate-200 text-center px-4 py-3 text-sm font-bold uppercase tracking-[0.14em]"
+              className="block mt-4 rounded-xl border border-white/25 px-4 py-3 text-center text-sm font-bold uppercase tracking-[0.14em] text-slate-200 transition-colors hover:border-primary-400 hover:text-primary-300"
             >
               Agendar
             </a>
@@ -108,7 +137,7 @@ const Navbar: React.FC<{ onShowServices: () => void }> = ({ onShowServices }) =>
                 setIsOpen(false);
                 onShowServices();
               }}
-              className="block w-full mt-2 bg-primary-400 text-ink text-center px-4 py-3 text-sm font-bold uppercase tracking-[0.14em]"
+              className="mt-2 block w-full rounded-xl bg-primary-400 px-4 py-3 text-center text-sm font-bold uppercase tracking-[0.14em] text-ink transition-colors hover:bg-primary-300"
             >
               Precios
             </button>

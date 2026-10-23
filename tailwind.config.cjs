@@ -12,22 +12,26 @@ module.exports = {
     extend: {
       colors: {
         primary: {
-          50: '#f7fee7',
-          100: '#ecfccb',
-          200: '#d9f99d',
-          300: '#bef264',
-          400: '#a3e635',
-          500: '#84cc16',
-          600: '#65a30d',
-          700: '#4d7c0f',
-          800: '#3f6212',
-          900: '#365314',
-          950: '#1a2e05',
+          50: '#eff8ff',
+          100: '#dbeeff',
+          200: '#bfe1ff',
+          300: '#8ecbff',
+          400: '#2e9bff',
+          500: '#0a84e8',
+          600: '#006fca',
+          700: '#005aa6',
+          800: '#064a85',
+          900: '#0b3e6b',
+          950: '#072a4a',
         },
         ink: {
           DEFAULT: '#070b14',
-          soft: '#0d1322',
+          soft: '#0c1322',
           line: 'rgba(255,255,255,0.10)',
+        },
+        paper: {
+          DEFAULT: '#f4f7fb',
+          soft: '#e9eff6',
         },
       },
       fontFamily: {

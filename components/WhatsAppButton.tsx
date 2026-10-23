@@ -36,13 +36,13 @@ const WhatsAppButton: React.FC = () => {
       aria-label="Escríbenos por WhatsApp"
       aria-hidden={suppressed}
       tabIndex={suppressed ? -1 : 0}
-      className={`group fixed bottom-5 right-5 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-[#25D366] text-ink shadow-lg shadow-black/40 transition-all duration-200 hover:scale-105 focus-visible:scale-105 motion-reduce:transition-none motion-reduce:hover:scale-100 motion-reduce:focus-visible:scale-100 sm:bottom-6 sm:right-6 ${
+      className={`group fixed bottom-5 right-5 z-40 flex h-14 w-14 items-center justify-center rounded-full bg-primary-400 text-ink shadow-lg shadow-primary-400/20 ring-1 ring-white/20 transition-all duration-200 hover:scale-105 hover:bg-primary-300 focus-visible:scale-105 motion-reduce:transition-none motion-reduce:hover:scale-100 motion-reduce:focus-visible:scale-100 sm:bottom-6 sm:right-6 ${
         suppressed ? 'pointer-events-none translate-y-3 opacity-0' : 'opacity-100'
       }`}
     >
       <span
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0 animate-wa-pulse rounded-full bg-[#25D366] motion-reduce:animate-none"
+        className="pointer-events-none absolute inset-0 animate-wa-pulse rounded-full bg-primary-300 motion-reduce:animate-none"
       />
       <WhatsAppIcon className="relative h-7 w-7" />
       <span

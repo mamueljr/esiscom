@@ -25,23 +25,27 @@ const STEPS = [
 
 const Process: React.FC = () => {
   return (
-    <section className="py-24 bg-ink text-white border-t border-white/10">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <p className="font-display text-xs font-bold tracking-[0.3em] text-primary-400 mb-4">
-            04 — CÓMO TRABAJAMOS
+    <section className="border-t border-white/10 bg-ink py-24 text-white">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <p className="mb-4 flex items-center gap-3 font-display text-xs font-bold tracking-[0.3em] text-primary-400">
+          <span aria-hidden="true" className="h-px w-10 bg-primary-400/70" />
+          04 — CÓMO TRABAJAMOS
         </p>
-        <h2 className="font-display text-4xl sm:text-5xl font-extrabold tracking-tight leading-[1.05] max-w-3xl">
+        <h2 className="max-w-3xl font-display text-4xl font-extrabold leading-[1.05] tracking-tight sm:text-5xl">
           Sin sorpresas. <span className="text-primary-400">Sin letras chicas.</span>
         </h2>
 
-        <div className="mt-14 grid sm:grid-cols-2 lg:grid-cols-4 gap-px bg-white/10 border border-white/10">
+        <div className="mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {STEPS.map((s) => (
-            <div key={s.n} className="bg-ink p-8 hover:bg-ink-soft transition-colors group">
-              <p className="font-display text-5xl font-extrabold text-primary-400/90 group-hover:text-primary-400">
+            <div
+              key={s.n}
+              className="panel-sheen group rounded-2xl border border-white/10 bg-ink-soft/60 p-8 transition-colors hover:border-primary-400/50 hover:bg-ink-soft"
+            >
+              <p className="font-display text-5xl font-extrabold text-primary-400/80 transition-colors group-hover:text-primary-300">
                 {s.n}
               </p>
               <h3 className="mt-5 font-display text-lg font-bold">{s.title}</h3>
-              <p className="mt-2 text-sm text-slate-400 leading-relaxed">{s.desc}</p>
+              <p className="mt-2 text-sm leading-relaxed text-slate-400">{s.desc}</p>
             </div>
           ))}
         </div>

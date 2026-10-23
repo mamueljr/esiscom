@@ -79,9 +79,12 @@ const Stat: React.FC<{ value: number; prefix: string; label: string }> = ({
 
   const text = `${prefix}${n}`;
   return (
-    <div ref={ref} className="flex items-baseline gap-4 py-6 sm:px-8 first:pl-0 border-b sm:border-b-0 border-white/10">
-      <span className="font-display text-4xl font-extrabold text-white tabular-nums">{text}</span>
-      <span className="text-sm text-slate-400 uppercase tracking-wider">{label}</span>
+    <div
+      ref={ref}
+      className="flex items-baseline gap-4 border-b border-white/10 py-6 sm:border-b-0 sm:border-l sm:border-white/10 sm:px-8 sm:first:border-l-0 sm:first:pl-0"
+    >
+      <span className="font-display text-4xl font-extrabold tabular-nums text-white">{text}</span>
+      <span className="text-sm uppercase tracking-wider text-slate-400">{label}</span>
     </div>
   );
 };
@@ -109,46 +112,50 @@ const Hero: React.FC<{ onShowServices: () => void }> = ({ onShowServices }) => {
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-36 pb-16 lg:pt-48 lg:pb-20">
         <div className="grid lg:grid-cols-12 gap-12 items-center">
           <div className="lg:col-span-7">
-            <p className="font-display text-xs font-bold tracking-[0.3em] text-primary-400 mb-6">
+            <p className="mb-6 flex items-center gap-3 font-display text-xs font-bold tracking-[0.3em] text-primary-400">
+              <span aria-hidden="true" className="h-px w-10 bg-primary-400/70" />
               ESISCOM — CHIHUAHUA, MX
             </p>
-            <h1 className="font-display text-4xl sm:text-6xl lg:text-7xl font-extrabold text-white tracking-tight leading-[1.05]">
+            <h1 className="font-display text-4xl font-extrabold leading-[1.05] tracking-tight text-white sm:text-6xl lg:text-7xl">
               TU TECNOLOGÍA
               <br />
               BAJO <span className="text-primary-400">CONTROL.</span>
             </h1>
-            <p className="mt-6 max-w-xl text-lg text-slate-300 leading-relaxed">
+            <p className="mt-6 max-w-xl text-lg leading-relaxed text-slate-300">
               Reparación de equipos, soporte IT y software a la medida para
               negocios que no pueden detenerse. Diagnóstico rápido, trato
               directo y resultados garantizados.
             </p>
-            <div className="mt-10 flex flex-col sm:flex-row gap-4">
+            <div className="mt-10 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
               <a
                 href="#contact"
-                className="inline-flex justify-center items-center px-8 py-4 bg-primary-400 hover:bg-primary-300 text-ink font-display text-sm font-bold uppercase tracking-[0.12em] transition-colors"
+                className="inline-flex shrink-0 items-center justify-center whitespace-nowrap rounded-xl bg-primary-400 px-6 py-4 font-display text-sm font-bold uppercase tracking-[0.12em] text-ink shadow-lg shadow-primary-400/15 transition-all duration-200 hover:-translate-y-0.5 hover:bg-primary-300 hover:shadow-xl hover:shadow-primary-400/20"
               >
                 Agendar diagnóstico
               </a>
               <a
                 href="#remote-support"
-                className="inline-flex justify-center items-center px-8 py-4 border border-white/25 hover:border-primary-400 text-white hover:text-primary-400 font-display text-sm font-bold uppercase tracking-[0.12em] transition-colors"
+                className="inline-flex shrink-0 items-center justify-center whitespace-nowrap rounded-xl border border-white/25 px-6 py-4 font-display text-sm font-bold uppercase tracking-[0.12em] text-white transition-colors hover:border-primary-400 hover:text-primary-300"
               >
                 Soporte remoto →
               </a>
               <button
                 onClick={onShowServices}
-                className="inline-flex justify-center items-center px-8 py-4 border border-white/25 hover:border-primary-400 text-white hover:text-primary-400 font-display text-sm font-bold uppercase tracking-[0.12em] transition-colors"
+                className="group inline-flex shrink-0 items-center justify-center gap-2 whitespace-nowrap px-2 py-4 font-display text-sm font-bold uppercase tracking-[0.12em] text-primary-300 transition-colors hover:text-white"
               >
                 Ver precios
+                <span aria-hidden="true" className="transition-transform group-hover:translate-x-1">
+                  →
+                </span>
               </button>
             </div>
-            <div className="mt-6 inline-flex items-center gap-2.5 border border-white/15 bg-white/5 px-4 py-2">
+            <div className="mt-6 inline-flex items-center gap-2.5 rounded-full border border-white/15 bg-white/5 px-4 py-2">
               <span className="relative flex h-2.5 w-2.5">
                 {openState.open && (
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary-400 opacity-75"></span>
+                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-primary-400 opacity-75"></span>
                 )}
                 <span
-                  className={`relative inline-flex rounded-full h-2.5 w-2.5 ${
+                  className={`relative inline-flex h-2.5 w-2.5 rounded-full ${
                     openState.open ? 'bg-primary-400' : 'bg-slate-500'
                   }`}
                 ></span>
@@ -161,30 +168,36 @@ const Hero: React.FC<{ onShowServices: () => void }> = ({ onShowServices }) => {
 
           <div className="lg:col-span-5">
             <div className="relative">
-              <div className="absolute -top-3 -left-3 w-24 h-24 border-t-4 border-l-4 border-primary-400"></div>
-              <div className="relative overflow-hidden bg-ink-soft">
+              <div
+                aria-hidden="true"
+                className="absolute -left-4 -top-4 h-24 w-24 rounded-tl-2xl border-l-2 border-t-2 border-primary-400/70"
+              ></div>
+              <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-ink-soft shadow-2xl shadow-black/40">
                 <img
                   src="images/intro-image.jpg"
                   alt="Técnico trabajando en infraestructura"
-                  className="w-full h-[420px] object-cover grayscale contrast-125 brightness-90"
+                  className="h-[420px] w-full object-cover grayscale contrast-125 brightness-90"
                   onError={(e) => {
                     (e.target as HTMLImageElement).style.display = 'none';
                   }}
                 />
-                <div className="absolute inset-0 bg-primary-400/25 mix-blend-overlay"></div>
-                <div className="absolute inset-0 bg-gradient-to-t from-ink/80 via-transparent to-transparent"></div>
-                <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between">
-                  <span className="bg-ink/80 backdrop-blur px-4 py-2 font-display text-[11px] font-bold tracking-[0.22em] text-primary-400">
+                <div className="absolute inset-0 bg-primary-500/25 mix-blend-color"></div>
+                <div className="absolute inset-0 bg-gradient-to-t from-ink/85 via-ink/10 to-transparent"></div>
+                <div className="absolute inset-x-4 bottom-4 flex items-center justify-between">
+                  <span className="rounded-full bg-ink/80 px-4 py-2 font-display text-[11px] font-bold tracking-[0.22em] text-primary-300 backdrop-blur">
                     SOPORTE REAL · HARDWARE REAL
                   </span>
                 </div>
               </div>
-              <div className="absolute -bottom-3 -right-3 w-24 h-24 border-b-4 border-r-4 border-primary-400"></div>
+              <div
+                aria-hidden="true"
+                className="absolute -bottom-4 -right-4 h-24 w-24 rounded-br-2xl border-b-2 border-r-2 border-primary-400/70"
+              ></div>
             </div>
           </div>
         </div>
 
-        <div className="mt-16 grid grid-cols-1 sm:grid-cols-3 border-t border-white/10">
+        <div className="mt-16 grid grid-cols-1 border-t border-white/10 sm:grid-cols-3">
           {STATS.map((s) => (
             <Stat key={s.label} value={s.value} prefix={s.prefix} label={s.label} />
           ))}

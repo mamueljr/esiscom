@@ -468,7 +468,7 @@ const ServicesDetail: React.FC<{ onBack: () => void }> = ({ onBack }) => {
           <button
             type="button"
             onClick={onBack}
-            className="group inline-flex shrink-0 items-center gap-2 rounded-xl px-1 py-3 text-sm font-semibold text-slate-300 transition-colors hover:text-primary-400 sm:px-2"
+            className="group inline-flex shrink-0 items-center gap-2 rounded-xl px-1 py-3 text-sm font-semibold text-slate-300 transition-colors hover:text-primary-300 sm:px-2"
             aria-label="Volver al inicio"
           >
             <ChevronLeftIcon className="h-5 w-5 transition-transform duration-200 group-hover:-translate-x-0.5 motion-reduce:transition-none motion-reduce:group-hover:translate-x-0" />
@@ -524,7 +524,7 @@ const ServicesDetail: React.FC<{ onBack: () => void }> = ({ onBack }) => {
                 </a>
                 <a
                   href="#empresas"
-                  className="inline-flex items-center justify-center gap-2 rounded-2xl border border-white/20 bg-white/[0.03] px-6 py-4 font-display text-sm font-bold uppercase tracking-[0.1em] text-white transition-colors hover:border-primary-400 hover:text-primary-400"
+                  className="inline-flex items-center justify-center gap-2 rounded-2xl border border-white/20 bg-white/[0.03] px-6 py-4 font-display text-sm font-bold uppercase tracking-[0.1em] text-white transition-colors hover:border-primary-400 hover:text-primary-300"
                 >
                   Ver planes para empresas
                   <ArrowRightIcon className="h-4 w-4" />
@@ -565,7 +565,7 @@ const ServicesDetail: React.FC<{ onBack: () => void }> = ({ onBack }) => {
                 <li key={item.href} className="shrink-0">
                   <a
                     href={item.href}
-                    className="inline-flex items-center rounded-full border border-white/15 bg-ink-soft px-4 py-2 text-sm font-semibold text-slate-200 transition-colors hover:border-primary-400 hover:text-primary-400"
+                    className="inline-flex items-center rounded-full border border-white/15 bg-ink-soft px-4 py-2 text-sm font-semibold text-slate-200 transition-colors hover:border-primary-400 hover:text-primary-300"
                   >
                     {item.label}
                   </a>

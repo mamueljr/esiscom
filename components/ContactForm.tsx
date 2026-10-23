@@ -40,7 +40,7 @@ const EMPTY: Form = {
 };
 
 const inputClass =
-  'w-full border border-white/15 bg-ink px-4 py-3 text-white placeholder:text-slate-600 transition-colors focus:border-primary-400 focus:outline-none';
+  'w-full rounded-xl border border-white/15 bg-ink px-4 py-3 text-white placeholder:text-slate-600 transition-colors focus:border-primary-400 focus:outline-none focus:ring-2 focus:ring-primary-400/20';
 const labelClass =
   'mb-2 block font-display text-[11px] font-bold uppercase tracking-[0.2em] text-slate-400';
 
@@ -129,7 +129,7 @@ const ContactForm: React.FC = () => {
 
   if (status === 'sent') {
     return (
-      <div className="flex h-full flex-col justify-center border border-primary-400/40 bg-primary-400/5 p-8 sm:p-10">
+      <div className="panel-sheen flex h-full flex-col justify-center rounded-2xl border border-primary-400/30 bg-primary-400/[0.04] p-8 sm:p-10">
         <p className="font-display text-xs font-bold tracking-[0.3em] text-primary-400">
           SOLICITUD ENVIADA
         </p>
@@ -145,7 +145,7 @@ const ContactForm: React.FC = () => {
               setStatus('idle');
               setNotice('');
             }}
-            className="border border-white/25 px-6 py-3 font-display text-sm font-bold uppercase tracking-[0.12em] text-white transition-colors hover:border-primary-400 hover:text-primary-400"
+            className="rounded-xl border border-white/25 px-6 py-3 font-display text-sm font-bold uppercase tracking-[0.12em] text-white transition-colors hover:border-primary-400 hover:text-primary-300"
           >
             Enviar otra
           </button>
@@ -153,7 +153,7 @@ const ContactForm: React.FC = () => {
             href={`https://wa.me/${WHATSAPP_NUMBER}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center justify-center gap-2 bg-primary-400 px-6 py-3 font-display text-sm font-bold uppercase tracking-[0.12em] text-ink transition-colors hover:bg-primary-300"
+            className="inline-flex items-center justify-center gap-2 rounded-xl bg-primary-400 px-6 py-3 font-display text-sm font-bold uppercase tracking-[0.12em] text-ink transition-colors hover:bg-primary-300"
           >
             <WhatsAppIcon className="h-4 w-4" />
             WhatsApp
@@ -167,7 +167,7 @@ const ContactForm: React.FC = () => {
     <form
       onSubmit={handleSubmit}
       noValidate
-      className="border border-white/15 bg-ink-soft p-6 sm:p-10"
+      className="panel-sheen rounded-2xl border border-white/10 bg-ink-soft p-6 sm:p-10"
     >
       <h3 className="font-display text-xl font-bold text-white sm:text-2xl">
         Cuéntanos qué necesitas
@@ -322,7 +322,7 @@ const ContactForm: React.FC = () => {
       </div>
 
       {status === 'error' && (
-        <p role="alert" className="mt-6 border border-red-400/40 bg-red-400/10 p-4 text-sm text-red-300">
+        <p role="alert" className="mt-6 rounded-xl border border-red-400/40 bg-red-400/10 p-4 text-sm text-red-300">
           No pudimos enviar el formulario. Escríbenos por WhatsApp o llama al (614) 254-1066.
         </p>
       )}
@@ -331,11 +331,11 @@ const ContactForm: React.FC = () => {
         <button
           type="submit"
           disabled={status === 'sending'}
-          className="inline-flex justify-center bg-primary-400 px-8 py-4 font-display text-sm font-bold uppercase tracking-[0.12em] text-ink transition-colors hover:bg-primary-300 disabled:cursor-not-allowed disabled:opacity-60"
+          className="inline-flex justify-center rounded-xl bg-primary-400 px-8 py-4 font-display text-sm font-bold uppercase tracking-[0.12em] text-ink transition-colors hover:bg-primary-300 disabled:cursor-not-allowed disabled:opacity-60"
         >
           {status === 'sending' ? 'Enviando…' : 'Enviar solicitud'}
         </button>
-        <p className="text-xs text-slate-500">
+        <p className="text-xs text-slate-400">
           Tus datos nunca se comparten con terceros.
         </p>
       </div>
