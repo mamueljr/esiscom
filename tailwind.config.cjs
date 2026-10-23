@@ -39,9 +39,14 @@ module.exports = {
           from: { transform: 'translateX(0)' },
           to: { transform: 'translateX(-50%)' },
         },
+        'wa-pulse': {
+          '0%, 100%': { transform: 'scale(1)', opacity: '0' },
+          '50%': { transform: 'scale(1.35)', opacity: '0.28' },
+        },
       },
       animation: {
         marquee: 'marquee 28s linear infinite',
+        'wa-pulse': 'wa-pulse 2.8s ease-in-out infinite',
       },
     },
   },

@@ -21,9 +21,26 @@ const HASH_BY_VIEW: Record<View, string> = {
   privacy: '#aviso-de-privacidad',
 };
 
-const viewFromHash = (): View =>
-  (Object.keys(HASH_BY_VIEW) as View[]).find((v) => HASH_BY_VIEW[v] === window.location.hash) ??
-  'home';
+// Anclas internas de la página de Servicios y Precios. Se reconocen para que
+// los chips de navegación no se interpreten como "volver al inicio".
+const SERVICE_HASHES = new Set([
+  '#servicios-detalle',
+  '#contenido-servicios',
+  '#taller',
+  '#soporte-externo',
+  '#zonas',
+  '#empresas',
+  '#como-trabajamos',
+]);
+
+const viewFromHash = (): View => {
+  if (SERVICE_HASHES.has(window.location.hash)) return 'services';
+  return (
+    (Object.keys(HASH_BY_VIEW) as View[]).find(
+      (v) => HASH_BY_VIEW[v] === window.location.hash
+    ) ?? 'home'
+  );
+};
 
 const App: React.FC = () => {
   const [view, setView] = useState<View>(viewFromHash);
