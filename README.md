@@ -47,36 +47,30 @@
 - Se extendió `NavItem` (`types.ts`) con `external?: boolean`.
 - `components/Navbar.tsx` (desktop y móvil) abre enlaces externos con `target="_blank" rel="noopener noreferrer"`.
 
-## Despliegue (GitHub Pages sin Actions)
-- Actions está bloqueado por billing (`account is locked`), así que Pages usa **Deploy from a branch** (configurado una vez vía API: `build_type: legacy`, `source: {branch: gh-pages, path: /}`).
-- La rama `gh-pages` contiene solo el build: `index.html` + `assets/` + `images/` + `robots.txt` + `sitemap.xml` + `.nojekyll`. El push a `main` solo guarda código; el workflow `deploy.yml` falla por billing y **no publica nada** — se puede ignorar.
+## Despliegue (Hostinger)
 
-### Un solo comando (recomendado)
-```bash
-npm run deploy
-```
-`predeploy` corre `npm run build` y `gh-pages -d dist --nojekyll` publica el resultado en la rama `gh-pages`. GitHub Pages reconstruye solo en 30–60 s; no hay que disparar nada por API.
+El sitio se publica en `https://esiscom.com` desde el hosting de Hostinger:
+
+- **Document root:** `/home/u371508174/domains/esiscom.com/public_html`
+- **Servidor SSH:** `191.96.56.28:65002` (usuario `u371508174`)
+- El workflow `.github/workflows/deploy.yml` compila con Vite y sube `dist/` por `rsync` en cada push a `main`.
+
+### Secretos necesarios (GitHub → Settings → Secrets and variables → Actions)
+
+| Secreto | Valor |
+|---|---|
+| `SSH_PRIVATE_KEY` | llave privada de despliegue (`~/.ssh/esiscom_gh_actions`) |
+| `SSH_HOST` | `191.96.56.28` |
+| `SSH_PORT` | `65002` |
+| `SSH_USER` | `u371508174` |
 
 ### Verificar
 ```bash
-gh api repos/mamueljr/esiscom/pages/builds -q '.[0] | "\(.status) \(.commit[0:7])"'
-curl -s https://mamueljr.github.io/esiscom/ | grep -o 'assets/[^"]*'
+curl -sI https://esiscom.com/ | head -12
+curl -s https://esiscom.com/ | grep -o 'src="/assets/[^"]*"' | head
 ```
 
-### Manual (equivalente, si falla el paquete `gh-pages`)
-```bash
-npx tsc --noEmit && npm run build
-cp -r dist /tmp/esiscom-dist
-git checkout gh-pages
-git rm -rq --cached assets images index.html .nojekyll 2>/dev/null
-rm -rf assets images index.html
-cp -r /tmp/esiscom-dist/* .
-touch .nojekyll
-git add -A -- assets images index.html .nojekyll  # paths explícitos: NO agregar node_modules/ ni dist/
-git commit -m "Deploy <descripción>" && git push origin gh-pages
-git checkout main
-```
-- Sitio en vivo: https://mamueljr.github.io/esiscom/
+- Sitio en vivo: https://esiscom.com/
 
 ## Run Locally
 
