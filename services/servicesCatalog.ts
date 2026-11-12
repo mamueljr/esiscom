@@ -56,7 +56,7 @@ export interface Catalogo {
   porQue: Punto[];
 }
 
-export const WHATSAPP_NUMBER = '526142541066';
+export const WHATSAPP_NUMBER = '526143249716';
 export const WHATSAPP_BASE = `https://wa.me/${WHATSAPP_NUMBER}`;
 
 export const waLink = (texto: string) =>

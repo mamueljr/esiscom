@@ -24,7 +24,7 @@ export const generateChatResponse = async (
   try {
     const ai = getAiClient();
     if (!ai) {
-      return "Actualmente nuestros sistemas de IA están en mantenimiento. Por favor llama al (614) 254-1066.";
+      return "Actualmente nuestros sistemas de IA están en mantenimiento. Por favor llama al (614) 324-9716.";
     }
 
     const model = "gemini-2.5-flash";
@@ -42,7 +42,7 @@ export const generateChatResponse = async (
         Tus objetivos son:
         1. Ayudar a clientes potenciales a entender los servicios de ESISCOM (Reparación de hardware, Soporte Técnico, Desarrollo de Software).
         2. Guiar a los usuarios a la sección de "Soporte Remoto" si tienen una urgencia técnica.
-        3. Proporcionar información de contacto: (614) 254-1066, contacto@esiscom.com, dirección: Cipres #3712, Col. Satelite.
+        3. Proporcionar información de contacto: (614) 324-9716, contacto@esiscom.com, dirección: Cipres #3712, Col. Satelite.
         4. Si preguntan por precios específicos, diles que depende del diagnóstico y sugiéreles agendar una cita.
         
         Tono: Profesional, técnico pero accesible, y muy servicial. Respuestas concisas.
@@ -64,6 +64,6 @@ export const generateChatResponse = async (
     );
   } catch (error) {
     console.error("Error calling Gemini API:", error);
-    return "Actualmente nuestros sistemas de IA están en mantenimiento. Por favor llama al (614) 254-1066.";
+    return "Actualmente nuestros sistemas de IA están en mantenimiento. Por favor llama al (614) 324-9716.";
   }
 };

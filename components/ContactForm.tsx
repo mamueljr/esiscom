@@ -9,7 +9,7 @@ import { WhatsAppIcon } from './Icons';
  * que es el canal que la empresa ya atiende.
  */
 const WEB3FORMS_ENDPOINT = 'https://api.web3forms.com/submit';
-const WHATSAPP_NUMBER = '526142541066';
+const WHATSAPP_NUMBER = '526143249716';
 
 const SERVICIOS = [
   'Reparación de equipo',
@@ -210,7 +210,7 @@ const ContactForm: React.FC = () => {
             value={form.email}
             onChange={(e) => set('email', e.target.value)}
             className={inputClass}
-            placeholder="tu@correo.com"
+            placeholder="Escribe tu correo"
             autoComplete="email"
             aria-invalid={Boolean(errors.email)}
             aria-describedby={errors.email ? 'cf-email-error' : undefined}
@@ -323,7 +323,7 @@ const ContactForm: React.FC = () => {
 
       {status === 'error' && (
         <p role="alert" className="mt-6 border border-red-400/40 bg-red-400/10 p-4 text-sm text-red-300">
-          No pudimos enviar el formulario. Escríbenos por WhatsApp o llama al (614) 254-1066.
+          No pudimos enviar el formulario. Escríbenos por WhatsApp o llama al (614) 324-9716.
         </p>
       )}
 

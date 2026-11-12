@@ -18,7 +18,7 @@ const ROWS = [
   {
     icon: <PhoneIcon className="w-6 h-6 text-primary-400" />,
     title: 'Teléfono',
-    body: <a href="tel:+526142541066" className="hover:text-primary-400 transition-colors">(614) 254-1066</a>,
+    body: <a href="tel:+526143249716" className="hover:text-primary-400 transition-colors">(614) 324-9716</a>,
   },
   {
     icon: <MailIcon className="w-6 h-6 text-primary-400" />,
@@ -80,7 +80,7 @@ const Contact: React.FC = () => {
                 ))}
               </div>
               <a
-                href="https://wa.me/526142541066?text=Hola%20ESISCOM%2C%20necesito%20soporte%20t%C3%A9cnico."
+                href="https://wa.me/526143249716?text=Hola%20ESISCOM%2C%20necesito%20soporte%20t%C3%A9cnico."
                 target="_blank"
                 rel="noopener noreferrer"
                 className="mt-10 flex items-center justify-center px-6 py-4 bg-primary-400 hover:bg-primary-300 text-ink font-display text-sm font-bold uppercase tracking-[0.12em] transition-colors"

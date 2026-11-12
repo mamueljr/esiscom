@@ -83,8 +83,8 @@ const Footer: React.FC<{ onShowServices: () => void }> = ({ onShowServices }) =>
             </h3>
             <ul className="space-y-3 text-sm text-slate-300">
               <li>
-                <a href="tel:+526142541066" className="hover:text-primary-400 transition-colors">
-                  (614) 254-1066
+                <a href="tel:+526143249716" className="hover:text-primary-400 transition-colors">
+                  (614) 324-9716
                 </a>
               </li>
               <li>

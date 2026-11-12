@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { WhatsAppIcon } from './Icons';
 
-const PHONE = '526142541066';
+const PHONE = '526143249716';
 const MESSAGE = 'Hola ESISCOM, necesito soporte técnico.';
 
 /**

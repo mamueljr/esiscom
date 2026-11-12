@@ -20,7 +20,7 @@ const SECTIONS: Section[] = [
     paragraphs: [
       'ESISCOM (en adelante, "la empresa") es responsable del tratamiento de los datos personales que recaba a través de este sitio, del teléfono, de WhatsApp, del correo electrónico y de la atención directa en sus instalaciones.',
       'Domicilio: Cipres #3712, Col. Satélite, Chihuahua, Chih., C.P. 31114, México.',
-      'Correo de contacto: contacto@esiscom.com · Teléfono: (614) 254-1066.',
+      'Correo de contacto: contacto@esiscom.com · Teléfono: (614) 324-9716.',
     ],
   },
   {
@@ -174,8 +174,8 @@ const PrivacyPolicy: React.FC<{ onBack: () => void }> = ({ onBack }) => (
             contacto@esiscom.com
           </a>{' '}
           ·{' '}
-          <a href="tel:+526142541066" className="text-primary-400 hover:text-primary-300">
-            (614) 254-1066
+          <a href="tel:+526143249716" className="text-primary-400 hover:text-primary-300">
+            (614) 324-9716
           </a>
         </p>
         <button

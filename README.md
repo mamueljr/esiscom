@@ -31,7 +31,7 @@
 
 ### Página "Servicios y Precios" (vista interna `#servicios-detalle`)
 - Nuevo componente `components/ServicesDetail.tsx` con precios de taller, soporte externo, empresas, zonas de cobertura, "Cómo trabajamos" y "Por qué ESISCOM".
-- Todos los CTA usan WhatsApp prellenado (`wa.me/526142541066?text=...`).
+- Todos los CTA usan WhatsApp prellenado (`wa.me/526143249716?text=...`).
 - Datos reales: SSD 240 GB desde $980, zonas por distancia (1 sin cargo / 2 +$150 / 3 +$250), 20 años de experiencia, revisión técnica de oficina gratis.
 - Navegación SPA sin dependencias: estado `view` en `App.tsx` + hash `#servicios-detalle` (soporta back/forward). Botones "Precios" en Navbar (desktop/móvil), "Ver precios" en Hero, "Precios y servicios" en Footer y en las filas de Services.
 - Verificación: `npx tsc --noEmit` y `npm run build` OK.
