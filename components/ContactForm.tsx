@@ -4,7 +4,9 @@ import { WhatsAppIcon } from './Icons';
 /**
  * Formulario de contacto sin backend.
  *
- * Con `VITE_WEB3FORMS_KEY` definida, el envío va a Web3Forms y llega por correo.
+ * Con `VITE_WEB3FORMS_KEY` definida (secreto `VITE_WEB3FORMS_KEY` en GitHub Actions),
+ * el envío va a Web3Forms y llega por correo. Si el envío falla, se ofrece el mismo
+ * mensaje por WhatsApp para no perder la solicitud.
  * Sin llave, el formulario NO finge un envío: arma el mensaje y abre WhatsApp,
  * que es el canal que la empresa ya atiende.
  */
@@ -79,6 +81,8 @@ const ContactForm: React.FC = () => {
       .filter(Boolean)
       .join('\n');
 
+  const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(buildMessage())}`;
+
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
     if (status === 'sending') return;
@@ -88,11 +92,7 @@ const ContactForm: React.FC = () => {
 
     // Sin llave configurada: no simulamos un envío, pasamos a WhatsApp.
     if (!accessKey) {
-      window.open(
-        `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(buildMessage())}`,
-        '_blank',
-        'noopener,noreferrer'
-      );
+      window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
       setNotice('Abrimos WhatsApp con tu mensaje listo para enviar.');
       setStatus('sent');
       return;
@@ -121,7 +121,6 @@ const ContactForm: React.FC = () => {
       }
       setNotice('Recibimos tu solicitud. Te contactamos hoy mismo.');
       setStatus('sent');
-      setForm(EMPTY);
     } catch {
       setStatus('error');
     }
@@ -322,9 +321,24 @@ const ContactForm: React.FC = () => {
       </div>
 
       {status === 'error' && (
-        <p role="alert" className="mt-6 border border-red-400/40 bg-red-400/10 p-4 text-sm text-red-300">
-          No pudimos enviar el formulario. Escríbenos por WhatsApp o llama al (614) 324-9716.
-        </p>
+        <div
+          role="alert"
+          className="mt-6 border border-red-400/40 bg-red-400/10 p-4 text-sm text-red-300"
+        >
+          <p>No pudimos enviar el formulario por correo. Tu mensaje no se perdió:</p>
+          <a
+            href={whatsappUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-3 inline-flex items-center gap-2 bg-primary-400 px-4 py-2 font-display text-xs font-bold uppercase tracking-[0.12em] text-ink transition-colors hover:bg-primary-300"
+          >
+            <WhatsAppIcon className="h-4 w-4" />
+            Enviarlo por WhatsApp
+          </a>
+          <p className="mt-3 text-xs text-red-300/80">
+            También puedes llamar al (614) 324-9716.
+          </p>
+        </div>
       )}
 
       <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:items-center">
@@ -336,7 +350,7 @@ const ContactForm: React.FC = () => {
           {status === 'sending' ? 'Enviando…' : 'Enviar solicitud'}
         </button>
         <p className="text-xs text-slate-500">
-          Tus datos nunca se comparten con terceros.
+          Tus datos se usan solo para atender tu solicitud.
         </p>
       </div>
     </form>

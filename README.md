@@ -3,6 +3,12 @@
 ## SItio web de la empresa ESISCOM
 
 ## Cambios
+### 2026-11-13 — Formulario de contacto: envío por correo reparado
+- `.github/workflows/deploy.yml`: el build ahora recibe `VITE_WEB3FORMS_KEY` desde el secreto de GitHub. Antes el build de CI nunca la tenía, así que Vite eliminaba la rama de correo y todos los envíos caían a WhatsApp.
+- `components/ContactForm.tsx`: si el envío por correo falla, se muestra un botón que abre WhatsApp con el mismo mensaje ya armado (antes solo aparecía un aviso sin enlace). Se conserva el nombre en la pantalla de confirmación (antes se vaciaba el formulario y decía "Gracias, bienvenido"). Se corrigió la leyenda "nunca se comparten con terceros".
+- Sin el secreto, el formulario sigue abriendo WhatsApp como hasta ahora. Para activar el correo: crear la llave en web3forms.com y agregarla como secreto `VITE_WEB3FORMS_KEY`.
+- Verificación: `npx tsc --noEmit` y `npm run build` OK.
+
 ### 2026-11-13 — Aviso de privacidad alineado con Google Analytics
 - `components/PrivacyPolicy.tsx` sección 9: ahora declara el uso de cookies estadísticas de **Google Tag Manager / Google Analytics 4** (`_ga`, `_ga_*`), para qué sirven, cuánto duran y cómo rechazarlas (navegador o complemento de inhabilitación). Se eliminó la afirmación de que el sitio "no utiliza cookies". Sección 6: Google se lista como proveedor de medición de audiencia. Fecha de actualización al 13/11/2026.
 - `index.html`: reemplazado el snippet mixto (`gtm.js` + `gtag()`) por el snippet oficial de **Google Tag Manager** (script + `<noscript>`), que es el que corresponde al contenedor `GTM-N9RKSNH5` (dentro carga GA4 `G-2NQQCDWWH0`).
@@ -78,6 +84,7 @@ El sitio se publica en `https://esiscom.com` desde el hosting de Hostinger:
 | `SSH_HOST` | `191.96.56.28` |
 | `SSH_PORT` | `65002` |
 | `SSH_USER` | `u371508174` |
+| `VITE_WEB3FORMS_KEY` | llave de Web3Forms para que el formulario de contacto llegue por correo (sin ella, el formulario abre WhatsApp) |
 
 ### Verificar
 ```bash
