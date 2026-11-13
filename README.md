@@ -3,6 +3,12 @@
 ## SItio web de la empresa ESISCOM
 
 ## Cambios
+### 2026-11-13 — Aviso de privacidad alineado con Google Analytics
+- `components/PrivacyPolicy.tsx` sección 9: ahora declara el uso de cookies estadísticas de **Google Tag Manager / Google Analytics 4** (`_ga`, `_ga_*`), para qué sirven, cuánto duran y cómo rechazarlas (navegador o complemento de inhabilitación). Se eliminó la afirmación de que el sitio "no utiliza cookies". Sección 6: Google se lista como proveedor de medición de audiencia. Fecha de actualización al 13/11/2026.
+- `index.html`: reemplazado el snippet mixto (`gtm.js` + `gtag()`) por el snippet oficial de **Google Tag Manager** (script + `<noscript>`), que es el que corresponde al contenedor `GTM-N9RKSNH5` (dentro carga GA4 `G-2NQQCDWWH0`).
+- **Pendiente de decisión:** añadir banner de consentimiento que bloquee la carga de GTM hasta que el usuario acepte.
+- Verificación: `npx tsc --noEmit` y `npm run build` OK.
+
 ### 2026-11-12 — Sección "ESISCOM Soft" (apps de la empresa)
 - Nueva vista `software` (`#software`) en `App.tsx`, con la misma mecánica que "Servicios y Precios": página completa con botón "Volver".
 - Nuevo `components/SoftDetail.tsx`: hero con badges y grilla de tarjetas por aplicación. Cada tarjeta muestra icono, categoría, nombre, descripción, características y botón **"Acceder"** (enlace externo en pestaña nueva).

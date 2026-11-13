@@ -3,10 +3,10 @@ import React from 'react';
 /**
  * Aviso de Privacidad — base conforme a la LFPDPPP (México).
  * Conviene que un abogado lo revise antes de usarlo como documento definitivo.
- * Al agregar analítica o cookies de marketing hay que actualizar la sección 9.
+ * Si cambian las herramientas de medición (Tag Manager, Analytics, píxeles), actualizar la sección 9.
  */
 
-const UPDATED = '18 de octubre de 2026';
+const UPDATED = '13 de noviembre de 2026';
 
 type Section = {
   title: string;
@@ -60,7 +60,7 @@ const SECTIONS: Section[] = [
     title: '6. Transferencias de datos',
     paragraphs: [
       'No transferimos tus datos personales a terceros sin tu consentimiento, salvo las excepciones previstas por la Ley Federal de Protección de Datos Personales en Posesión de los Particulares (por ejemplo, requerimientos de autoridad competente).',
-      'Los proveedores tecnológicos que nos apoyan —servicio de correo, hospedaje del sitio y mensajería— tratan los datos únicamente por cuenta de la empresa y para las finalidades descritas en este aviso.',
+      'Los proveedores tecnológicos que nos apoyan —servicio de correo, hospedaje del sitio, mensajería y medición de audiencia (Google Tag Manager y Google Analytics)— tratan los datos únicamente por cuenta de la empresa y para las finalidades descritas en este aviso.',
     ],
   },
   {
@@ -81,9 +81,15 @@ const SECTIONS: Section[] = [
   {
     title: '9. Cookies y servicios de terceros',
     paragraphs: [
-      'Este sitio no utiliza cookies publicitarias ni de perfilamiento. La aceptación del formulario no depende de ellas.',
-      'El sitio carga tipografías de Google Fonts y un mapa de Google Maps embebido. Estos servicios son operados por Google y pueden registrar tu dirección IP y datos técnicos de tu navegador; su tratamiento se rige por los propios avisos de privacidad de Google.',
-      'Si el sitio consulta información técnica de tu equipo para orientar un diagnóstico, esa información se usa únicamente para ese fin.',
+      'Este sitio utiliza cookies y tecnologías similares con fines estadísticos, para entender cómo se usa el sitio y mejorarlo. No usamos cookies publicitarias ni de perfilamiento, no mostramos anuncios y no vendemos tu información a terceros.',
+      'Para medir la audiencia cargamos Google Tag Manager y Google Analytics 4, servicios operados por Google LLC. Google puede recibir tu dirección IP, identificadores del navegador y datos técnicos de la visita (páginas vistas, tiempo en el sitio, dispositivo, navegador, origen del tráfico y ubicación aproximada a nivel ciudad). Usamos esa información de forma agregada, no para identificarte personalmente.',
+    ],
+    bullets: [
+      'Cookies de analítica: “_ga” y “_ga_*”, que distinguen visitantes de forma anónima y pueden conservarse hasta por dos años. No contienen tu nombre ni tus datos de contacto.',
+      'Puedes rechazar, bloquear o eliminar estas cookies desde la configuración de tu navegador; el sitio seguirá funcionando con normalidad.',
+      'También puedes instalar el complemento de inhabilitación de Google Analytics: https://tools.google.com/dlpage/gaoptout',
+      'El tratamiento que Google hace de estos datos se rige por su propia política: https://policies.google.com/privacy',
+      'Además, el sitio carga tipografías de Google Fonts y un mapa de Google Maps embebido, que pueden registrar tu dirección IP y datos técnicos del navegador.',
     ],
   },
   {
