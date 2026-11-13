@@ -75,6 +75,9 @@ El sitio se publica en `https://esiscom.com` desde el hosting de Hostinger:
 - **Document root:** `/home/u371508174/domains/esiscom.com/public_html`
 - **Servidor SSH:** `191.96.56.28:65002` (usuario `u371508174`)
 - El workflow `.github/workflows/deploy.yml` compila con Vite y sube `dist/` por `rsync` en cada push a `main`.
+- **Deploy manual:** `npm run deploy`. Usa `~/.ssh/esiscom_com_deploy` por defecto; se puede cambiar con `SSH_KEY=/ruta/llave npm run deploy`. La llave `id_ed25519` **no** está autorizada en el servidor.
+- **Red:** algunas redes (p. ej. la de la UACH) bloquean SSH saliente; en ese caso usar hotspot/VPN o el workflow de GitHub.
+- Para que el build manual incluya el correo del formulario, definir `VITE_WEB3FORMS_KEY` en `.env.local`.
 
 ### Secretos necesarios (GitHub → Settings → Secrets and variables → Actions)
 

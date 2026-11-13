@@ -6,7 +6,7 @@ set -euo pipefail
 SSH_HOST="${SSH_HOST:-191.96.56.28}"
 SSH_PORT="${SSH_PORT:-65002}"
 SSH_USER="${SSH_USER:-u371508174}"
-SSH_KEY="${SSH_KEY:-$HOME/.ssh/id_ed25519}"
+SSH_KEY="${SSH_KEY:-$HOME/.ssh/esiscom_com_deploy}"
 REMOTE_DIR="${REMOTE_DIR:-domains/esiscom.com/public_html/}"
 
 if [ ! -f "$SSH_KEY" ]; then
