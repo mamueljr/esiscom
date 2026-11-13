@@ -1,6 +1,9 @@
 import React from 'react';
 
-const Footer: React.FC<{ onShowServices: () => void }> = ({ onShowServices }) => {
+const Footer: React.FC<{
+  onShowServices: () => void;
+  onShowSoftware: () => void;
+}> = ({ onShowServices, onShowSoftware }) => {
   return (
     <footer className="bg-black text-white pt-16 overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -65,14 +68,12 @@ const Footer: React.FC<{ onShowServices: () => void }> = ({ onShowServices }) =>
                 </button>
               </li>
               <li>
-                <a
-                  href="https://investigacioneducativafccf.net/esiscom/manager/login"
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <button
+                  onClick={onShowSoftware}
                   className="text-slate-300 hover:text-primary-400 transition-colors"
                 >
-                  EManager ↗
-                </a>
+                  ESISCOM Soft
+                </button>
               </li>
             </ul>
           </div>

@@ -3,6 +3,15 @@
 ## SItio web de la empresa ESISCOM
 
 ## Cambios
+### 2026-11-12 — Sección "ESISCOM Soft" (apps de la empresa)
+- Nueva vista `software` (`#software`) en `App.tsx`, con la misma mecánica que "Servicios y Precios": página completa con botón "Volver".
+- Nuevo `components/SoftDetail.tsx`: hero con badges y grilla de tarjetas por aplicación. Cada tarjeta muestra icono, categoría, nombre, descripción, características y botón **"Acceder"** (enlace externo en pestaña nueva).
+- Nuevo `services/softwareCatalog.ts`: arreglo `APPS` con las apps. **Agregar una app = agregar un objeto al arreglo**, sin tocar la UI. Incluye `ESISCOM Medical` (Salud, destacada), `ESISCOM Nails` y `ESISCOM Barber` (Cuidado personal).
+- SEO: título, meta description y JSON-LD `SoftwareApplication`.
+- Navegación: botón **"ESoft"** en el Navbar (desktop/móvil) y enlace **"ESISCOM Soft"** en el footer. Se eliminó el enlace directo a `EManager` (herramienta interna del dueño, no debe aparecer en el catálogo público).
+- `public/sitemap.xml`: se agregó `https://esiscom.com/medical/`.
+- Verificación: `npx tsc --noEmit` y `npm run build` OK.
+
 ### 2026-10-18 — Tailwind compilado (fuera el CDN)
 - Se eliminó `cdn.tailwindcss.com` y el `tailwind.config` inline del `index.html`. Ahora `tailwind.config.cjs` + `postcss.config.cjs` + `index.css` (importado desde `index.tsx`) generan un CSS estático de **33.5 kB (6.5 kB gzip)** y la paleta/tipografías viven en el config real.
 - Los estilos propios (`body`, `::selection`, `:focus-visible`, `.bg-grid`, `.scrollbar-hide`) pasaron a `@layer base` / `@layer utilities`; la animación del marquee ahora se define en `theme.extend.animation`.

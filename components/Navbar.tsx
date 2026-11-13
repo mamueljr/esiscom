@@ -5,7 +5,10 @@ import { MenuIcon, XIcon } from './Icons';
 const linkClass =
   'px-3 py-2 text-[13px] font-semibold uppercase tracking-[0.18em] text-slate-300 hover:text-primary-400 transition-colors';
 
-const Navbar: React.FC<{ onShowServices: () => void }> = ({ onShowServices }) => {
+const Navbar: React.FC<{
+  onShowServices: () => void;
+  onShowSoftware: () => void;
+}> = ({ onShowServices, onShowSoftware }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
@@ -58,6 +61,12 @@ const Navbar: React.FC<{ onShowServices: () => void }> = ({ onShowServices }) =>
                 Agendar
               </a>
               <button
+                onClick={onShowSoftware}
+                className="ml-2 border border-white/25 hover:border-primary-400 text-slate-200 hover:text-primary-400 px-5 py-2.5 text-[13px] font-bold uppercase tracking-[0.14em] transition-colors"
+              >
+                ESoft
+              </button>
+              <button
                 onClick={onShowServices}
                 className="ml-2 bg-primary-400 hover:bg-primary-300 text-ink px-5 py-2.5 text-[13px] font-bold uppercase tracking-[0.14em] transition-colors"
               >
@@ -103,6 +112,15 @@ const Navbar: React.FC<{ onShowServices: () => void }> = ({ onShowServices }) =>
             >
               Agendar
             </a>
+            <button
+              onClick={() => {
+                setIsOpen(false);
+                onShowSoftware();
+              }}
+              className="block w-full mt-2 border border-white/25 text-slate-200 text-center px-4 py-3 text-sm font-bold uppercase tracking-[0.14em]"
+            >
+              ESoft
+            </button>
             <button
               onClick={() => {
                 setIsOpen(false);

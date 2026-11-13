@@ -11,13 +11,15 @@ import CtaBand from './components/CtaBand';
 import Footer from './components/Footer';
 import WhatsAppButton from './components/WhatsAppButton';
 import ServicesDetail from './components/ServicesDetail';
+import SoftDetail from './components/SoftDetail';
 import PrivacyPolicy from './components/PrivacyPolicy';
 
-type View = 'home' | 'services' | 'privacy';
+type View = 'home' | 'services' | 'software' | 'privacy';
 
 const HASH_BY_VIEW: Record<View, string> = {
   home: '#intro',
   services: '#servicios-detalle',
+  software: '#software',
   privacy: '#aviso-de-privacidad',
 };
 
@@ -83,6 +85,15 @@ const App: React.FC = () => {
     );
   }
 
+  if (view === 'software') {
+    return (
+      <div className="min-h-screen flex flex-col font-sans bg-ink">
+        <SoftDetail onBack={() => goTo('home')} />
+        <WhatsAppButton />
+      </div>
+    );
+  }
+
   if (view === 'privacy') {
     return (
       <div className="min-h-screen flex flex-col font-sans bg-ink">
@@ -100,7 +111,10 @@ const App: React.FC = () => {
       >
         Saltar al contenido
       </a>
-      <Navbar onShowServices={() => goTo('services')} />
+      <Navbar
+        onShowServices={() => goTo('services')}
+        onShowSoftware={() => goTo('software')}
+      />
       <main className="flex-grow">
         <Hero onShowServices={() => goTo('services')} />
         <Clients />
@@ -111,7 +125,10 @@ const App: React.FC = () => {
         <CtaBand />
         <Contact />
       </main>
-      <Footer onShowServices={() => goTo('services')} />
+      <Footer
+        onShowServices={() => goTo('services')}
+        onShowSoftware={() => goTo('software')}
+      />
       <WhatsAppButton />
     </div>
   );
