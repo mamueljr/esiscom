@@ -1,13 +1,11 @@
 import React, { useEffect } from 'react';
-import Reveal from './Reveal';
-import { WrenchIcon, WhatsAppIcon } from './Icons';
+import { WhatsAppIcon } from './Icons';
 import {
   CATALOGO,
   formatMXN,
   waLink,
   type Punto,
   type Servicio,
-  type Zona,
 } from '../services/servicesCatalog';
 
 const PAGE_TITLE = 'Servicios y Precios | ESISCOM Chihuahua';
@@ -22,32 +20,24 @@ const NAV_ANCHORS = [
   { href: '#como-trabajamos', label: 'Cómo trabajamos' },
 ];
 
-const HERO_BADGES = [
-  { label: '30 días de garantía', Icon: ShieldCheckIcon },
-  { label: 'Precios publicados', Icon: TagIcon },
-  { label: 'Taller, domicilio y remoto', Icon: WrenchIcon },
-  { label: 'Ingeniero a cargo', Icon: UserCheckIcon },
-];
-
-const POR_QUE_ICONS = [UserCheckIcon, TagIcon, ShieldCheckIcon];
+const ZONE_RANGE_WIDTH: Record<string, string> = {
+  'zona-1': '24%',
+  'zona-2': '54%',
+  'zona-3': '82%',
+  'fuera-de-zona': '100%',
+};
 
 /* ------------------------------------------------------------------ */
-/* Íconos en línea (sin dependencias)                                  */
+/* Íconos geométricos mínimos (mismo grosor 1.75)                     */
 /* ------------------------------------------------------------------ */
 
 function CheckIcon({ className = 'h-4 w-4' }: { className?: string }) {
   return (
-    <svg
-      viewBox="0 0 20 20"
-      fill="none"
-      aria-hidden="true"
-      className={className}
-    >
-      <circle cx="10" cy="10" r="9" className="fill-primary-400/15" />
+    <svg viewBox="0 0 20 20" fill="none" aria-hidden="true" className={className}>
       <path
-        d="m6 10.3 2.6 2.6L14 7.5"
+        d="m5 10.5 3.2 3.2L15 6.8"
         stroke="currentColor"
-        strokeWidth="2"
+        strokeWidth="1.75"
         strokeLinecap="round"
         strokeLinejoin="round"
       />
@@ -55,56 +45,26 @@ function CheckIcon({ className = 'h-4 w-4' }: { className?: string }) {
   );
 }
 
-function XMarkIcon({ className = 'h-4 w-4' }: { className?: string }) {
+function MinusIcon({ className = 'h-4 w-4' }: { className?: string }) {
   return (
-    <svg
-      viewBox="0 0 20 20"
-      fill="none"
-      aria-hidden="true"
-      className={className}
-    >
-      <circle cx="10" cy="10" r="9" className="fill-white/5" />
+    <svg viewBox="0 0 20 20" fill="none" aria-hidden="true" className={className}>
       <path
-        d="m7 7 6 6m0-6-6 6"
+        d="M5 10h10"
         stroke="currentColor"
-        strokeWidth="1.8"
+        strokeWidth="1.75"
         strokeLinecap="round"
       />
     </svg>
   );
 }
 
-function ArrowRightIcon({ className = 'h-4 w-4' }: { className?: string }) {
+function ChevronLeftIcon({ className = 'h-4 w-4' }: { className?: string }) {
   return (
-    <svg
-      viewBox="0 0 24 24"
-      fill="none"
-      aria-hidden="true"
-      className={className}
-    >
-      <path
-        d="M5 12h14m-5-5 5 5-5 5"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  );
-}
-
-function ChevronLeftIcon({ className = 'h-5 w-5' }: { className?: string }) {
-  return (
-    <svg
-      viewBox="0 0 24 24"
-      fill="none"
-      aria-hidden="true"
-      className={className}
-    >
+    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" className={className}>
       <path
         d="m15 19-7-7 7-7"
         stroke="currentColor"
-        strokeWidth="2"
+        strokeWidth="1.75"
         strokeLinecap="round"
         strokeLinejoin="round"
       />
@@ -114,287 +74,240 @@ function ChevronLeftIcon({ className = 'h-5 w-5' }: { className?: string }) {
 
 function ChevronDownIcon({ className = 'h-5 w-5' }: { className?: string }) {
   return (
-    <svg
-      viewBox="0 0 24 24"
-      fill="none"
-      aria-hidden="true"
-      className={className}
-    >
+    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" className={className}>
       <path
         d="m6 9 6 6 6-6"
         stroke="currentColor"
-        strokeWidth="2"
+        strokeWidth="1.75"
         strokeLinecap="round"
         strokeLinejoin="round"
-      />
-    </svg>
-  );
-}
-
-function ShieldCheckIcon({ className = 'h-4 w-4' }: { className?: string }) {
-  return (
-    <svg
-      viewBox="0 0 24 24"
-      fill="none"
-      aria-hidden="true"
-      className={className}
-    >
-      <path
-        d="M12 3 5 6v5c0 4.4 2.9 7.8 7 10 4.1-2.2 7-5.6 7-10V6l-7-3Z"
-        stroke="currentColor"
-        strokeWidth="1.8"
-        strokeLinejoin="round"
-      />
-      <path
-        d="m8.8 12 2.1 2.1 4.4-4.4"
-        stroke="currentColor"
-        strokeWidth="1.8"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  );
-}
-
-function TagIcon({ className = 'h-4 w-4' }: { className?: string }) {
-  return (
-    <svg
-      viewBox="0 0 24 24"
-      fill="none"
-      aria-hidden="true"
-      className={className}
-    >
-      <path
-        d="M3 12.2V5a2 2 0 0 1 2-2h7.2a2 2 0 0 1 1.4.6l7 7a2 2 0 0 1 0 2.8l-6.2 6.2a2 2 0 0 1-2.8 0l-7-7a2 2 0 0 1-.6-1.4Z"
-        stroke="currentColor"
-        strokeWidth="1.8"
-        strokeLinejoin="round"
-      />
-      <circle cx="8" cy="8" r="1.4" fill="currentColor" />
-    </svg>
-  );
-}
-
-function UserCheckIcon({ className = 'h-4 w-4' }: { className?: string }) {
-  return (
-    <svg
-      viewBox="0 0 24 24"
-      fill="none"
-      aria-hidden="true"
-      className={className}
-    >
-      <circle cx="9" cy="8" r="3.2" stroke="currentColor" strokeWidth="1.8" />
-      <path
-        d="M3.5 20c.5-3.2 2.5-5.2 5.5-5.2 1.1 0 2.1.3 2.9.8"
-        stroke="currentColor"
-        strokeWidth="1.8"
-        strokeLinecap="round"
-      />
-      <path
-        d="m14.5 16.8 1.8 1.8 4-4"
-        stroke="currentColor"
-        strokeWidth="1.8"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  );
-}
-
-function InfoIcon({ className = 'h-4 w-4' }: { className?: string }) {
-  return (
-    <svg
-      viewBox="0 0 24 24"
-      fill="none"
-      aria-hidden="true"
-      className={className}
-    >
-      <circle cx="12" cy="12" r="9" stroke="currentColor" strokeWidth="1.8" />
-      <path
-        d="M12 11v5m0-8.2v.1"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
       />
     </svg>
   );
 }
 
 /* ------------------------------------------------------------------ */
-/* Componentes de la página                                            */
+/* Piezas de tarifa (ledgers Vantage sin tarjetas repetitivas)         */
 /* ------------------------------------------------------------------ */
 
-const SectionHeading: React.FC<{
-  id: string;
-  children: React.ReactNode;
-}> = ({ id, children }) => (
-  <div>
-    <span
-      aria-hidden="true"
-      className="mb-4 block h-1 w-12 rounded-full bg-primary-400"
-    />
-    <h2
-      id={id}
-      className="font-display text-2xl font-extrabold tracking-tight text-white sm:text-3xl"
-    >
-      {children}
-    </h2>
-  </div>
-);
-
-const PriceBlock: React.FC<{ servicio: Servicio }> = ({ servicio }) => (
+const PriceFigure: React.FC<{ servicio: Servicio; large?: boolean }> = ({
+  servicio,
+  large = false,
+}) => (
   <div>
     {servicio.precioEtiqueta && (
-      <p className="text-sm font-medium text-slate-400">
+      <p className="text-[14px] font-normal text-[var(--color-muted)]">
         {servicio.precioEtiqueta}
       </p>
     )}
     <div className="mt-1 flex flex-wrap items-baseline gap-x-2 gap-y-1">
-      <span className="font-display text-4xl font-extrabold leading-none tracking-tight text-primary-400 sm:text-5xl">
+      <span
+        className={
+          large
+            ? 'v-num-statement text-[var(--color-ink)]'
+            : 'v-num text-[26px] leading-none text-[var(--color-ink)] sm:text-[30px]'
+        }
+      >
         {servicio.precioTexto ?? formatMXN(servicio.precio ?? 0)}
       </span>
       {!servicio.precioTexto && servicio.precio !== null && (
-        <span className="font-display text-xs font-bold uppercase tracking-[0.18em] text-primary-400/90">
-          MXN
-        </span>
-      )}
-      {servicio.precioSufijo && (
-        <span className="basis-full text-sm text-slate-400">
-          {servicio.precioSufijo}
-        </span>
+        <span className="v-unit">MXN</span>
       )}
     </div>
+    {servicio.precioSufijo && (
+      <p className="mt-1.5 text-[14px] text-[var(--color-muted)]">
+        {servicio.precioSufijo}
+      </p>
+    )}
     {servicio.precioDetalle && (
-      <p className="mt-2 text-sm font-medium text-slate-300">
+      <p className="mt-1 text-[14px] font-normal text-[var(--color-ink-2)]">
         {servicio.precioDetalle}
       </p>
     )}
   </div>
 );
 
-const ServiceCard: React.FC<{ servicio: Servicio }> = ({ servicio }) => {
+const FeaturedWorkshopColumn: React.FC<{ servicio: Servicio }> = ({ servicio }) => {
   const mensaje =
     servicio.mensajeWhatsApp ??
     `Hola ESISCOM, quiero cotizar ${servicio.nombre}.`;
 
   return (
     <article
-      className={[
-        'group relative flex h-full flex-col overflow-hidden rounded-2xl border bg-ink-soft p-6',
-        'transition-[transform,border-color,box-shadow] duration-300 sm:p-8',
-        'hover:-translate-y-1 hover:border-primary-400 hover:shadow-2xl hover:shadow-black/40',
-        'focus-within:border-primary-400 motion-reduce:transition-none motion-reduce:hover:translate-y-0',
-        servicio.ancha ? 'md:col-span-2' : '',
-        servicio.destacado ? 'border-primary-400/70' : 'border-white/10',
-      ].join(' ')}
+      className={`flex h-full flex-col justify-between rounded-[var(--radius-card)] p-6 sm:p-8 ${
+        servicio.destacado
+          ? 'ticks bg-[var(--color-paper-2)]'
+          : 'border border-[var(--color-rule)] bg-[var(--color-paper)]'
+      }`}
     >
-      {servicio.destacado && (
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute -right-20 -top-20 h-48 w-48 rounded-full bg-primary-400/10 blur-3xl"
-        />
-      )}
+      <div>
+        <div className="flex flex-wrap items-baseline justify-between gap-2 border-b border-[var(--color-rule)] pb-5">
+          <h3 className="text-[var(--color-ink)]">{servicio.nombre}</h3>
+          {servicio.badge && (
+            <span className="text-[14px] font-normal text-[var(--color-accent)]">
+              {servicio.badge}
+            </span>
+          )}
+        </div>
 
-      <div className="relative flex h-full flex-col">
-        {servicio.badge && (
-          <span className="mb-4 inline-flex w-fit items-center rounded-full bg-primary-400 px-3 py-1 font-display text-[11px] font-bold uppercase tracking-[0.14em] text-ink">
-            {servicio.badge}
-          </span>
+        <div className="mt-6">
+          <PriceFigure servicio={servicio} large />
+        </div>
+
+        <ul className="mt-6 space-y-3 border-t border-[var(--color-rule)] pt-6 text-[16px] leading-relaxed text-[var(--color-ink-2)]">
+          {servicio.incluye.map((item) => (
+            <li key={item} className="flex items-start gap-3">
+              <CheckIcon className="mt-1 h-4 w-4 shrink-0 text-[var(--color-muted)]" />
+              <span>{item}</span>
+            </li>
+          ))}
+        </ul>
+
+        {servicio.nota && (
+          <p className="mt-5 text-[14px] leading-relaxed text-[var(--color-muted)]">
+            {servicio.nota}
+          </p>
         )}
+      </div>
 
-        <div
-          className={
-            servicio.ancha
-              ? 'md:grid md:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] md:gap-8'
-              : ''
-          }
+      <div className="mt-8 pt-4">
+        <a
+          href={waLink(mensaje)}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="v-btn v-btn--line v-btn--sm"
         >
-          <div>
-            <h3 className="font-display text-xl font-bold leading-tight text-white sm:text-2xl">
-              {servicio.nombre}
-            </h3>
-            <div className="mt-4">
-              <PriceBlock servicio={servicio} />
-            </div>
-          </div>
-
-          <div className="mt-6 md:mt-0">
-            <ul className="space-y-4 text-sm leading-relaxed text-slate-300 sm:text-base">
-              {servicio.incluye.map((item) => (
-                <li key={item} className="flex items-start gap-4">
-                  <CheckIcon className="mt-0.5 h-4 w-4 shrink-0 text-primary-400" />
-                  <span>{item}</span>
-                </li>
-              ))}
-            </ul>
-
-            {servicio.nota && (
-              <p className="mt-6 border-t border-white/10 pt-4 text-sm leading-relaxed text-slate-400">
-                {servicio.nota}
-              </p>
-            )}
-          </div>
-        </div>
-
-        <div className="mt-auto pt-6">
-          <a
-            href={waLink(mensaje)}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex min-h-[2.75rem] items-center gap-2 text-sm font-bold text-primary-400 transition-colors hover:text-primary-300"
-          >
-            {servicio.ctaTexto ?? 'Cotizar este servicio'}
-            <ArrowRightIcon className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1 motion-reduce:transition-none motion-reduce:group-hover:translate-x-0" />
-          </a>
-        </div>
+          {servicio.ctaTexto ?? 'Cotizar este servicio'}
+        </a>
       </div>
     </article>
   );
 };
 
-const ZoneCard: React.FC<{ zona: Zona }> = ({ zona }) => (
-  <article className="flex h-full flex-col rounded-2xl border border-white/10 bg-ink-soft p-6 transition-colors duration-200 hover:border-primary-400/60">
-    <span className="inline-flex w-fit items-center rounded-full border border-primary-400/30 bg-primary-400/10 px-3 py-1 font-display text-xs font-bold uppercase tracking-[0.14em] text-primary-400">
-      {zona.nombre}
-    </span>
+const TariffLedgerRow: React.FC<{ servicio: Servicio }> = ({ servicio }) => {
+  const mensaje =
+    servicio.mensajeWhatsApp ??
+    `Hola ESISCOM, quiero cotizar ${servicio.nombre}.`;
 
-    <dl className="mt-6 space-y-4 text-sm leading-relaxed">
-      <div className="flex items-start justify-between gap-4">
-        <dt className="text-slate-400">Distancia</dt>
-        <dd className="text-right font-medium text-slate-200">
-          {zona.distancia}
-        </dd>
+  return (
+    <article className="grid grid-cols-1 gap-6 py-8 md:grid-cols-12 md:items-start md:gap-[var(--gap-columns)]">
+      <div className="min-w-0 md:col-span-4">
+        <h3 className="text-[var(--color-ink)]">{servicio.nombre}</h3>
+        {servicio.nota && (
+          <p className="mt-2.5 max-w-[44ch] text-[14px] leading-relaxed text-[var(--color-muted)]">
+            {servicio.nota}
+          </p>
+        )}
       </div>
-      <div className="flex items-start justify-between gap-4">
-        <dt className="text-slate-400">Tiempo</dt>
-        <dd className="text-right font-medium text-slate-200">{zona.tiempo}</dd>
-      </div>
-    </dl>
 
-    <p className="mt-6 border-t border-white/10 pt-4 font-display text-lg font-extrabold text-primary-400">
-      {zona.cargo}
-    </p>
-  </article>
-);
+      <div className="min-w-0 md:col-span-4">
+        <ul className="space-y-2.5 text-[16px] leading-relaxed text-[var(--color-ink-2)]">
+          {servicio.incluye.map((item) => (
+            <li key={item} className="flex items-start gap-2.5">
+              <CheckIcon className="mt-1 h-4 w-4 shrink-0 text-[var(--color-muted)]" />
+              <span>{item}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <div className="min-w-0 md:col-span-2">
+        <PriceFigure servicio={servicio} />
+      </div>
+
+      <div className="flex items-center md:col-span-2 md:justify-end">
+        <a
+          href={waLink(mensaje)}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex min-h-[44px] items-center whitespace-nowrap text-[14px] font-normal text-[var(--color-ink)] underline decoration-[var(--color-rule-2)] underline-offset-4 transition-colors duration-[var(--dur-short)] hover:text-[var(--color-accent)] hover:decoration-[var(--color-accent)]"
+        >
+          {servicio.ctaTexto ?? 'Cotizar este servicio'}
+        </a>
+      </div>
+    </article>
+  );
+};
+
+const ExternalScheduleRow: React.FC<{ servicio: Servicio }> = ({ servicio }) => {
+  const mensaje =
+    servicio.mensajeWhatsApp ??
+    `Hola ESISCOM, quiero cotizar ${servicio.nombre}.`;
+
+  return (
+    <article className="py-7 first:pt-0">
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-baseline sm:justify-between">
+        <h3 className="text-[var(--color-ink)]">{servicio.nombre}</h3>
+        <div className="shrink-0 sm:text-right">
+          <div className="flex flex-wrap items-baseline gap-x-2 sm:justify-end">
+            <span className="v-num text-[26px] leading-none text-[var(--color-ink)] sm:text-[30px]">
+              {servicio.precioTexto ?? formatMXN(servicio.precio ?? 0)}
+            </span>
+            {!servicio.precioTexto && servicio.precio !== null && (
+              <span className="v-unit">MXN</span>
+            )}
+          </div>
+          {servicio.precioSufijo && (
+            <p className="mt-1 text-[14px] text-[var(--color-muted)]">
+              {servicio.precioSufijo}
+            </p>
+          )}
+          {servicio.precioDetalle && (
+            <p className="mt-0.5 text-[14px] text-[var(--color-ink-2)]">
+              {servicio.precioDetalle}
+            </p>
+          )}
+        </div>
+      </div>
+
+      <ul className="mt-4 space-y-2 text-[16px] leading-relaxed text-[var(--color-ink-2)]">
+        {servicio.incluye.map((item) => (
+          <li key={item} className="flex items-start gap-2.5">
+            <CheckIcon className="mt-1 h-4 w-4 shrink-0 text-[var(--color-muted)]" />
+            <span>{item}</span>
+          </li>
+        ))}
+      </ul>
+
+      <div className="mt-4 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+        {servicio.nota ? (
+          <p className="max-w-[56ch] text-[14px] leading-relaxed text-[var(--color-muted)]">
+            {servicio.nota}
+          </p>
+        ) : (
+          <span />
+        )}
+        <a
+          href={waLink(mensaje)}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex min-h-[44px] shrink-0 items-center whitespace-nowrap text-[14px] font-normal text-[var(--color-ink)] underline decoration-[var(--color-rule-2)] underline-offset-4 transition-colors duration-[var(--dur-short)] hover:text-[var(--color-accent)] hover:decoration-[var(--color-accent)]"
+        >
+          {servicio.ctaTexto ?? 'Cotizar este servicio'}
+        </a>
+      </div>
+    </article>
+  );
+};
 
 const AccordionItem: React.FC<{ punto: Punto; index: number }> = ({
   punto,
   index,
 }) => (
   <details className="group" open={index === 0}>
-    <summary className="flex cursor-pointer list-none items-center justify-between gap-4 rounded-xl px-6 py-4 text-left transition-colors hover:bg-white/[0.03] [&::-webkit-details-marker]:hidden">
-      <span className="flex items-start gap-4">
-        <span className="mt-0.5 font-display text-xs font-bold tracking-[0.16em] text-primary-400">
+    <summary className="flex min-h-[60px] cursor-pointer list-none items-center justify-between gap-4 py-5 text-left transition-colors duration-[var(--dur-short)] hover:text-[var(--color-ink)] [&::-webkit-details-marker]:hidden">
+      <span className="flex items-baseline gap-4">
+        <span className="v-num text-[14px] text-[var(--color-muted)]">
           {String(index + 1).padStart(2, '0')}
         </span>
-        <span className="font-display text-base font-bold text-white sm:text-lg">
+        <span className="text-[18px] font-normal text-[var(--color-ink)] sm:text-[20px]">
           {punto.titulo}
         </span>
       </span>
-      <ChevronDownIcon className="h-5 w-5 shrink-0 text-primary-400 transition-transform duration-200 group-open:rotate-180 motion-reduce:transition-none" />
+      <ChevronDownIcon className="v-details-chevron h-5 w-5 shrink-0 text-[var(--color-muted)] group-open:text-[var(--color-accent)]" />
     </summary>
-    <div className="px-6 pb-6 pl-14 text-sm leading-relaxed text-slate-400 sm:text-base">
-      {punto.texto}
+    <div className="pb-6 pl-9 text-[16px] leading-relaxed text-[var(--color-ink-2)]">
+      <p className="max-w-[60ch]">{punto.texto}</p>
     </div>
   </details>
 );
@@ -451,289 +364,495 @@ const ServicesDetail: React.FC<{ onBack: () => void }> = ({ onBack }) => {
     return () => window.clearTimeout(timer);
   }, []);
 
+  const tallerPaquetes = CATALOGO.taller.slice(0, 3);
+  const tallerBase = CATALOGO.taller.slice(3);
+
   return (
     <div
       id="servicios-detalle"
-      className="min-h-screen bg-ink pb-24 text-white sm:pb-28"
+      className="min-h-screen bg-[var(--color-paper)] text-[var(--color-ink)]"
     >
       <a
         href="#contenido-servicios"
-        className="sr-only focus:not-sr-only focus:absolute focus:left-2 focus:top-2 focus:z-[60] focus:bg-primary-400 focus:px-4 focus:py-2 focus:text-sm focus:font-bold focus:text-ink"
+        className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-2 focus:z-[var(--z-toast)] focus:bg-[var(--color-accent)] focus:px-4 focus:py-2 focus:text-[14px] focus:text-[var(--color-accent-ink)]"
       >
         Saltar al contenido
       </a>
 
-      <header className="sticky top-0 z-50 border-b border-white/10 bg-ink/95 backdrop-blur-md">
-        <div className="mx-auto flex h-16 max-w-[1100px] items-center gap-2 px-4 sm:gap-4 sm:px-6 lg:px-8">
+      <header className="sticky top-0 z-[var(--z-sticky-nav)] border-b border-[var(--color-rule)] bg-[var(--color-paper)]">
+        <div className="container flex h-16 items-center justify-between gap-4">
           <button
             type="button"
             onClick={onBack}
-            className="group inline-flex shrink-0 items-center gap-2 rounded-xl px-1 py-3 text-sm font-semibold text-slate-300 transition-colors hover:text-primary-400 sm:px-2"
+            className="inline-flex min-h-[44px] shrink-0 items-center gap-2 whitespace-nowrap text-[14px] font-normal text-[var(--color-ink-2)] transition-colors duration-[var(--dur-short)] hover:text-[var(--color-ink)]"
             aria-label="Volver al inicio"
           >
-            <ChevronLeftIcon className="h-5 w-5 transition-transform duration-200 group-hover:-translate-x-0.5 motion-reduce:transition-none motion-reduce:group-hover:translate-x-0" />
-            <span className="hidden min-[360px]:inline">Volver</span>
+            <ChevronLeftIcon className="h-4 w-4 shrink-0" />
+            <span>Volver</span>
           </button>
 
-          <span className="min-w-0 flex-1 truncate text-center font-display text-base font-extrabold tracking-tight text-white sm:text-lg">
-            Servicios y Precios
-          </span>
+          <nav
+            aria-label="Navegación rápida por secciones"
+            className="hidden items-center gap-1 lg:flex"
+          >
+            {NAV_ANCHORS.map((item) => (
+              <a
+                key={item.href}
+                href={item.href}
+                className="inline-flex min-h-[44px] items-center whitespace-nowrap px-3 text-[14px] font-normal text-[var(--color-ink-2)] transition-colors duration-[var(--dur-short)] hover:text-[var(--color-ink)]"
+              >
+                {item.label}
+              </a>
+            ))}
+          </nav>
 
-          <div className="w-7 shrink-0 min-[360px]:w-20" aria-hidden="true" />
+          <div className="flex shrink-0 items-center gap-2.5">
+            <img
+              src="images/logo.svg"
+              alt=""
+              width="24"
+              height="24"
+              className="h-6 w-auto brightness-0 invert"
+            />
+            <span className="text-[15px] font-normal text-[var(--color-ink)]">
+              ESISCOM
+            </span>
+          </div>
         </div>
       </header>
 
-      <main id="contenido-servicios" tabIndex={-1} className="scroll-mt-24 focus:outline-none">
+      <main id="contenido-servicios" tabIndex={-1} className="scroll-mt-20 focus:outline-none">
         {/* Hero ------------------------------------------------------- */}
-        <section className="relative overflow-hidden border-b border-white/10">
-          <div
-            aria-hidden="true"
-            className="pointer-events-none absolute inset-0 bg-grid opacity-25"
-          />
-          <div
-            aria-hidden="true"
-            className="pointer-events-none absolute -left-24 -top-20 h-64 w-64 rounded-full bg-primary-400/10 blur-3xl"
-          />
+        <section
+          data-hide-wa-fab
+          className="v-pricing-hero border-b border-[var(--color-rule)]"
+        >
+          <div className="container">
+            <div className="v-pricing-hero__layout">
+              <div className="v-pricing-hero__copy min-w-0">
+                <h1 className="v-pricing-hero__title text-[var(--color-ink)]">
+                  Soporte técnico con precios publicados.
+                </h1>
 
-          <div className="relative mx-auto max-w-[1100px] px-4 pb-12 pt-12 sm:px-6 sm:pb-16 sm:pt-16 lg:px-8">
-            <Reveal>
-              <p className="font-display text-xs font-bold uppercase tracking-[0.24em] text-primary-400">
-                Soporte técnico en Chihuahua
-              </p>
+                <p className="lead mt-6 text-[var(--color-ink-2)]">
+                  Taller, domicilio y acceso remoto en Chihuahua con 30 días de garantía.
+                </p>
 
-              <h1 className="mt-4 max-w-4xl font-display text-4xl font-extrabold leading-[1.08] tracking-tight text-white sm:text-5xl lg:text-6xl">
-                Tu computadora funcionando bien, sin vueltas ni{' '}
-                <span className="text-primary-400">sorpresas</span>
-              </h1>
+                <div className="mt-8 flex flex-wrap items-center gap-3">
+                  <a
+                    href={waLink('Hola ESISCOM, quiero cotizar un servicio')}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="v-btn"
+                  >
+                    <WhatsAppIcon className="h-5 w-5 shrink-0" />
+                    <span>Cotiza por WhatsApp</span>
+                  </a>
+                  <a href="#empresas" className="v-btn v-btn--line">
+                    Planes empresas
+                  </a>
+                </div>
 
-              <p className="mt-6 max-w-3xl text-base leading-relaxed text-slate-300 sm:text-lg">
-                Atendemos a hogares y pequeñas empresas en taller, a domicilio y
-                por acceso remoto. Precios claros desde el inicio y 30 días de
-                garantía en nuestro trabajo.
-              </p>
-
-              <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:flex-wrap">
-                <a
-                  href={waLink('Hola ESISCOM, quiero cotizar un servicio')}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center gap-2 rounded-2xl bg-primary-400 px-6 py-4 font-display text-sm font-bold uppercase tracking-[0.1em] text-ink transition-colors hover:bg-primary-300"
-                >
-                  <WhatsAppIcon className="h-5 w-5" />
-                  Cotiza por WhatsApp
-                </a>
-                <a
-                  href="#empresas"
-                  className="inline-flex items-center justify-center gap-2 rounded-2xl border border-white/20 bg-white/[0.03] px-6 py-4 font-display text-sm font-bold uppercase tracking-[0.1em] text-white transition-colors hover:border-primary-400 hover:text-primary-400"
-                >
-                  Ver planes para empresas
-                  <ArrowRightIcon className="h-4 w-4" />
-                </a>
+                <p className="mt-6 max-w-[46ch] text-[14px] text-[var(--color-muted)]">
+                  Precios en pesos mexicanos (MXN). Si requieres factura, se agrega IVA.
+                </p>
               </div>
 
-              <ul className="mt-8 grid grid-cols-2 gap-4 lg:grid-cols-4">
-                {HERO_BADGES.map(({ label, Icon }) => (
-                  <li
-                    key={label}
-                    className="flex min-h-[3.5rem] items-center gap-2 rounded-2xl border border-white/10 bg-ink-soft/80 px-3 py-3 text-xs font-medium leading-snug text-slate-300 sm:px-4 sm:text-sm"
-                  >
-                    <Icon className="h-4 w-4 shrink-0 text-primary-400" />
-                    <span>{label}</span>
-                  </li>
-                ))}
-              </ul>
+              <div className="v-pricing-hero__media min-w-0">
+                <figure className="ticks v-pricing-hero__stage">
+                  <img
+                    src="images/hero-bg.jpg"
+                    width="960"
+                    height="540"
+                    fetchPriority="high"
+                    alt="Técnico de ESISCOM revisando conexiones de red y equipo en rack"
+                    className="h-full w-full object-cover"
+                    style={{ objectPosition: '58% 42%' }}
+                  />
+                </figure>
+              </div>
 
-              <p className="mt-6 flex max-w-3xl items-start gap-2 pr-16 text-sm leading-relaxed text-slate-400 sm:pr-0">
-                <InfoIcon className="mt-0.5 h-4 w-4 shrink-0 text-primary-400" />
-                <span>
-                  Precios en pesos mexicanos (MXN). Si requieres factura, se
-                  agrega IVA.
-                </span>
-              </p>
-            </Reveal>
+              <div className="v-pricing-hero__strip ticks grid grid-cols-3 gap-2 px-3 py-4 sm:gap-6 sm:px-6">
+                <a
+                  href="#taller"
+                  className="group min-w-0 transition-colors duration-[var(--dur-short)]"
+                >
+                  <span className="block whitespace-nowrap text-[12px] text-[var(--color-muted)] sm:text-[13px]">
+                    Diagnóstico
+                  </span>
+                  <span className="mt-1 inline-flex items-baseline gap-1 whitespace-nowrap text-[var(--color-ink)] group-hover:text-[var(--color-accent)] sm:gap-1.5">
+                    <span className="v-num text-[16px] sm:text-[24px]">$200</span>
+                    <span className="text-[11px] text-[var(--color-muted)] sm:text-[14px]">MXN</span>
+                  </span>
+                </a>
+
+                <a
+                  href="#soporte-externo"
+                  className="group min-w-0 border-l border-[var(--color-rule)] pl-2.5 transition-colors duration-[var(--dur-short)] sm:pl-6"
+                >
+                  <span className="block whitespace-nowrap text-[12px] text-[var(--color-muted)] sm:text-[13px]">
+                    Remoto
+                  </span>
+                  <span className="mt-1 inline-flex items-baseline gap-1 whitespace-nowrap text-[var(--color-ink)] group-hover:text-[var(--color-accent)] sm:gap-1.5">
+                    <span className="v-num text-[16px] sm:text-[24px]">$300</span>
+                    <span className="text-[11px] text-[var(--color-muted)] sm:text-[14px]">MXN</span>
+                  </span>
+                </a>
+
+                <a
+                  href="#empresas"
+                  className="group min-w-0 border-l border-[var(--color-rule)] pl-2.5 transition-colors duration-[var(--dur-short)] sm:pl-6"
+                >
+                  <span className="block whitespace-nowrap text-[12px] text-[var(--color-muted)] sm:text-[13px]">
+                    Bolsa 6 h
+                  </span>
+                  <span className="mt-1 inline-flex items-baseline gap-1 whitespace-nowrap text-[var(--color-ink)] group-hover:text-[var(--color-accent)] sm:gap-1.5">
+                    <span className="v-num text-[16px] sm:text-[24px]">$1,500</span>
+                    <span className="text-[11px] text-[var(--color-muted)] sm:text-[14px]">MXN</span>
+                  </span>
+                </a>
+              </div>
+            </div>
           </div>
         </section>
 
-        {/* Navegación rápida ----------------------------------------- */}
-        <div className="mx-auto max-w-[1100px] px-4 sm:px-6 lg:px-8">
-          <nav
-            aria-label="Navegación rápida por secciones"
-            className="border-b border-white/10"
-          >
-            <ul className="scrollbar-hide -mx-4 flex gap-2 overflow-x-auto px-4 py-4 sm:mx-0 sm:flex-wrap sm:px-0">
+        {/* Navegación móvil ------------------------------------------- */}
+        <nav
+          aria-label="Secciones de precios"
+          className="border-b border-[var(--color-rule)] bg-[var(--color-paper)] lg:hidden"
+        >
+          <div className="container">
+            <ul className="scrollbar-hide flex gap-2 overflow-x-auto py-3">
               {NAV_ANCHORS.map((item) => (
                 <li key={item.href} className="shrink-0">
                   <a
                     href={item.href}
-                    className="inline-flex items-center rounded-full border border-white/15 bg-ink-soft px-4 py-2 text-sm font-semibold text-slate-200 transition-colors hover:border-primary-400 hover:text-primary-400"
+                    className="inline-flex min-h-[44px] items-center whitespace-nowrap rounded-[var(--radius-pill)] border border-[var(--color-rule-2)] px-4 text-[14px] text-[var(--color-ink-2)] transition-colors duration-[var(--dur-short)] hover:border-[var(--color-ink-2)] hover:text-[var(--color-ink)]"
                   >
                     {item.label}
                   </a>
                 </li>
               ))}
             </ul>
-          </nav>
+          </div>
+        </nav>
 
-          <div className="space-y-16 py-12 sm:space-y-24 sm:py-16">
-            {/* Taller ------------------------------------------------ */}
-            <section
-              id="taller"
-              aria-labelledby="taller-title"
-              className="scroll-mt-24"
-            >
-              <Reveal>
-                <SectionHeading id="taller-title">
+        {/* Taller ----------------------------------------------------- */}
+        <section
+          id="taller"
+          aria-labelledby="taller-title"
+          className="v-section scroll-mt-20"
+        >
+          <div className="container">
+            <div className="grid grid-cols-1 items-end gap-6 pb-10 lg:grid-cols-12">
+              <div className="lg:col-span-7">
+                <h2 id="taller-title" className="text-[var(--color-ink)]">
                   Servicios en taller
-                </SectionHeading>
-              </Reveal>
-
-              <div className="mt-8 grid gap-6 md:grid-cols-2">
-                {CATALOGO.taller.map((servicio) => (
-                  <ServiceCard key={servicio.id} servicio={servicio} />
-                ))}
+                </h2>
               </div>
-            </section>
+              <div className="lg:col-span-5 lg:text-right">
+                <p className="text-[16px] text-[var(--color-ink-2)] lg:ml-auto lg:max-w-[40ch]">
+                  Diagnóstico, formateo, respaldo verificado y mejora de hardware en Col. Satélite.
+                </p>
+              </div>
+            </div>
 
-            {/* Soporte externo --------------------------------------- */}
-            <section
-              id="soporte-externo"
-              aria-labelledby="soporte-externo-title"
-              className="scroll-mt-24"
-            >
-              <Reveal>
-                <SectionHeading
-                  id="soporte-externo-title"
-                >
+            {/* Escalera de formateo y renovación en orden: Estándar -> Pro -> Renovación */}
+            <div className="grid grid-cols-1 gap-[var(--gap-columns)] lg:grid-cols-3">
+              {tallerPaquetes.map((servicio) => (
+                <FeaturedWorkshopColumn key={servicio.id} servicio={servicio} />
+              ))}
+            </div>
+
+            {/* Tabla / ledger de servicios rápidos en taller */}
+            <div className="mt-14 border-y border-[var(--color-rule)] divide-y divide-[var(--color-rule)]">
+              {tallerBase.map((servicio) => (
+                <TariffLedgerRow key={servicio.id} servicio={servicio} />
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Soporte técnico externo ------------------------------------ */}
+        <section
+          id="soporte-externo"
+          aria-labelledby="soporte-externo-title"
+          className="v-section scroll-mt-20 border-t border-[var(--color-rule)]"
+        >
+          <div className="container">
+            <div className="grid grid-cols-1 items-start gap-12 lg:grid-cols-12 lg:gap-[var(--gap-columns)]">
+              <div className="min-w-0 lg:sticky lg:top-24 lg:col-span-5">
+                <h2 id="soporte-externo-title" className="text-[var(--color-ink)]">
                   Soporte técnico externo
-                </SectionHeading>
-              </Reveal>
+                </h2>
+                <p className="lead mt-4 text-[var(--color-ink-2)]">
+                  Atención en tu domicilio, oficina o conexión remota por AnyDesk.
+                </p>
 
-              <div className="mt-8 grid gap-6 md:grid-cols-2">
+                <figure className="mt-8">
+                  <div className="ticks v-photo aspect-[16/10] w-full">
+                    <img
+                      src="images/generated/workshop-bench.jpg"
+                      width="1408"
+                      height="768"
+                      loading="lazy"
+                      alt="Diagnóstico de equipo portátil con multímetro y juego de herramientas de precisión"
+                      className="h-full w-full object-cover"
+                      style={{ objectPosition: '50% 100%' }}
+                    />
+                  </div>
+                  <figcaption className="mt-3 text-[14px] text-[var(--color-muted)]">
+                    Redes, impresoras, carpetas compartidas y resolución de fallas en sitio.
+                  </figcaption>
+                </figure>
+              </div>
+
+              <div className="min-w-0 divide-y divide-[var(--color-rule)] border-t border-[var(--color-rule)] pt-7 lg:col-span-7 lg:border-t-0 lg:pt-0">
                 {CATALOGO.externo.map((servicio) => (
-                  <ServiceCard key={servicio.id} servicio={servicio} />
+                  <ExternalScheduleRow key={servicio.id} servicio={servicio} />
                 ))}
               </div>
-            </section>
+            </div>
+          </div>
+        </section>
 
-            {/* Zonas -------------------------------------------------- */}
-            <section
-              id="zonas"
-              aria-labelledby="zonas-title"
-              className="scroll-mt-24"
-            >
-              <Reveal>
-                <SectionHeading id="zonas-title">
+        {/* Zonas de cobertura ----------------------------------------- */}
+        <section
+          id="zonas"
+          aria-labelledby="zonas-title"
+          className="v-section scroll-mt-20"
+        >
+          <div className="container">
+            <div className="grid grid-cols-1 items-end gap-6 pb-10 lg:grid-cols-12">
+              <div className="lg:col-span-7">
+                <h2 id="zonas-title" className="text-[var(--color-ink)]">
                   Zonas de cobertura
-                </SectionHeading>
-              </Reveal>
-
-              <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-                {CATALOGO.zonas.map((zona) => (
-                  <ZoneCard key={zona.id} zona={zona} />
-                ))}
+                </h2>
               </div>
-            </section>
+              <div className="lg:col-span-5 lg:text-right">
+                <p className="text-[16px] text-[var(--color-ink-2)] lg:ml-auto lg:max-w-[40ch]">
+                  Cargo de traslado calculado por distancia radial desde nuestro taller en Chihuahua.
+                </p>
+              </div>
+            </div>
 
-            {/* Empresas ----------------------------------------------- */}
-            <section
-              id="empresas"
-              aria-labelledby="empresas-title"
-              className="scroll-mt-24"
-            >
-              <Reveal>
-                <SectionHeading
-                  id="empresas-title"
-                >
-                  Para empresas
-                </SectionHeading>
-              </Reveal>
+            <div className="border-y border-[var(--color-rule)]">
+              <div className="hidden grid-cols-12 gap-[var(--gap-columns)] border-b border-[var(--color-rule-2)] py-4 text-[14px] text-[var(--color-muted)] md:grid">
+                <span className="col-span-3">Zona</span>
+                <span className="col-span-4">Distancia</span>
+                <span className="col-span-3">Tiempo</span>
+                <span className="col-span-2 text-right">Cargo</span>
+              </div>
 
-              <Reveal className="mt-8">
-                <article className="overflow-hidden rounded-[20px] border-2 border-primary-400/60 bg-ink-soft">
-                  <div className="border-b border-white/10 bg-primary-400/[0.04] p-6 sm:p-8">
-                    <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
-                      <div className="max-w-2xl">
-                        <span className="inline-flex items-center rounded-full border border-primary-400/30 bg-primary-400/10 px-3 py-1 font-display text-xs font-bold uppercase tracking-[0.14em] text-primary-400">
-                          Plan mensual
+              <ul className="divide-y divide-[var(--color-rule)]">
+                {CATALOGO.zonas.map((zona) => {
+                  const isFree = zona.id === 'zona-1';
+                  return (
+                    <li
+                      key={zona.id}
+                      className="grid grid-cols-1 gap-3 py-6 md:grid-cols-12 md:items-center md:gap-[var(--gap-columns)]"
+                    >
+                      <div className="md:col-span-3">
+                        <span className="text-[20px] font-normal text-[var(--color-ink)]">
+                          {zona.nombre}
                         </span>
-                        <h3 className="mt-4 font-display text-2xl font-extrabold tracking-tight text-white sm:text-3xl">
-                          {CATALOGO.care.nombre}
-                        </h3>
-                        <p className="mt-2 text-sm leading-relaxed text-slate-300 sm:text-base">
-                          {CATALOGO.care.subtitulo}
-                        </p>
                       </div>
 
+                      <div className="md:col-span-4">
+                        <div className="flex items-center justify-between gap-4 text-[15px] text-[var(--color-ink-2)] md:block">
+                          <span className="text-[14px] text-[var(--color-muted)] md:hidden">
+                            Distancia
+                          </span>
+                          <span className="v-num">{zona.distancia}</span>
+                        </div>
+                        <div className="v-range-track mt-2" aria-hidden="true">
+                          <div
+                            className={`v-range-fill ${isFree ? 'v-range-fill--accent' : ''}`}
+                            style={{ width: ZONE_RANGE_WIDTH[zona.id] ?? '50%' }}
+                          />
+                        </div>
+                      </div>
+
+                      <div className="flex items-center justify-between gap-4 text-[15px] text-[var(--color-ink-2)] md:col-span-3 md:block">
+                        <span className="text-[14px] text-[var(--color-muted)] md:hidden">
+                          Tiempo
+                        </span>
+                        <span className="v-num">{zona.tiempo}</span>
+                      </div>
+
+                      <div className="flex items-center justify-between gap-4 md:col-span-2 md:justify-end">
+                        <span className="text-[14px] text-[var(--color-muted)] md:hidden">
+                          Cargo
+                        </span>
+                        <span
+                          className={`v-num text-[20px] font-normal ${
+                            isFree ? 'text-[var(--color-accent)]' : 'text-[var(--color-ink)]'
+                          }`}
+                        >
+                          {zona.cargo}
+                        </span>
+                      </div>
+                    </li>
+                  );
+                })}
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        {/* Para empresas ---------------------------------------------- */}
+        <section
+          id="empresas"
+          aria-labelledby="empresas-title"
+          className="v-section--band scroll-mt-20 border-y border-[var(--color-rule)]"
+        >
+          <div className="container">
+            <div className="grid grid-cols-1 items-center gap-10 pb-12 lg:grid-cols-12 lg:gap-[var(--gap-columns)]">
+              <div className="min-w-0 lg:col-span-7">
+                <h2 id="empresas-title" className="text-[var(--color-ink)]">
+                  Para empresas
+                </h2>
+                <h3 className="mt-6 text-[var(--color-ink)]">
+                  {CATALOGO.care.nombre}
+                </h3>
+                <p className="lead mt-3 text-[var(--color-ink-2)]">
+                  {CATALOGO.care.subtitulo}
+                </p>
+
+                <div className="mt-7 flex flex-wrap items-center gap-3">
+                  <a
+                    href={waLink(CATALOGO.care.mensajeWhatsApp)}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="v-btn"
+                  >
+                    {CATALOGO.care.ctaTexto}
+                  </a>
+                </div>
+              </div>
+
+              <div className="min-w-0 lg:col-span-5">
+                <figure className="ticks v-photo aspect-[4/3] w-full">
+                  <img
+                    src="images/generated/server-support.jpg"
+                    width="1408"
+                    height="768"
+                    loading="lazy"
+                    alt="Rack de servidores y cableado estructurado de oficina administrado por ESISCOM"
+                    className="h-full w-full object-cover"
+                    style={{ objectPosition: '50% 50%', transform: 'scale(1.22)' }}
+                  />
+                </figure>
+              </div>
+            </div>
+
+            {/* Alcance de ESISCOM Care: división por líneas finas, cero cajas anidadas */}
+            <div className="grid grid-cols-1 gap-10 border-t border-[var(--color-rule)] pt-10 md:grid-cols-2 md:gap-0">
+              <div className="min-w-0 md:pr-10">
+                <h4 className="text-[16px] font-normal text-[var(--color-ink)]">
+                  Incluye
+                </h4>
+                <ul className="mt-5 space-y-3.5 text-[16px] leading-relaxed text-[var(--color-ink-2)]">
+                  {CATALOGO.care.incluye.map((item) => (
+                    <li key={item} className="flex items-start gap-3">
+                      <CheckIcon className="mt-1 h-4 w-4 shrink-0 text-[var(--color-muted)]" />
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <div className="min-w-0 border-t border-[var(--color-rule)] pt-8 md:border-l md:border-t-0 md:pl-10 md:pt-0">
+                <h4 className="text-[16px] font-normal text-[var(--color-muted)]">
+                  No incluye
+                </h4>
+                <ul className="mt-5 space-y-3.5 text-[16px] leading-relaxed text-[var(--color-muted)]">
+                  {CATALOGO.care.noIncluye.map((item) => (
+                    <li key={item} className="flex items-start gap-3">
+                      <MinusIcon className="mt-1 h-4 w-4 shrink-0 text-[var(--color-muted)]" />
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+
+            <p className="mt-8 max-w-[70ch] border-t border-[var(--color-rule)] pt-6 text-[15px] leading-relaxed text-[var(--color-ink-2)]">
+              {CATALOGO.care.nota}
+            </p>
+
+            {/* Bolsa de horas y Revisión técnica de oficina */}
+            <div className="mt-14 grid grid-cols-1 gap-10 border-t border-[var(--color-rule-2)] pt-12 md:grid-cols-2 md:gap-0">
+              {[CATALOGO.bolsa, CATALOGO.revision].map((servicio, idx) => {
+                const mensaje =
+                  servicio.mensajeWhatsApp ??
+                  `Hola ESISCOM, quiero cotizar ${servicio.nombre}.`;
+                return (
+                  <article
+                    key={servicio.id}
+                    className={`flex min-w-0 flex-col justify-between ${
+                      idx === 0
+                        ? 'md:pr-10'
+                        : 'border-t border-[var(--color-rule)] pt-10 md:border-l md:border-t-0 md:pl-10 md:pt-0'
+                    }`}
+                  >
+                    <div>
+                      <h3 className="text-[var(--color-ink)]">
+                        {servicio.nombre}
+                      </h3>
+                      <div className="mt-4">
+                        <PriceFigure servicio={servicio} large />
+                      </div>
+                      <ul className="mt-6 space-y-3 text-[16px] leading-relaxed text-[var(--color-ink-2)]">
+                        {servicio.incluye.map((item) => (
+                          <li key={item} className="flex items-start gap-3">
+                            <CheckIcon className="mt-1 h-4 w-4 shrink-0 text-[var(--color-muted)]" />
+                            <span>{item}</span>
+                          </li>
+                        ))}
+                      </ul>
+                      {servicio.nota && (
+                        <p className="mt-5 max-w-[52ch] text-[14px] leading-relaxed text-[var(--color-muted)]">
+                          {servicio.nota}
+                        </p>
+                      )}
+                    </div>
+
+                    <div className="mt-7">
                       <a
-                        href={waLink(CATALOGO.care.mensajeWhatsApp)}
+                        href={waLink(mensaje)}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex shrink-0 items-center justify-center gap-2 rounded-2xl bg-primary-400 px-6 py-4 font-display text-sm font-bold uppercase tracking-[0.1em] text-ink transition-colors hover:bg-primary-300"
+                        className="v-btn v-btn--line v-btn--sm"
                       >
-                        {CATALOGO.care.ctaTexto}
-                        <ArrowRightIcon className="h-4 w-4" />
+                        {servicio.ctaTexto ?? 'Cotizar este servicio'}
                       </a>
                     </div>
-                  </div>
+                  </article>
+                );
+              })}
+            </div>
+          </div>
+        </section>
 
-                  <div className="grid gap-6 p-6 sm:p-8 md:grid-cols-2">
-                    <div className="rounded-2xl border border-white/10 bg-ink/40 p-6">
-                      <h4 className="font-display text-sm font-bold uppercase tracking-[0.16em] text-primary-400">
-                        Incluye
-                      </h4>
-                      <ul className="mt-4 space-y-4 text-sm leading-relaxed text-slate-300">
-                        {CATALOGO.care.incluye.map((item) => (
-                          <li key={item} className="flex items-start gap-4">
-                            <CheckIcon className="mt-0.5 h-4 w-4 shrink-0 text-primary-400" />
-                            <span>{item}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-
-                    <div className="rounded-2xl border border-white/10 bg-ink/40 p-6">
-                      <h4 className="font-display text-sm font-bold uppercase tracking-[0.16em] text-slate-300">
-                        No incluye
-                      </h4>
-                      <ul className="mt-4 space-y-4 text-sm leading-relaxed text-slate-400">
-                        {CATALOGO.care.noIncluye.map((item) => (
-                          <li key={item} className="flex items-start gap-4">
-                            <XMarkIcon className="mt-0.5 h-4 w-4 shrink-0 text-slate-400" />
-                            <span>{item}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  </div>
-
-                  <div className="border-t border-white/10 p-6 sm:p-8">
-                    <p className="flex items-start gap-4 rounded-2xl border border-primary-400/20 bg-primary-400/[0.06] p-4 text-sm leading-relaxed text-slate-300 sm:text-base">
-                      <InfoIcon className="mt-0.5 h-5 w-5 shrink-0 text-primary-400" />
-                      <span>{CATALOGO.care.nota}</span>
-                    </p>
-                  </div>
-                </article>
-              </Reveal>
-
-              <div className="mt-6 grid gap-6 md:grid-cols-2">
-                <ServiceCard servicio={CATALOGO.bolsa} />
-                <ServiceCard servicio={CATALOGO.revision} />
-              </div>
-            </section>
-
-            {/* Cómo trabajamos ---------------------------------------- */}
-            <section
-              id="como-trabajamos"
-              aria-labelledby="como-trabajamos-title"
-              className="scroll-mt-24"
-            >
-              <Reveal>
-                <SectionHeading id="como-trabajamos-title">
+        {/* Cómo trabajamos -------------------------------------------- */}
+        <section
+          id="como-trabajamos"
+          aria-labelledby="como-trabajamos-title"
+          className="v-section scroll-mt-20"
+        >
+          <div className="container">
+            <div className="grid grid-cols-1 items-start gap-10 lg:grid-cols-12 lg:gap-[var(--gap-columns)]">
+              <div className="min-w-0 lg:col-span-5">
+                <h2 id="como-trabajamos-title" className="text-[var(--color-ink)]">
                   Cómo trabajamos
-                </SectionHeading>
-              </Reveal>
+                </h2>
+                <p className="lead mt-4 text-[var(--color-ink-2)]">
+                  Condiciones claras sobre garantía, respaldos, piezas y resguardo en taller.
+                </p>
+              </div>
 
-              <div className="mt-8 divide-y divide-white/10 overflow-hidden rounded-2xl border border-white/10 bg-ink-soft">
+              <div className="min-w-0 divide-y divide-[var(--color-rule)] border-y border-[var(--color-rule)] lg:col-span-7">
                 {CATALOGO.comoTrabajamos.map((punto, index) => (
                   <AccordionItem
                     key={punto.titulo}
@@ -742,60 +861,86 @@ const ServicesDetail: React.FC<{ onBack: () => void }> = ({ onBack }) => {
                   />
                 ))}
               </div>
-            </section>
+            </div>
+          </div>
+        </section>
 
-            {/* Por qué ESISCOM ---------------------------------------- */}
-            <section aria-labelledby="por-que-title" className="scroll-mt-24">
-              <Reveal>
-                <SectionHeading id="por-que-title">
+        {/* Por qué ESISCOM y cierre directo --------------------------- */}
+        <section
+          data-hide-wa-fab
+          aria-labelledby="por-que-title"
+          className="v-section border-t border-[var(--color-rule)]"
+        >
+          <div className="container">
+            <div className="grid grid-cols-1 items-end gap-6 pb-10 lg:grid-cols-12">
+              <div className="lg:col-span-7">
+                <h2 id="por-que-title" className="text-[var(--color-ink)]">
                   Por qué ESISCOM
-                </SectionHeading>
-              </Reveal>
-
-              <div className="mt-8 grid gap-4 sm:grid-cols-3">
-                {CATALOGO.porQue.map((punto, index) => {
-                  const Icon = POR_QUE_ICONS[index] ?? ShieldCheckIcon;
-                  return (
-                    <article
-                      key={punto.titulo}
-                      className="rounded-2xl border border-white/10 bg-ink-soft p-6"
-                    >
-                      <div className="flex h-10 w-10 items-center justify-center rounded-xl border border-primary-400/30 bg-primary-400/10 text-primary-400">
-                        <Icon className="h-5 w-5" />
-                      </div>
-                      <h3 className="mt-4 font-display text-base font-bold text-white">
-                        {punto.titulo}
-                      </h3>
-                      <p className="mt-2 text-sm leading-relaxed text-slate-400">
-                        {punto.texto}
-                      </p>
-                    </article>
-                  );
-                })}
+                </h2>
               </div>
-
-              <div className="mt-8">
+              <div className="lg:col-span-5 lg:flex lg:justify-end">
                 <a
                   href={waLink('Hola ESISCOM, quiero más información')}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center gap-2 rounded-2xl border-2 border-primary-400 px-6 py-4 font-display text-sm font-bold uppercase tracking-[0.1em] text-primary-400 transition-colors hover:bg-primary-400 hover:text-ink"
+                  className="v-btn"
                 >
-                  <WhatsAppIcon className="h-5 w-5" />
-                  Escríbenos por WhatsApp
+                  <WhatsAppIcon className="h-5 w-5 shrink-0" />
+                  <span>Escríbenos por WhatsApp</span>
                 </a>
               </div>
-            </section>
+            </div>
+
+            <div className="grid grid-cols-1 gap-8 border-t border-[var(--color-rule)] pt-10 md:grid-cols-3 md:gap-0">
+              {CATALOGO.porQue.map((punto, index) => (
+                <article
+                  key={punto.titulo}
+                  className={`min-w-0 ${
+                    index === 0
+                      ? 'md:pr-8'
+                      : 'border-t border-[var(--color-rule)] pt-6 md:border-l md:border-t-0 md:px-8 md:pt-0'
+                  } ${index === CATALOGO.porQue.length - 1 ? 'md:pr-0' : ''}`}
+                >
+                  <h3 className="text-[var(--color-ink)]">{punto.titulo}</h3>
+                  <p className="mt-3 max-w-[36ch] text-[16px] leading-relaxed text-[var(--color-ink-2)]">
+                    {punto.texto}
+                  </p>
+                </article>
+              ))}
+            </div>
           </div>
-        </div>
+        </section>
       </main>
 
-      <footer className="border-t border-white/10">
-        <div className="mx-auto max-w-[1100px] px-4 py-8 text-center text-sm leading-relaxed text-slate-400 sm:px-6 lg:px-8">
-          <span className="font-display tracking-[0.2em] text-slate-300">
-            ESISCOM
-          </span>{' '}
-          — Chihuahua, MX · Precios vigentes al momento de la cotización.
+      <footer className="border-t border-[var(--color-rule)] bg-[var(--color-paper)] py-14 text-[var(--color-ink)]">
+        <div className="container">
+          <div className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
+            <div className="min-w-0">
+              <div className="flex items-center gap-2.5">
+                <img
+                  src="images/logo.svg"
+                  alt=""
+                  width="24"
+                  height="24"
+                  className="h-6 w-auto brightness-0 invert"
+                />
+                <span className="text-[16px] font-normal text-[var(--color-ink)]">
+                  ESISCOM
+                </span>
+              </div>
+              <p className="mt-3 text-[15px] text-[var(--color-ink-2)]">
+                Chihuahua, MX. Precios vigentes al momento de la cotización.
+              </p>
+            </div>
+
+            <button
+              type="button"
+              onClick={onBack}
+              className="v-btn v-btn--line v-btn--sm w-fit"
+            >
+              Volver al inicio
+            </button>
+          </div>
         </div>
       </footer>
     </div>

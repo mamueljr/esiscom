@@ -1,7 +1,10 @@
-/* Hallmark · shape: kept · genre: modern-minimal · theme: Vantage (by request) · redesign: restyle
- * hero: Stage · nav: edge-aligned · footer: mast · imagery: screenshots 3 (capture.mjs), generated 2 (workshop-bench, server-support) · signature: Vantage point cloud + corner-ticked workshop photo, ESoft live plate, and dark ESoft switcher table · vantage: terrain/steel
+/* Hallmark · shape: Split Studio · genre: modern-minimal · theme: Vantage (by request) · draw: 654f72 · redesign: full
+ * hero: Stage (/#servicios-detalle) · nav: three-part · footer: colophon · imagery: project 3 (hero-bg, workshop-bench, server-support) · signature: borderless corner-ticked dark rack technician visual beside aligned 3-column MXN tariff readout and ruled precision rate ledgers · vantage: object/steel
  * axes: dark/grotesk-sans/chromatic-lime · posture: restrained · contrast: pass · fold: pass · v2.0.0 */
-/* Hallmark · pre-emit critique: P5 H5 E5 S5 R5 V5 · cut Wayfind 2px square borders and Chivo Mono in favour of Vantage Geologica SHRP 100, corner ticks, and lime signal */
+/* Hallmark · pre-emit critique: P5 H5 E5 S5 R5 V4 · weakest: V, shares Vantage theme with home by user request; broke every repetitive card wall into ruled ledgers, precision distance bars, and hardware photography */
+/* Hallmark · reworded "Tu computadora funcionando bien, sin vueltas ni sorpresas" to "Soporte técnico con precios publicados." · 58 and 38iii name the 8-word headline and accented word */
+/* Hallmark · hero-review: fix · 4 findings · 4 resolved */
+/* Hallmark · finish-review: subagent · 8 findings · 7 resolved 1 kept-copy (section headings kept for redesign --kept parity) · gap: none */
 @import "./tokens.css";
 @import "./base.css";
 
@@ -130,6 +133,145 @@ h3 {
 .v-num {
   font-variant-numeric: tabular-nums;
   font-weight: 400;
+}
+.v-num-statement {
+  font-family: var(--font-display);
+  font-size: var(--text-3xl);
+  font-variant-numeric: tabular-nums;
+  font-weight: 300;
+  font-variation-settings: "SHRP" 100;
+  letter-spacing: var(--tracking-display);
+  line-height: 1;
+}
+.v-unit {
+  font-size: var(--text-sm);
+  font-weight: 400;
+  color: var(--color-muted);
+}
+
+/* Vantage pricing stage hero */
+.v-pricing-hero {
+  background-color: var(--color-paper);
+  color: var(--color-ink);
+  min-height: min(calc(100dvh - 64px), 824px);
+  display: flex;
+  align-items: center;
+  padding-block: var(--space-lg);
+}
+.v-pricing-hero__title {
+  font-size: var(--text-display-s);
+  max-width: 15ch;
+}
+.v-pricing-hero__layout {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  column-gap: var(--space-2xl);
+  row-gap: var(--space-xl);
+  align-items: center;
+}
+.v-pricing-hero__copy {
+  grid-column: 1;
+  grid-row: 1;
+}
+.v-pricing-hero__media {
+  grid-column: 2;
+  grid-row: 1;
+}
+.v-pricing-hero__strip {
+  grid-column: 1 / -1;
+  grid-row: 2;
+}
+.v-pricing-hero__stage {
+  position: relative;
+  aspect-ratio: 16 / 10;
+  min-height: 440px;
+  max-height: 490px;
+  width: 100%;
+  overflow: hidden;
+  border-radius: var(--radius-card);
+  background-color: var(--color-paper);
+  color: var(--color-ink);
+}
+.v-pricing-hero__stage::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  background:
+    linear-gradient(to right, var(--color-paper) 0%, transparent 18%),
+    linear-gradient(to top, var(--color-paper) 0%, transparent 24%);
+}
+@media (max-width: 60rem) {
+  .v-pricing-hero {
+    min-height: auto;
+    padding-block: var(--space-lg);
+  }
+  .v-pricing-hero__layout {
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: var(--space-lg);
+  }
+  .v-pricing-hero__copy {
+    grid-column: 1;
+    grid-row: 1;
+  }
+  .v-pricing-hero__strip {
+    grid-column: 1;
+    grid-row: 2;
+  }
+  .v-pricing-hero__media {
+    grid-column: 1;
+    grid-row: 3;
+  }
+  .v-pricing-hero__stage {
+    min-height: 240px;
+    max-height: 320px;
+    aspect-ratio: 16 / 10;
+  }
+}
+
+/* Vantage photo inset outline and muted dark-ground grading */
+.v-photo {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius-card);
+  background-color: var(--color-paper-2);
+}
+.v-photo > img {
+  filter: saturate(0.8) contrast(1.06) brightness(0.86);
+  outline: var(--rule-hair) solid color-mix(in oklab, var(--color-ink) 8%, transparent);
+  outline-offset: -1px;
+}
+
+/* Pricing distance range bar */
+.v-range-track {
+  position: relative;
+  height: var(--space-2xs);
+  width: 100%;
+  background-color: var(--color-paper-3);
+  border-radius: var(--radius-pill);
+  overflow: hidden;
+}
+.v-range-fill {
+  height: 100%;
+  border-radius: var(--radius-pill);
+  background-color: var(--color-ink-2);
+}
+.v-range-fill--accent {
+  background-color: var(--color-accent);
+}
+
+/* Native details chevron rotation */
+.v-details-chevron {
+  transition: transform var(--dur-short) var(--ease-out);
+}
+details[open] .v-details-chevron {
+  transform: rotate(180deg);
+}
+@media (prefers-reduced-motion: reduce) {
+  .v-details-chevron {
+    transition: none;
+  }
 }
 
 /* Segmented switcher */

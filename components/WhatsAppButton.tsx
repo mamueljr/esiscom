@@ -8,13 +8,23 @@ const WhatsAppButton: React.FC = () => {
   const [suppressed, setSuppressed] = useState(false);
 
   useEffect(() => {
-    const contact = document.getElementById('contact');
-    if (!contact) return;
+    const targets = Array.from(
+      document.querySelectorAll('#contact, [data-hide-wa-fab]')
+    );
+    if (targets.length === 0) return;
+
+    const visible = new Set<Element>();
     const obs = new IntersectionObserver(
-      ([entry]) => setSuppressed(entry.isIntersecting),
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) visible.add(entry.target);
+          else visible.delete(entry.target);
+        }
+        setSuppressed(visible.size > 0);
+      },
       { threshold: 0.12 }
     );
-    obs.observe(contact);
+    targets.forEach((el) => obs.observe(el));
     return () => obs.disconnect();
   }, []);
 
