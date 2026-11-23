@@ -3,7 +3,7 @@ import { NAV_ITEMS } from '../constants';
 import { MenuIcon, XIcon } from './Icons';
 
 const linkClass =
-  'px-3 py-2 text-[13px] font-semibold uppercase tracking-[0.18em] text-slate-300 hover:text-primary-400 transition-colors';
+  'px-3 py-2 text-[14px] font-normal whitespace-nowrap text-[var(--color-ink-2)] hover:text-[var(--color-ink)] transition-colors duration-[var(--dur-short)]';
 
 const Navbar: React.FC<{
   onShowServices: () => void;
@@ -16,70 +16,77 @@ const Navbar: React.FC<{
     const handleScroll = () => {
       setScrolled(window.scrollY > 20);
     };
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   return (
     <nav
-      className={`fixed w-full z-50 bg-ink/85 backdrop-blur-md border-b border-white/10 transition-all duration-300 ${
-        scrolled ? 'py-1' : 'py-3'
+      aria-label="Navegación principal"
+      className={`fixed top-0 left-0 right-0 z-[var(--z-sticky-nav)] border-b border-[var(--color-rule)] bg-[var(--color-paper)] transition-colors duration-[var(--dur-short)] ${
+        scrolled ? 'border-[var(--color-rule-2)]' : ''
       }`}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-16">
+      <div className="container">
+        <div className="flex justify-between items-center h-16 gap-4">
           <div className="flex-shrink-0 flex items-center">
-            <a href="#intro" className="flex items-center gap-3">
+            <a href="#intro" aria-label="ESISCOM Inicio" className="flex items-center gap-3">
               <img
                 src="images/logo.svg"
-                alt="ESISCOM Logo"
-                className="h-10 w-auto brightness-0 invert"
+                alt=""
+                width="32"
+                height="32"
+                className="h-8 w-auto brightness-0 invert"
               />
-              <span className="font-display font-extrabold text-xl tracking-tight text-white">
+              <span className="font-normal text-[18px] tracking-tight text-[var(--color-ink)]">
                 ESISCOM
               </span>
             </a>
           </div>
 
           {/* Desktop Menu */}
-          <div className="hidden md:block">
-            <div className="ml-10 flex items-center space-x-2">
-              {NAV_ITEMS.map((item) => (
-                <a
-                  key={item.label}
-                  href={item.href}
-                  {...(item.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
-                  className={linkClass}
-                >
-                  {item.label}
-                </a>
-              ))}
+          <div className="hidden lg:flex items-center gap-1">
+            {NAV_ITEMS.map((item) => (
               <a
-                href="#contact"
-                className="ml-3 border border-white/25 hover:border-primary-400 text-slate-200 hover:text-primary-400 px-4 py-2.5 text-[13px] font-bold uppercase tracking-[0.14em] transition-colors"
+                key={item.label}
+                href={item.href}
+                {...(item.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+                className={linkClass}
               >
-                Agendar
+                {item.label}
               </a>
-              <button
-                onClick={onShowSoftware}
-                className="ml-2 border border-white/25 hover:border-primary-400 text-slate-200 hover:text-primary-400 px-5 py-2.5 text-[13px] font-bold uppercase tracking-[0.14em] transition-colors"
-              >
-                ESoft
-              </button>
-              <button
-                onClick={onShowServices}
-                className="ml-2 bg-primary-400 hover:bg-primary-300 text-ink px-5 py-2.5 text-[13px] font-bold uppercase tracking-[0.14em] transition-colors"
-              >
-                Precios
-              </button>
-            </div>
+            ))}
+          </div>
+
+          <div className="hidden lg:flex items-center gap-2 shrink-0">
+            <button
+              type="button"
+              onClick={onShowSoftware}
+              className="v-btn v-btn--line v-btn--sm"
+            >
+              ESoft
+            </button>
+            <button
+              type="button"
+              onClick={onShowServices}
+              className="v-btn v-btn--line v-btn--sm"
+            >
+              Precios
+            </button>
+            <a
+              href="#contact"
+              className="v-btn v-btn--sm"
+            >
+              Agendar
+            </a>
           </div>
 
           {/* Mobile menu button */}
-          <div className="md:hidden flex items-center">
+          <div className="lg:hidden flex items-center">
             <button
+              type="button"
               onClick={() => setIsOpen(!isOpen)}
-              className="p-2 text-white hover:text-primary-400 focus:outline-none"
+              className="p-2 min-w-[44px] min-h-[44px] inline-flex items-center justify-center text-[var(--color-ink)] hover:text-[var(--color-accent)] transition-colors"
               aria-label={isOpen ? 'Cerrar menú' : 'Abrir menú'}
               aria-expanded={isOpen}
               aria-controls="menu-movil"
@@ -92,44 +99,51 @@ const Navbar: React.FC<{
 
       {/* Mobile Menu Panel */}
       {isOpen && (
-        <div id="menu-movil" className="md:hidden bg-ink border-t border-white/10">
-          <div className="px-4 pt-2 pb-6 space-y-1">
+        <div
+          id="menu-movil"
+          className="lg:hidden bg-[var(--color-paper-2)] border-t border-[var(--color-rule)]"
+        >
+          <div className="container py-4 space-y-1">
             {NAV_ITEMS.map((item) => (
               <a
                 key={item.label}
                 href={item.href}
                 {...(item.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
                 onClick={() => setIsOpen(false)}
-                className="block px-3 py-3 text-sm font-semibold uppercase tracking-[0.18em] text-slate-200 hover:text-primary-400 border-b border-white/5"
+                className="block px-3 py-3 text-[15px] text-[var(--color-ink-2)] hover:text-[var(--color-ink)] border-b border-[var(--color-rule)]"
               >
                 {item.label}
               </a>
             ))}
-            <a
-              href="#contact"
-              onClick={() => setIsOpen(false)}
-              className="block mt-4 border border-white/25 text-slate-200 text-center px-4 py-3 text-sm font-bold uppercase tracking-[0.14em]"
-            >
-              Agendar
-            </a>
-            <button
-              onClick={() => {
-                setIsOpen(false);
-                onShowSoftware();
-              }}
-              className="block w-full mt-2 border border-white/25 text-slate-200 text-center px-4 py-3 text-sm font-bold uppercase tracking-[0.14em]"
-            >
-              ESoft
-            </button>
-            <button
-              onClick={() => {
-                setIsOpen(false);
-                onShowServices();
-              }}
-              className="block w-full mt-2 bg-primary-400 text-ink text-center px-4 py-3 text-sm font-bold uppercase tracking-[0.14em]"
-            >
-              Precios
-            </button>
+            <div className="pt-4 flex flex-col gap-2">
+              <button
+                type="button"
+                onClick={() => {
+                  setIsOpen(false);
+                  onShowSoftware();
+                }}
+                className="v-btn v-btn--line w-full"
+              >
+                ESoft
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  setIsOpen(false);
+                  onShowServices();
+                }}
+                className="v-btn v-btn--line w-full"
+              >
+                Precios
+              </button>
+              <a
+                href="#contact"
+                onClick={() => setIsOpen(false)}
+                className="v-btn w-full"
+              >
+                Agendar
+              </a>
+            </div>
           </div>
         </div>
       )}

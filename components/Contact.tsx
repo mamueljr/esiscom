@@ -1,42 +1,45 @@
 import React from 'react';
 import { LocationIcon, PhoneIcon, MailIcon, ClockIcon } from './Icons';
-import Reveal from './Reveal';
 import ContactForm from './ContactForm';
 
 const ROWS = [
   {
-    icon: <LocationIcon className="w-6 h-6 text-primary-400" />,
+    icon: <LocationIcon className="w-5 h-5 text-[var(--color-accent)]" />,
     title: 'Dirección',
     body: (
       <>
         Cipres #3712, Col. Satélite
         <br />
-        Chihuahua, Chih. · CP 31114
+        Chihuahua, Chih., CP 31114
       </>
     ),
   },
   {
-    icon: <PhoneIcon className="w-6 h-6 text-primary-400" />,
+    icon: <PhoneIcon className="w-5 h-5 text-[var(--color-accent)]" />,
     title: 'Teléfono',
-    body: <a href="tel:+526143249716" className="hover:text-primary-400 transition-colors">(614) 324-9716</a>,
+    body: (
+      <a href="tel:+526143249716" className="v-num hover:text-[var(--color-accent)] transition-colors">
+        (614) 324-9716
+      </a>
+    ),
   },
   {
-    icon: <MailIcon className="w-6 h-6 text-primary-400" />,
-    title: 'Email',
+    icon: <MailIcon className="w-5 h-5 text-[var(--color-accent)]" />,
+    title: 'Correo',
     body: (
-      <a href="mailto:contacto@esiscom.com" className="hover:text-primary-400 transition-colors">
+      <a href="mailto:contacto@esiscom.com" className="hover:text-[var(--color-accent)] transition-colors">
         contacto@esiscom.com
       </a>
     ),
   },
   {
-    icon: <ClockIcon className="w-6 h-6 text-primary-400" />,
+    icon: <ClockIcon className="w-5 h-5 text-[var(--color-accent)]" />,
     title: 'Horario',
     body: (
       <>
-        Lun–Vie: 9:00 AM – 6:00 PM
+        Lun a Vie: 9:00 am a 6:00 pm
         <br />
-        Sáb: 9:00 AM – 1:00 PM
+        Sáb: 9:00 am a 1:00 pm
       </>
     ),
   },
@@ -44,68 +47,59 @@ const ROWS = [
 
 const Contact: React.FC = () => {
   return (
-    <section id="contact" className="py-24 bg-ink text-white scroll-mt-20">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <Reveal>
-          <p className="font-display text-xs font-bold tracking-[0.3em] text-primary-400 mb-4">
-            05 — CONTACTO
-          </p>
-          <h2 className="font-display text-4xl sm:text-5xl font-extrabold tracking-tight leading-[1.05]">
-            Hablemos<span className="text-primary-400">.</span>
-          </h2>
-          <p className="mt-5 text-lg text-slate-400 max-w-2xl">
-            Cuéntanos qué pasa con tu equipo y te respondemos el mismo día hábil. También puedes
-            visitarnos en Cipres #3712.
-          </p>
-        </Reveal>
+    <section id="contact" className="v-section--band border-t border-[var(--color-rule)] scroll-mt-20">
+      <div className="container">
+        <h2 className="text-[var(--color-ink)]">
+          Hablemos.
+        </h2>
+        <p className="lead mt-4 text-[var(--color-ink-2)]">
+          Cuéntanos qué pasa con tu equipo o proyecto de software y te respondemos el mismo día hábil. También puedes visitarnos en Cipres #3712.
+        </p>
 
-        <div className="mt-12 grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-          <Reveal className="lg:col-span-7">
+        <div className="mt-10 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-[var(--gap-columns)] items-start">
+          <div className="lg:col-span-7 min-w-0">
             <ContactForm />
-          </Reveal>
+          </div>
 
-          <Reveal delay={120} className="lg:col-span-5">
-            <div className="flex h-full flex-col justify-between border border-white/15 bg-ink-soft p-8 sm:p-10">
-              <div className="space-y-8">
+          <div className="lg:col-span-5 min-w-0 space-y-6">
+            <div className="ticks p-6 sm:p-8 bg-[var(--color-paper)] rounded-[var(--radius-card)]">
+              <dl className="divide-y divide-[var(--color-rule)]">
                 {ROWS.map((row) => (
-                  <div key={row.title} className="flex items-start">
-                    <div className="flex-shrink-0 mt-0.5">{row.icon}</div>
-                    <div className="ml-5">
-                      <h4 className="font-display text-xs font-bold tracking-[0.24em] text-slate-400 uppercase">
-                        {row.title}
-                      </h4>
-                      <div className="mt-1 text-lg text-white">{row.body}</div>
+                  <div key={row.title} className="py-4 first:pt-0 last:pb-0 flex items-start gap-4">
+                    <div className="shrink-0 mt-0.5">{row.icon}</div>
+                    <div className="min-w-0">
+                      <dt className="text-[13px] text-[var(--color-muted)]">{row.title}</dt>
+                      <dd className="mt-1 text-[16px] text-[var(--color-ink)]">{row.body}</dd>
                     </div>
                   </div>
                 ))}
-              </div>
+              </dl>
+
               <a
                 href="https://wa.me/526143249716?text=Hola%20ESISCOM%2C%20necesito%20soporte%20t%C3%A9cnico."
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mt-10 flex items-center justify-center px-6 py-4 bg-primary-400 hover:bg-primary-300 text-ink font-display text-sm font-bold uppercase tracking-[0.12em] transition-colors"
+                className="v-btn w-full mt-6"
               >
                 Enviar WhatsApp
               </a>
             </div>
-          </Reveal>
-        </div>
 
-        <Reveal delay={160} className="mt-8">
-          <div className="h-72 sm:h-80 overflow-hidden border border-white/15">
-            <iframe
-              title="Ubicación ESISCOM"
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3500.6762461427656!2d-106.0922363!3d28.6694111!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x86ea4308e7bce6cd%3A0xadd80f9d7922d30d!2sESISCOM!5e0!3m2!1ses!2smx"
-              width="100%"
-              height="100%"
-              style={{ border: 0 }}
-              className="[filter:grayscale(1)_invert(92%)_contrast(88%)]"
-              allowFullScreen={true}
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-            ></iframe>
+            <div className="ticks h-64 overflow-hidden rounded-[var(--radius-card)] bg-[var(--color-paper)]">
+              <iframe
+                title="Ubicación ESISCOM"
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3500.6762461427656!2d-106.0922363!3d28.6694111!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x86ea4308e7bce6cd%3A0xadd80f9d7922d30d!2sESISCOM!5e0!3m2!1ses!2smx"
+                width="100%"
+                height="100%"
+                style={{ border: 0 }}
+                className="[filter:grayscale(1)_invert(92%)_contrast(88%)]"
+                allowFullScreen={true}
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+              />
+            </div>
           </div>
-        </Reveal>
+        </div>
       </div>
     </section>
   );

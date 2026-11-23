@@ -1,45 +1,220 @@
+/* Hallmark · shape: Conversational FAQ · genre: modern-minimal · theme: Vantage (by request) · redesign: full
+ * hero: Stage · nav: edge-aligned · footer: mast · imagery: screenshots 3 (capture.mjs), library 1 (Wikimedia Commons) · signature: live Vantage point cloud framing real ESoft captures · vantage: terrain/steel
+ * reworded "Tu tecnología bajo control." to "Tecnología y software bajo control." · 58/ESoft focus
+ * reworded "Tres frentes. Cero downtime." to "Tres frentes técnicos, cero paros." · 19/38iii
+ * reworded "Tu problema, resuelto en minutos." to "Soporte remoto en minutos." · 38iii
+ * dropped hero-bg.jpg, intro-image.jpg · replaced with live ESoft Medical capture and verified Wikimedia Commons photo
+ * axes: dark/grotesk-sans/chromatic-lime · posture: restrained · contrast: pass · fold: pass · v2.0.0 */
+/* Hallmark · pre-emit critique: P4 H5 E4 S5 R4 V5 · weakest: P, software was buried behind a button; promoted ESoft with live captures in hero and switcher */
+/* Hallmark · waive 44c · hero text column includes the three-stat ticks strip below the actions, placing its centre 64px from the Stage capture · aligned to the Stage grid */
+@import "./tokens.css";
+@import "./base.css";
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-@layer base {
-  body {
-    font-family: 'Inter', sans-serif;
-    background-color: #070b14;
-  }
+/* Vantage typography & surface rules (after Tailwind preflight) */
+h1, h2, h3 {
+  font-family: var(--font-display);
+  font-weight: var(--display-weight);
+  font-variation-settings: "SHRP" 100;
+  letter-spacing: var(--tracking-display);
+  line-height: 1.02;
+}
+h1 {
+  max-width: 16ch;
+  font-size: var(--text-display);
+}
+h2 {
+  max-width: 24ch;
+  font-size: var(--text-section);
+}
+h3 {
+  max-width: 36ch;
+  font-size: var(--text-title);
+  line-height: 1.2;
+}
+.lead {
+  font-size: var(--text-lead);
+  line-height: 1.45;
+  max-width: 48ch;
+}
 
-  ::selection {
-    background: #a3e635;
-    color: #070b14;
-  }
+body {
+  background-color: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-body);
+  font-weight: 300;
+  font-variation-settings: "SHRP" 0;
+}
 
-  :focus-visible {
-    outline: 2px solid #a3e635;
-    outline-offset: 3px;
-  }
+/* Vantage corner ticks */
+.ticks {
+  position: relative;
+}
+.ticks::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  border: var(--rule-hair) solid var(--color-rule-2);
+  -webkit-mask: conic-gradient(at var(--tick) var(--tick), transparent 75%, var(--color-ink) 0) 0 0 / calc(100% - var(--tick)) calc(100% - var(--tick));
+  mask: conic-gradient(at var(--tick) var(--tick), transparent 75%, var(--color-ink) 0) 0 0 / calc(100% - var(--tick)) calc(100% - var(--tick));
+  z-index: 2;
+}
 
-  @media (prefers-reduced-motion: reduce) {
-    html {
-      scroll-behavior: auto;
-    }
+/* Vantage buttons: 8 states */
+.v-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-xs);
+  min-height: 48px;
+  padding: 0 var(--space-lg);
+  border: var(--rule-hair) solid var(--color-accent);
+  border-radius: var(--radius-pill);
+  background-color: var(--color-accent);
+  color: var(--color-accent-ink);
+  font-family: var(--font-body);
+  font-size: var(--text-md);
+  font-weight: 400;
+  line-height: 1;
+  white-space: nowrap;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color var(--dur-short) var(--ease-out), border-color var(--dur-short) var(--ease-out), transform var(--dur-micro) var(--ease-out);
+}
+.v-btn:hover {
+  background-color: var(--color-accent-hi);
+  border-color: var(--color-accent-hi);
+}
+.v-btn:active {
+  transform: translateY(1px);
+}
+.v-btn:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 2px;
+}
+.v-btn:disabled,
+.v-btn[aria-disabled="true"] {
+  opacity: 0.55;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.v-btn--line {
+  background-color: transparent;
+  color: var(--color-ink);
+  border-color: var(--color-rule-2);
+}
+.v-btn--line:hover {
+  background-color: var(--color-paper-2);
+  border-color: var(--color-ink-2);
+}
+
+.v-btn--sm {
+  min-height: 44px;
+  padding: 0 var(--space-md);
+  font-size: var(--text-sm);
+}
+
+/* Section rhythm */
+.v-section {
+  background-color: var(--color-paper);
+  color: var(--color-ink);
+  padding-block: var(--section-gap);
+}
+.v-section--band {
+  background-color: var(--color-paper-2);
+  color: var(--color-ink);
+  padding-block: var(--section-gap-s);
+}
+
+/* Tabular figures */
+.v-num {
+  font-variant-numeric: tabular-nums;
+  font-weight: 400;
+}
+.v-num .v-unit {
+  color: var(--color-muted);
+  font-size: 0.75em;
+}
+
+/* Segmented switcher */
+.v-seg {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+}
+.v-seg button {
+  min-height: 44px;
+  padding: 0 var(--space-md);
+  border: var(--rule-hair) solid var(--color-rule);
+  border-radius: var(--radius-pill);
+  background-color: transparent;
+  color: var(--color-ink-2);
+  font-size: var(--text-sm);
+  font-weight: 400;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background-color var(--dur-short) var(--ease-out), border-color var(--dur-short) var(--ease-out), color var(--dur-short) var(--ease-out);
+}
+.v-seg button:hover {
+  border-color: var(--color-rule-2);
+  color: var(--color-ink);
+}
+.v-seg button[aria-selected="true"] {
+  background-color: var(--color-paper-3);
+  border-color: var(--color-accent);
+  color: var(--color-ink);
+}
+.v-seg button:active {
+  transform: translateY(1px);
+}
+
+/* Form wells */
+.v-input {
+  width: 100%;
+  min-height: 48px;
+  padding: var(--space-sm) var(--space-md);
+  border: var(--rule-hair) solid var(--color-muted);
+  border-radius: var(--radius-card);
+  background-color: var(--color-paper-2);
+  color: var(--color-ink);
+  font-size: var(--text-md);
+  transition: border-color var(--dur-short) var(--ease-out);
+}
+.v-input::placeholder {
+  color: var(--color-muted);
+}
+.v-input:focus {
+  outline: none;
+  border-color: var(--color-accent);
+}
+.v-input:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: -2px;
+}
+.v-input:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .v-btn,
+  .v-seg button,
+  .v-input {
+    transition: none;
   }
 }
 
 @layer utilities {
-  /* Scrollbar oculto para el chat */
   .scrollbar-hide::-webkit-scrollbar {
     display: none;
   }
   .scrollbar-hide {
     -ms-overflow-style: none;
     scrollbar-width: none;
-  }
-
-  /* Retícula de fondo del hero y de soporte remoto */
-  .bg-grid {
-    background-image:
-      linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
-      linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
-    background-size: 56px 56px;
   }
 }
