@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
-import Clients from './components/Clients';
+import SoftwareShowcase from './components/SoftwareShowcase';
 import Services from './components/Services';
 import RemoteSupport from './components/RemoteSupport';
 import Contact from './components/Contact';
@@ -23,8 +23,6 @@ const HASH_BY_VIEW: Record<View, string> = {
   privacy: '#aviso-de-privacidad',
 };
 
-// Anclas internas de la página de Servicios y Precios. Se reconocen para que
-// los chips de navegación no se interpreten como "volver al inicio".
 const SERVICE_HASHES = new Set([
   '#servicios-detalle',
   '#contenido-servicios',
@@ -55,13 +53,9 @@ const App: React.FC = () => {
   useEffect(() => {
     const onHashChange = () => {
       const next = viewFromHash();
-      // Solo al cambiar de vista: así los enlaces internos (#contact, #services)
-      // siguen desplazándose a su sección y no al inicio.
       if (next !== viewRef.current) {
         const toTop = () => window.scrollTo({ top: 0, behavior: 'instant' as ScrollBehavior });
         toTop();
-        // El navegador reajusta el scroll al cambiar el alto del documento;
-        // repetimos después del commit para no aterrizar a media página.
         requestAnimationFrame(() => requestAnimationFrame(toTop));
       }
       setView(next);
@@ -78,7 +72,7 @@ const App: React.FC = () => {
 
   if (view === 'services') {
     return (
-      <div className="min-h-screen flex flex-col font-sans bg-ink">
+      <div className="min-h-screen flex flex-col bg-[var(--color-paper)] text-[var(--color-ink)]">
         <ServicesDetail onBack={() => goTo('home')} />
         <WhatsAppButton />
       </div>
@@ -87,7 +81,7 @@ const App: React.FC = () => {
 
   if (view === 'software') {
     return (
-      <div className="min-h-screen flex flex-col font-sans bg-ink">
+      <div className="min-h-screen flex flex-col bg-[var(--color-paper)] text-[var(--color-ink)]">
         <SoftDetail onBack={() => goTo('home')} />
         <WhatsAppButton />
       </div>
@@ -96,7 +90,7 @@ const App: React.FC = () => {
 
   if (view === 'privacy') {
     return (
-      <div className="min-h-screen flex flex-col font-sans bg-ink">
+      <div className="min-h-screen flex flex-col bg-[var(--color-paper)] text-[var(--color-ink)]">
         <PrivacyPolicy onBack={() => goTo('home')} />
         <WhatsAppButton />
       </div>
@@ -104,10 +98,10 @@ const App: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen flex flex-col font-sans bg-ink">
+    <div className="min-h-screen flex flex-col bg-[var(--color-paper)] text-[var(--color-ink)]">
       <a
         href="#intro"
-        className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-[60] focus:bg-primary-400 focus:text-ink focus:px-4 focus:py-2 focus:font-bold focus:text-sm"
+        className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-[60] focus:bg-[var(--color-accent)] focus:text-[var(--color-accent-ink)] focus:px-4 focus:py-2 focus:text-sm"
       >
         Saltar al contenido
       </a>
@@ -117,7 +111,7 @@ const App: React.FC = () => {
       />
       <main className="flex-grow">
         <Hero onShowServices={() => goTo('services')} />
-        <Clients />
+        <SoftwareShowcase onShowSoftware={() => goTo('software')} />
         <Services onShowServices={() => goTo('services')} />
         <RemoteSupport />
         <Testimonials />

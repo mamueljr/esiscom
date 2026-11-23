@@ -34,13 +34,13 @@ export const SERVICES: ServiceItem[] = [
 export const TESTIMONIALS: Testimonial[] = [
   {
     quote: "El equipo de ESISCOM dio respuesta inmediata cuando nuestra red cayó. En menos de una hora restablecieron los servicios.",
-    author: "María González",
+    author: "Miriam Arizmendi",
     role: "Coordinadora TI, Electricos Marín"
   },
   {
     quote: "Su servicio de mantenimiento preventivo nos ha ahorrado paros costosos. Además, su comunicación es clara y profesional.",
-    author: "Carlos Méndez",
-    role: "Director General, Heladería Geronimos"
+    author: "Homberto Fernández",
+    role: "Director General, Windows Home"
   },
   {
     quote: "Desarrollaron un sistema a la medida para gestionar inventario. Fue entregado a tiempo y con capacitación completa.",

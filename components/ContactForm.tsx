@@ -1,15 +1,6 @@
 import React, { useState } from 'react';
 import { WhatsAppIcon } from './Icons';
 
-/**
- * Formulario de contacto sin backend.
- *
- * Con `VITE_WEB3FORMS_KEY` definida (secreto `VITE_WEB3FORMS_KEY` en GitHub Actions),
- * el envío va a Web3Forms y llega por correo. Si el envío falla, se ofrece el mismo
- * mensaje por WhatsApp para no perder la solicitud.
- * Sin llave, el formulario NO finge un envío: arma el mensaje y abre WhatsApp,
- * que es el canal que la empresa ya atiende.
- */
 const WEB3FORMS_ENDPOINT = 'https://api.web3forms.com/submit';
 const WHATSAPP_NUMBER = '526143249716';
 
@@ -41,10 +32,7 @@ const EMPTY: Form = {
   acepto: false,
 };
 
-const inputClass =
-  'w-full border border-white/15 bg-ink px-4 py-3 text-white placeholder:text-slate-600 transition-colors focus:border-primary-400 focus:outline-none';
-const labelClass =
-  'mb-2 block font-display text-[11px] font-bold uppercase tracking-[0.2em] text-slate-400';
+const labelClass = 'mb-2 block text-[14px] text-[var(--color-ink-2)]';
 
 const ContactForm: React.FC = () => {
   const [form, setForm] = useState<Form>(EMPTY);
@@ -90,7 +78,6 @@ const ContactForm: React.FC = () => {
 
     const accessKey = import.meta.env.VITE_WEB3FORMS_KEY;
 
-    // Sin llave configurada: no simulamos un envío, pasamos a WhatsApp.
     if (!accessKey) {
       window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
       setNotice('Abrimos WhatsApp con tu mensaje listo para enviar.');
@@ -128,15 +115,15 @@ const ContactForm: React.FC = () => {
 
   if (status === 'sent') {
     return (
-      <div className="flex h-full flex-col justify-center border border-primary-400/40 bg-primary-400/5 p-8 sm:p-10">
-        <p className="font-display text-xs font-bold tracking-[0.3em] text-primary-400">
-          SOLICITUD ENVIADA
+      <div className="ticks flex h-full flex-col justify-center bg-[var(--color-paper)] rounded-[var(--radius-card)] p-8 sm:p-10">
+        <p className="text-[14px] text-[var(--color-accent)]">
+          Solicitud lista
         </p>
-        <h3 className="mt-4 font-display text-2xl font-extrabold text-white sm:text-3xl">
+        <h3 className="mt-3 text-[var(--color-ink)]">
           Gracias, {form.nombre.trim() || 'bienvenido'}.
         </h3>
-        <p className="mt-3 text-slate-300">{notice}</p>
-        <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+        <p className="mt-3 text-[var(--color-ink-2)]">{notice}</p>
+        <div className="mt-8 flex flex-wrap gap-3">
           <button
             type="button"
             onClick={() => {
@@ -144,7 +131,7 @@ const ContactForm: React.FC = () => {
               setStatus('idle');
               setNotice('');
             }}
-            className="border border-white/25 px-6 py-3 font-display text-sm font-bold uppercase tracking-[0.12em] text-white transition-colors hover:border-primary-400 hover:text-primary-400"
+            className="v-btn v-btn--line"
           >
             Enviar otra
           </button>
@@ -152,7 +139,7 @@ const ContactForm: React.FC = () => {
             href={`https://wa.me/${WHATSAPP_NUMBER}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center justify-center gap-2 bg-primary-400 px-6 py-3 font-display text-sm font-bold uppercase tracking-[0.12em] text-ink transition-colors hover:bg-primary-300"
+            className="v-btn"
           >
             <WhatsAppIcon className="h-4 w-4" />
             WhatsApp
@@ -166,16 +153,16 @@ const ContactForm: React.FC = () => {
     <form
       onSubmit={handleSubmit}
       noValidate
-      className="border border-white/15 bg-ink-soft p-6 sm:p-10"
+      className="ticks bg-[var(--color-paper)] rounded-[var(--radius-card)] p-6 sm:p-8"
     >
-      <h3 className="font-display text-xl font-bold text-white sm:text-2xl">
+      <h3 className="text-[var(--color-ink)]">
         Cuéntanos qué necesitas
       </h3>
-      <p className="mt-2 text-sm text-slate-400">
+      <p className="mt-2 text-[15px] text-[var(--color-ink-2)]">
         Respondemos el mismo día hábil. Si es urgente, marca o escríbenos por WhatsApp.
       </p>
 
-      <div className="mt-8 grid gap-5 sm:grid-cols-2">
+      <div className="mt-7 grid gap-5 sm:grid-cols-2">
         <div>
           <label htmlFor="cf-nombre" className={labelClass}>
             Nombre *
@@ -185,17 +172,15 @@ const ContactForm: React.FC = () => {
             name="nombre"
             value={form.nombre}
             onChange={(e) => set('nombre', e.target.value)}
-            className={inputClass}
+            className="v-input"
             placeholder="Tu nombre"
             autoComplete="name"
             aria-invalid={Boolean(errors.nombre)}
             aria-describedby={errors.nombre ? 'cf-nombre-error' : undefined}
           />
-          {errors.nombre && (
-            <p id="cf-nombre-error" className="mt-2 text-xs text-red-400">
-              {errors.nombre}
-            </p>
-          )}
+          <p id="cf-nombre-error" className="mt-1.5 min-h-[1lh] text-[13px] text-[var(--color-error)]">
+            {errors.nombre ?? ''}
+          </p>
         </div>
 
         <div>
@@ -208,17 +193,15 @@ const ContactForm: React.FC = () => {
             type="email"
             value={form.email}
             onChange={(e) => set('email', e.target.value)}
-            className={inputClass}
+            className="v-input"
             placeholder="Escribe tu correo"
             autoComplete="email"
             aria-invalid={Boolean(errors.email)}
             aria-describedby={errors.email ? 'cf-email-error' : undefined}
           />
-          {errors.email && (
-            <p id="cf-email-error" className="mt-2 text-xs text-red-400">
-              {errors.email}
-            </p>
-          )}
+          <p id="cf-email-error" className="mt-1.5 min-h-[1lh] text-[13px] text-[var(--color-error)]">
+            {errors.email ?? ''}
+          </p>
         </div>
 
         <div>
@@ -231,7 +214,7 @@ const ContactForm: React.FC = () => {
             type="tel"
             value={form.telefono}
             onChange={(e) => set('telefono', e.target.value)}
-            className={inputClass}
+            className="v-input"
             placeholder="(614) 000-0000"
             autoComplete="tel"
           />
@@ -246,7 +229,7 @@ const ContactForm: React.FC = () => {
             name="servicio"
             value={form.servicio}
             onChange={(e) => set('servicio', e.target.value)}
-            className={`${inputClass} appearance-none`}
+            className="v-input appearance-none"
           >
             <option value="">Selecciona una opción</option>
             {SERVICIOS.map((s) => (
@@ -264,23 +247,21 @@ const ContactForm: React.FC = () => {
           <textarea
             id="cf-mensaje"
             name="mensaje"
-            rows={5}
+            rows={4}
             value={form.mensaje}
             onChange={(e) => set('mensaje', e.target.value)}
-            className={`${inputClass} resize-y`}
+            className="v-input resize-y"
             placeholder="Ejemplo: laptop Lenovo no enciende desde ayer, necesito diagnóstico."
             aria-invalid={Boolean(errors.mensaje)}
             aria-describedby={errors.mensaje ? 'cf-mensaje-error' : undefined}
           />
-          {errors.mensaje && (
-            <p id="cf-mensaje-error" className="mt-2 text-xs text-red-400">
-              {errors.mensaje}
-            </p>
-          )}
+          <p id="cf-mensaje-error" className="mt-1.5 min-h-[1lh] text-[13px] text-[var(--color-error)]">
+            {errors.mensaje ?? ''}
+          </p>
         </div>
       </div>
 
-      {/* Honeypot anti-spam (Web3Forms lo reconoce por el name) */}
+      {/* Honeypot anti-spam */}
       <input
         type="checkbox"
         name="botcheck"
@@ -290,13 +271,13 @@ const ContactForm: React.FC = () => {
         aria-hidden="true"
       />
 
-      <div className="mt-6">
-        <label className="flex items-start gap-3 text-sm text-slate-400">
+      <div className="mt-4">
+        <label className="flex items-start gap-3 text-[14px] text-[var(--color-ink-2)]">
           <input
             type="checkbox"
             checked={form.acepto}
             onChange={(e) => set('acepto', e.target.checked)}
-            className="mt-1 h-4 w-4 shrink-0 accent-primary-400"
+            className="mt-1 h-4 w-4 shrink-0 accent-[var(--color-accent)]"
             aria-invalid={Boolean(errors.acepto)}
             aria-describedby={errors.acepto ? 'cf-acepto-error' : undefined}
           />
@@ -306,50 +287,48 @@ const ContactForm: React.FC = () => {
               href="#aviso-de-privacidad"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-primary-400 underline underline-offset-2 hover:text-primary-300"
+              className="text-[var(--color-accent)] underline underline-offset-2 whitespace-nowrap hover:text-[var(--color-accent-hi)]"
             >
               aviso de privacidad
             </a>{' '}
             y el uso de mis datos para atender esta solicitud.
           </span>
         </label>
-        {errors.acepto && (
-          <p id="cf-acepto-error" className="mt-2 text-xs text-red-400">
-            {errors.acepto}
-          </p>
-        )}
+        <p id="cf-acepto-error" className="mt-1.5 min-h-[1lh] text-[13px] text-[var(--color-error)]">
+          {errors.acepto ?? ''}
+        </p>
       </div>
 
       {status === 'error' && (
         <div
           role="alert"
-          className="mt-6 border border-red-400/40 bg-red-400/10 p-4 text-sm text-red-300"
+          className="mt-4 border border-[var(--color-error)] rounded-[var(--radius-card)] p-4 text-[14px] text-[var(--color-ink)]"
         >
           <p>No pudimos enviar el formulario por correo. Tu mensaje no se perdió:</p>
           <a
             href={whatsappUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="mt-3 inline-flex items-center gap-2 bg-primary-400 px-4 py-2 font-display text-xs font-bold uppercase tracking-[0.12em] text-ink transition-colors hover:bg-primary-300"
+            className="v-btn v-btn--sm mt-3"
           >
             <WhatsAppIcon className="h-4 w-4" />
             Enviarlo por WhatsApp
           </a>
-          <p className="mt-3 text-xs text-red-300/80">
+          <p className="mt-3 text-[13px] text-[var(--color-muted)]">
             También puedes llamar al (614) 324-9716.
           </p>
         </div>
       )}
 
-      <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:items-center">
+      <div className="mt-6 flex flex-col gap-4 sm:flex-row sm:items-center">
         <button
           type="submit"
           disabled={status === 'sending'}
-          className="inline-flex justify-center bg-primary-400 px-8 py-4 font-display text-sm font-bold uppercase tracking-[0.12em] text-ink transition-colors hover:bg-primary-300 disabled:cursor-not-allowed disabled:opacity-60"
+          className="v-btn"
         >
           {status === 'sending' ? 'Enviando…' : 'Enviar solicitud'}
         </button>
-        <p className="text-xs text-slate-500">
+        <p className="text-[13px] text-[var(--color-muted)]">
           Tus datos se usan solo para atender tu solicitud.
         </p>
       </div>

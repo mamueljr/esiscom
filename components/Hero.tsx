@@ -1,10 +1,6 @@
-import React, { useEffect, useRef, useState } from 'react';
-
-const STATS = [
-  { value: 20, prefix: '+', label: 'Años en Chihuahua' },
-  { value: 3, prefix: '0', label: 'Hardware · Redes · Software' },
-  { value: 6, prefix: '0', label: 'Días de atención semanal' },
-];
+import React, { useState } from 'react';
+import { APPS } from '../services/softwareCatalog';
+import VantageCloud from './VantageCloud';
 
 function getOpenState(now: Date): { open: boolean; detail: string } {
   const utcH = now.getUTCHours();
@@ -17,180 +13,137 @@ function getOpenState(now: Date): { open: boolean; detail: string } {
     (isWeekday && h >= 9 && h < 18) || (d === 6 && h >= 9 && h < 13);
 
   if (open) {
-    const close = isWeekday ? '6 PM' : '1 PM';
-    return { open: true, detail: `ABIERTO AHORA · CERRAMOS ${close}` };
+    const close = isWeekday ? '6:00 pm' : '1:00 pm';
+    return { open: true, detail: `Abierto ahora, cerramos ${close}` };
   }
-  let next = 'HOY 9 AM';
+  let next = 'hoy 9:00 am';
   if (d === 0 || (d === 6 && h >= 13) || (isWeekday && h >= 18)) {
-    next = d === 5 || d === 6 ? 'LUN 9 AM' : 'MAÑANA 9 AM';
-    if (d === 0) next = 'LUN 9 AM';
+    next = d === 5 || d === 6 ? 'lunes 9:00 am' : 'mañana 9:00 am';
+    if (d === 0) next = 'lunes 9:00 am';
   } else if (isWeekday && h < 9) {
-    next = 'HOY 9 AM';
+    next = 'hoy 9:00 am';
   }
-  return { open: false, detail: `CERRADO · ABRIMOS ${next}` };
+  return { open: false, detail: `Cerrado, abrimos ${next}` };
 }
-
-const Stat: React.FC<{ value: number; prefix: string; label: string }> = ({
-  value,
-  prefix,
-  label,
-}) => {
-  const ref = useRef<HTMLDivElement>(null);
-  const [started, setStarted] = useState(false);
-  // Arranca en el valor real: si el bloque ya es visible al cargar (o el usuario
-  // pide menos movimiento) nunca se muestra una cifra falsa mientras anima.
-  const [n, setN] = useState(value);
-
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-
-    const rect = el.getBoundingClientRect();
-    if (rect.top < window.innerHeight && rect.bottom > 0) return;
-
-    const obs = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setN(0);
-          setStarted(true);
-          obs.disconnect();
-        }
-      },
-      { threshold: 0.4 }
-    );
-    obs.observe(el);
-    return () => obs.disconnect();
-  }, []);
-
-  useEffect(() => {
-    if (!started) return;
-    let raf = 0;
-    const t0 = performance.now();
-    const duration = 1200;
-    const tick = (t: number) => {
-      const p = Math.min(1, (t - t0) / duration);
-      setN(Math.round(value * (1 - Math.pow(1 - p, 3))));
-      if (p < 1) raf = requestAnimationFrame(tick);
-    };
-    raf = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(raf);
-  }, [started, value]);
-
-  const text = `${prefix}${n}`;
-  return (
-    <div ref={ref} className="flex items-baseline gap-4 py-6 sm:px-8 first:pl-0 border-b sm:border-b-0 border-white/10">
-      <span className="font-display text-4xl font-extrabold text-white tabular-nums">{text}</span>
-      <span className="text-sm text-slate-400 uppercase tracking-wider">{label}</span>
-    </div>
-  );
-};
 
 const Hero: React.FC<{ onShowServices: () => void }> = ({ onShowServices }) => {
   const [openState] = useState(() => getOpenState(new Date()));
 
   return (
-    <div id="intro" className="relative bg-ink overflow-hidden scroll-mt-20">
-      <div className="absolute inset-0 z-0">
-        <img
-          src="images/hero-bg.jpg"
-          alt=""
-          aria-hidden="true"
-          className="w-full h-full object-cover opacity-15 grayscale"
-          onError={(e) => {
-            (e.target as HTMLImageElement).style.display = 'none';
-          }}
-        />
-        <div className="absolute inset-0 bg-grid [mask-image:radial-gradient(ellipse_70%_60%_at_50%_40%,black,transparent)]"></div>
-        <div className="absolute inset-0 bg-gradient-to-b from-ink/60 via-ink/80 to-ink"></div>
-        <div className="absolute -top-32 -left-32 w-[480px] h-[480px] bg-primary-400/15 rounded-full blur-3xl"></div>
-      </div>
+    <section
+      id="intro"
+      className="relative bg-[var(--color-paper)] text-[var(--color-ink)] pt-24 pb-12 lg:pt-24 lg:pb-12 min-h-[min(100dvh,900px)] flex items-center scroll-mt-20"
+    >
+      <div className="container">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-[var(--gap-columns)] items-center">
+          {/* Left column: exact intro headline & copy preserved on plain Vantage ground */}
+          <div className="lg:col-span-6 min-w-0">
+            <div
+              role="status"
+              className="inline-flex items-center gap-2 mb-5 text-[14px] text-[var(--color-ink-2)]"
+            >
+              <span
+                aria-hidden="true"
+                className={`inline-block w-2 h-2 rounded-full ${
+                  openState.open ? 'bg-[var(--color-accent)]' : 'bg-[var(--color-muted)]'
+                }`}
+              />
+              <span>{openState.detail}</span>
+            </div>
 
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-36 pb-16 lg:pt-48 lg:pb-20">
-        <div className="grid lg:grid-cols-12 gap-12 items-center">
-          <div className="lg:col-span-7">
-            <p className="font-display text-xs font-bold tracking-[0.3em] text-primary-400 mb-6">
-              ESISCOM — CHIHUAHUA, MX
-            </p>
-            <h1 className="font-display text-4xl sm:text-6xl lg:text-7xl font-extrabold text-white tracking-tight leading-[1.05]">
-              TU TECNOLOGÍA
-              <br />
-              BAJO <span className="text-primary-400">CONTROL.</span>
+            <h1 className="text-[var(--color-ink)]">
+              Tu tecnología bajo control.
             </h1>
-            <p className="mt-6 max-w-xl text-lg text-slate-300 leading-relaxed">
-              Reparación de equipos, soporte IT y software a la medida para
-              negocios que no pueden detenerse. Diagnóstico rápido, trato
-              directo y resultados garantizados.
+
+            <p className="lead mt-5 text-[var(--color-ink-2)]">
+              Reparación de equipos, soporte IT y software a la medida para negocios que no pueden detenerse. Diagnóstico rápido, trato directo y resultados garantizados.
             </p>
-            <div className="mt-10 flex flex-col sm:flex-row gap-4">
-              <a
-                href="#contact"
-                className="inline-flex justify-center items-center px-8 py-4 bg-primary-400 hover:bg-primary-300 text-ink font-display text-sm font-bold uppercase tracking-[0.12em] transition-colors"
-              >
+
+            <div className="mt-7 flex flex-wrap items-center gap-3">
+              <a href="#contact" className="v-btn">
                 Agendar diagnóstico
+              </a>
+              <a href="#esoft-showcase" className="v-btn v-btn--line">
+                Explorar ESoft
               </a>
               <a
                 href="#remote-support"
-                className="inline-flex justify-center items-center px-8 py-4 border border-white/25 hover:border-primary-400 text-white hover:text-primary-400 font-display text-sm font-bold uppercase tracking-[0.12em] transition-colors"
+                className="px-2 py-2 min-h-[44px] inline-flex items-center text-[14px] text-[var(--color-ink-2)] hover:text-[var(--color-ink)] underline underline-offset-4 whitespace-nowrap transition-colors"
               >
-                Soporte remoto →
+                Soporte remoto
               </a>
               <button
+                type="button"
                 onClick={onShowServices}
-                className="inline-flex justify-center items-center px-8 py-4 border border-white/25 hover:border-primary-400 text-white hover:text-primary-400 font-display text-sm font-bold uppercase tracking-[0.12em] transition-colors"
+                className="px-2 py-2 min-h-[44px] inline-flex items-center text-[14px] text-[var(--color-ink-2)] hover:text-[var(--color-ink)] underline underline-offset-4 whitespace-nowrap transition-colors"
               >
                 Ver precios
               </button>
             </div>
-            <div className="mt-6 inline-flex items-center gap-2.5 border border-white/15 bg-white/5 px-4 py-2">
-              <span className="relative flex h-2.5 w-2.5">
-                {openState.open && (
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary-400 opacity-75"></span>
-                )}
-                <span
-                  className={`relative inline-flex rounded-full h-2.5 w-2.5 ${
-                    openState.open ? 'bg-primary-400' : 'bg-slate-500'
-                  }`}
-                ></span>
-              </span>
-              <span className="font-display text-[11px] font-bold tracking-[0.22em] text-slate-300">
-                {openState.detail}
-              </span>
-            </div>
           </div>
 
-          <div className="lg:col-span-5">
-            <div className="relative">
-              <div className="absolute -top-3 -left-3 w-24 h-24 border-t-4 border-l-4 border-primary-400"></div>
-              <div className="relative overflow-hidden bg-ink-soft">
-                <img
-                  src="images/intro-image.jpg"
-                  alt="Técnico trabajando en infraestructura"
-                  className="w-full h-[420px] object-cover grayscale contrast-125 brightness-90"
-                  onError={(e) => {
-                    (e.target as HTMLImageElement).style.display = 'none';
-                  }}
-                />
-                <div className="absolute inset-0 bg-primary-400/25 mix-blend-overlay"></div>
-                <div className="absolute inset-0 bg-gradient-to-t from-ink/80 via-transparent to-transparent"></div>
-                <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between">
-                  <span className="bg-ink/80 backdrop-blur px-4 py-2 font-display text-[11px] font-bold tracking-[0.22em] text-primary-400">
-                    SOPORTE REAL · HARDWARE REAL
-                  </span>
+          {/* Right column: Vantage point cloud + corner-ticked workshop photo & ESoft live panel */}
+          <div className="lg:col-span-6 min-w-0">
+            <div className="ticks relative p-4 sm:p-5 bg-[var(--color-paper-2)] rounded-[var(--radius-card)]">
+              <VantageCloud className="absolute inset-0 w-full h-full pointer-events-none opacity-70" />
+              <div className="relative z-10 space-y-4">
+                <figure
+                  className="aspect-[16/10] w-full overflow-hidden rounded-[var(--radius-card)] border border-[var(--color-rule-2)] bg-[var(--color-paper)]"
+                  data-slot="hero-workshop"
+                  data-alt="Taller técnico de reparación de hardware y diagnóstico ESISCOM"
+                >
+                  <img
+                    src="images/generated/workshop-bench.jpg"
+                    width="1408"
+                    height="768"
+                    fetchPriority="high"
+                    alt="Técnico de ESISCOM trabajando en diagnóstico de hardware"
+                    className="w-full h-full object-cover"
+                    onError={(e) => {
+                      (e.target as HTMLImageElement).style.display = 'none';
+                    }}
+                  />
+                </figure>
+
+                {/* Vantage corner-ticked ESoft live systems ledger */}
+                <div className="ticks bg-[var(--color-paper)] rounded-[var(--radius-card)] p-4">
+                  <div className="flex items-center justify-between pb-2.5 border-b border-[var(--color-rule)] text-[13px] text-[var(--color-muted)]">
+                    <span>ESISCOM Soft</span>
+                    <span className="v-num text-[var(--color-accent)]">3 sistemas en línea</span>
+                  </div>
+                  <ul className="mt-2 divide-y divide-[var(--color-rule)] text-[14px]">
+                    {APPS.map((app) => (
+                      <li key={app.id} className="py-2 flex items-center justify-between gap-2">
+                        <a
+                          href={app.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-[var(--color-ink)] hover:text-[var(--color-accent)] transition-colors"
+                        >
+                          {app.nombre}
+                        </a>
+                        <span className="text-[13px] text-[var(--color-muted)]">
+                          {app.categoria.replace('Para ', '')}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                  <div className="mt-2 pt-2.5 border-t border-[var(--color-rule)] flex items-center justify-between text-[13px]">
+                    <span className="v-num text-[var(--color-muted)]">+20 años en Chihuahua</span>
+                    <a
+                      href="#esoft-showcase"
+                      className="text-[var(--color-accent)] hover:underline whitespace-nowrap"
+                    >
+                      Ver pantallas
+                    </a>
+                  </div>
                 </div>
               </div>
-              <div className="absolute -bottom-3 -right-3 w-24 h-24 border-b-4 border-r-4 border-primary-400"></div>
             </div>
           </div>
         </div>
-
-        <div className="mt-16 grid grid-cols-1 sm:grid-cols-3 border-t border-white/10">
-          {STATS.map((s) => (
-            <Stat key={s.label} value={s.value} prefix={s.prefix} label={s.label} />
-          ))}
-        </div>
       </div>
-    </div>
+    </section>
   );
 };
 

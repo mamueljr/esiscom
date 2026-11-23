@@ -4,14 +4,6 @@ import { WhatsAppIcon } from './Icons';
 const PHONE = '526143249716';
 const MESSAGE = 'Hola ESISCOM, necesito soporte técnico.';
 
-/**
- * Botón flotante de WhatsApp.
- * Reemplaza al asistente de IA (ChatWidget), que dependía de una API key
- * expuesta en el cliente y quedaba inservible en el build de producción.
- *
- * Se oculta mientras la sección de contacto está en pantalla: ahí ya hay un
- * botón de WhatsApp propio y el flotante tapaba los campos del formulario.
- */
 const WhatsAppButton: React.FC = () => {
   const [suppressed, setSuppressed] = useState(false);
 
@@ -36,18 +28,14 @@ const WhatsAppButton: React.FC = () => {
       aria-label="Escríbenos por WhatsApp"
       aria-hidden={suppressed}
       tabIndex={suppressed ? -1 : 0}
-      className={`group fixed bottom-5 right-5 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-[#25D366] text-ink shadow-lg shadow-black/40 transition-all duration-200 hover:scale-105 focus-visible:scale-105 motion-reduce:transition-none motion-reduce:hover:scale-100 motion-reduce:focus-visible:scale-100 sm:bottom-6 sm:right-6 ${
+      className={`group fixed bottom-5 right-5 z-[var(--z-sticky)] flex h-12 w-12 items-center justify-center rounded-full bg-[var(--color-accent)] text-[var(--color-accent-ink)] border border-[var(--color-accent)] transition-transform transition-opacity duration-[var(--dur-short)] hover:bg-[var(--color-accent-hi)] sm:bottom-6 sm:right-6 ${
         suppressed ? 'pointer-events-none translate-y-3 opacity-0' : 'opacity-100'
       }`}
     >
+      <WhatsAppIcon className="relative h-6 w-6" />
       <span
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0 animate-wa-pulse rounded-full bg-[#25D366] motion-reduce:animate-none"
-      />
-      <WhatsAppIcon className="relative h-7 w-7" />
-      <span
-        aria-hidden="true"
-        className="pointer-events-none absolute right-[4.25rem] whitespace-nowrap rounded-md bg-white px-3 py-1.5 text-sm font-semibold text-ink opacity-0 shadow-md transition-opacity duration-200 group-hover:opacity-100"
+        className="pointer-events-none absolute right-[3.5rem] whitespace-nowrap rounded-[var(--radius-card)] bg-[var(--color-paper-3)] border border-[var(--color-rule-2)] px-3 py-1.5 text-[13px] text-[var(--color-ink)] opacity-0 transition-opacity duration-[var(--dur-short)] group-hover:opacity-100"
       >
         WhatsApp
       </span>

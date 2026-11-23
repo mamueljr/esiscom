@@ -3,6 +3,13 @@
 ## SItio web de la empresa ESISCOM
 
 ## Cambios
+### 2026-11-23 — Rediseño Hallmark (tema Vantage) y protagonismo de ESISCOM Soft
+- **Sistema visual (Vantage):** tokens en `tokens.css` y `base.css` importados en `index.css`; tipografía variable `Geologica` (`SHRP` 100 en titulares, `tabular-nums` en cifras), superficie azul-negro (`--color-paper`), marcos con esquinas marcadas (`.ticks`), botones píldora y señal lima (`--color-accent`).
+- **Hero y ESoft al frente:** `components/Hero.tsx` conserva íntegro el texto de introducción, suma la nube de puntos (`components/VantageCloud.tsx`), fotografía del taller (`public/images/generated/workshop-bench.jpg`) y el tablero en vivo de los 3 sistemas de **ESISCOM Soft**.
+- **Nuevo `components/SoftwareShowcase.tsx`:** reemplaza la cinta marquee en el flujo principal por un selector interactivo (`Medical`, `Nails`, `Barber`) con capturas reales tomadas de los sitios en producción (`public/images/screens/`), características clave, enlaces directos y tabla de estado.
+- **Secciones actualizadas:** `Navbar`, `Services`, `RemoteSupport` (reemplaza la terminal simulada por lista ordenada real, descargas oficiales de AnyDesk/RustDesk y `public/images/generated/server-support.jpg`), `Testimonials` (filas tipográficas con testimonios actualizados: **Miriam Arizmendi** en Electricos Marín y **Homberto Fernández** en Windows Home), `Process`, `CtaBand`, `Contact`, `ContactForm` y `Footer`.
+- **Verificación:** `sloplint --render --kept` (0 FAIL, 0 REFLEX), `npx tsc --noEmit` y `npm run build` OK.
+
 ### 2026-11-13 — Formulario de contacto: envío por correo reparado
 - `.github/workflows/deploy.yml`: el build ahora recibe `VITE_WEB3FORMS_KEY` desde el secreto de GitHub. Antes el build de CI nunca la tenía, así que Vite eliminaba la rama de correo y todos los envíos caían a WhatsApp.
 - `components/ContactForm.tsx`: si el envío por correo falla, se muestra un botón que abre WhatsApp con el mismo mensaje ya armado (antes solo aparecía un aviso sin enlace). Se conserva el nombre en la pantalla de confirmación (antes se vaciaba el formulario y decía "Gracias, bienvenido"). Se corrigió la leyenda "nunca se comparten con terceros".
