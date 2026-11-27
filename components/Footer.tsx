@@ -26,7 +26,7 @@ const Footer: React.FC<{
             </p>
             <div className="mt-6 flex gap-3">
               <a
-                href="https://www.facebook.com/people/Esiscom/100091457924009/"
+                href="https://www.facebook.com/profile.php?id=100091457924009"
                 target="_blank"
                 rel="noreferrer"
                 aria-label="ESISCOM en Facebook"
@@ -35,7 +35,7 @@ const Footer: React.FC<{
                 Facebook
               </a>
               <a
-                href="https://www.instagram.com/esiscomti/"
+                href="https://www.instagram.com/esiscom_cuu/"
                 target="_blank"
                 rel="noreferrer"
                 aria-label="ESISCOM en Instagram"
